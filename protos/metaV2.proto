@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package ceresmetaxv2;
+option java_package = "com.alipay.ceres.metaxv2.proto";
+option java_outer_classname = "MetaProtosV2";
+
+enum NodeState {
+  ONLINE = 0;
+  OFFLINE = 1;
+}
+
+enum ShardRole {
+  LEADER = 0;
+  FOLLOWER = 1;
+}
+
+//key: version,magicCode,cluster
+//demo: v1/00010000/cluster
+message Cluster {
+  uint32 id = 1;
+  string name = 2;
+  uint32 min_node_count = 3;
+  //the number of shard replication
+  uint32 replication_factor = 4;
+  uint32 shard_total = 5;
+}
+
+//key: version,magicCode,cluster,metaVersion
+//demo: v1/00010110/cluster/current
+message ClusterMetaData {
+  enum ClusterState {
+    EMPTY = 0;
+    PREPARE_REBALANCE = 1;
+    AWAITING_CLOSE = 2;
+    AWAITING_OPEN = 3;
+    STABLE = 4;
+  }
+
+  uint32 cluster_id = 1;
+  uint64 data_version = 2;
+  ClusterState state = 3;
+  repeated Shard shard_view = 4;
+  // cluster view's changed cause
+  string cause = 5;
+  uint64 created_at = 6;
+  map<string, ChangeShards> change_node_shards = 7;
+}
+
+message ChangeShards {
+  repeated Shard close_shards = 1;
+  repeated Shard open_shards = 2;
+}
+
+message Shard {
+  uint32 id = 1;
+  ShardRole shard_role = 2;
+  uint64 node_id = 3;
+}
+
+//key: version,magicCode,cluster,name
+//demo: v1/00010111/cluster/schema
+message Schema {
+  uint32 id = 1;
+  uint32 cluster_id = 2;
+  string name = 3;
+}
+
+//key: version,magicCode,cluster,schema,name
+//demo: v1/00011001/cluster/schema/table
+message Table {
+  uint64 id = 1;
+  string name = 2;
+  uint32 schema_id = 3;
+  uint32 shard_id = 4;
+  string desc = 5;
+}
+
+//key: version,magicCode,cluster,shardId
+//demo: v1/00100010/cluster/1/version
+message ShardTableInfo {
+  repeated uint64 table_ids = 1;
+  uint64 version = 2;
+}
+
+
+//key: version,magicCode,cluster,node
+//demo: v1/00010011/cluster/127.0.0.1:5000
+message Node {
+  uint64 id = 1;
+  CommonNodeInfo node_info = 2;
+  uint64 create_time = 3;
+  uint64 last_touch_time = 4;
+  NodeState state = 5;
+  HeartbeatSamplingInfo heartbeat_sampling_info = 6;
+}
+
+message CommonNodeInfo {
+  string node = 1;
+  uint32 lease = 2;
+  string zone = 3;
+  string node_version = 4;
+}
+
+message HeartbeatSamplingInfo {
+  double threshold = 1;
+  double min_std_deviation_millis = 2;
+  uint64 acceptable_heartbeat_pause_millis = 3;
+  uint64 first_heartbeat_estimate_millis = 4;
+  uint32 max_sample_size = 5;
+  repeated int64 intervals = 6;
+  uint64 interval_sum = 7;
+  uint64 squared_interval_sum = 8;
+  uint64 last_timestamp_millis = 9;
+}

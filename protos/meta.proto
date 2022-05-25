@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package ceresmetax;
+option java_package = "com.alipay.ceres.metax.proto";
+option java_outer_classname = "MetaProtos";
+
+enum NodeType {
+  Data = 0;
+}
+
+enum ClusterType {
+  LocalStorage = 0;
+}
+
+enum Permission {
+  None = 0;
+  W = 2;
+  R = 4;
+  RW = 6;
+}
+
+enum NodeState {
+  Opened = 0;
+}
+
+message Cluster {
+  string cluster = 1;
+  ClusterType cluster_type = 2;
+  int32 expected_node_count = 3;
+}
+
+message Schema {
+  string cluster = 1;
+  string name = 2;
+  int32 shards_total = 3;
+  string desc = 4;
+}
+
+message CommonNodeInfo {
+  string node = 1;
+  int32 lease = 2;
+  string alipay_app_zone = 3;
+  string alipay_app_idc = 4;
+  string data_node_version = 5;
+}
+
+message Node {
+  CommonNodeInfo node_info = 1;
+  int64 create_time = 2;
+  int64 last_touch_time = 3;
+  NodeState state = 4;
+  bytes phi_bytes = 5;
+}
+
+message SingleShardView {
+  map<int32, string> shard_nodes = 1;
+}
+
+message SingleNodeView {
+  map<string, ShardsInfo> node_shards = 1;
+}
+
+message ShardsInfo {
+  repeated Shard shards = 1;
+}
+
+message NodeShardView {
+  map<string, SingleNodeView> schema_node_mapping = 1;
+  map<string, SingleShardView> schema_shard_mapping = 2;
+  string cause = 3;
+  int64 timestamp = 4;
+}
+
+message ClusterMetaDataStruct {
+  enum ClusterState {
+    Empty = 0;
+    Stable = 1;
+  }
+  string cluster = 1;
+  int64 data_version = 2;
+  ClusterState state = 3;
+  ClusterType cluster_type = 4;
+  NodeShardView current_view = 5;
+}
+
+message Shard {
+  sint32 shard_id = 1;
+  Permission perm = 2;
+}
+
+message ShardAndNode {
+  string node = 1;
+  int32 shard_id = 2;
+}

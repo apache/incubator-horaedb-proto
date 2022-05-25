@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package storage;
+option java_package = "com.alipay.ceresdbx.proto";
+option java_outer_classname = "Storage";
+option go_package = "go/ceresdbxproto";
+
+import "common.proto";
+
+message Expr {
+  oneof Node {
+    Operand operand = 1;
+    SubExpr sub_expr = 2;
+  };
+}
+
+message SubExpr {
+  enum OperatorType {
+    AGGR = 0;
+    FUNC = 1;
+    BINARY = 2;
+  }
+  OperatorType op_type = 1;
+  string operator = 2;
+  repeated Expr operands = 3;
+
+  // for aggr
+  repeated string group = 4;
+  bool without = 5;
+
+  // Not used for now
+  // for binaryExpr
+  // bool return_bool = 6;
+  // bool rhs_contains_metric = 7;
+}
+
+message Operand {
+  oneof Value {
+    double float_val = 1;
+    string string_val = 2;
+    Selector selector = 3;
+  }
+}
+
+enum FilterType {
+  LITERAL_OR = 0;
+  NOT_LITERAL_OR = 1;
+  REGEXP = 2;
+  NOT_REGEXP_MATCH = 3;
+}
+
+message FilterOperator {
+  FilterType filter_type = 1;
+  repeated string params = 2;
+}
+
+message Filter {
+  string tag_key = 1;
+  repeated FilterOperator operators = 2;
+}
+
+message Selector {
+  string measurement = 1;
+  repeated Filter filters = 2;
+  int64 start = 3;
+  int64 end = 4;
+  int64 align_start = 5;
+  int64 align_end = 6;
+  int64 step = 7;
+  int64 range = 8;
+  int64 offset = 9;
+  string field = 10;
+
+}
+
+message Sample {
+  double value = 1;
+  int64 timestamp = 2;
+}
+
+message TimeSeries {
+  repeated Label labels = 1;
+  repeated Sample samples = 2;
+}
+
+message Label {
+  string name = 1;
+  string value = 2;
+}
+
+message Labels {
+  repeated Label labels = 1;
+}
+
+message PrometheusQueryRequest {
+  Expr expr = 1;
+  // use oneof to represent option for scalar value
+  // https://github.com/protocolbuffers/protobuf/issues/1606
+  oneof lookback_delta {
+    int64 delta = 2;
+  }
+}
+
+message PrometheusQueryResponse {
+  ResponseHeader header = 1;
+  // Samples within a time series must be ordered by time.
+  repeated TimeSeries timeseries = 2;
+}

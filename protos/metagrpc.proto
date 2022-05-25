@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package ceresmetax;
+option java_multiple_files = false;
+option java_package = "com.alipay.ceres.metax.proto";
+option java_outer_classname = "MetaGrpcProto";
+import "meta.proto";
+
+service CeresmetaRpcService {
+  rpc register_node (RegisterNodeRequest) returns (RegisterNodeResponse) {}
+
+  rpc fetch_cluster_view (FetchClusterViewRequest) returns (stream ClusterViewResponse) {}
+}
+
+service CeresmetaForwardRpcService {
+  rpc signal_all_fetch_view (SignalAllFetchViewRequest) returns (SignalAllFetchViewResponse) {}
+}
+
+message NameSpace {
+  string cluster = 1;
+  string version = 2;
+}
+
+message RegisterNodeRequest {
+  NameSpace ns = 1;
+  NodeType node_type = 2;
+  CommonNodeInfo node_info = 3;
+}
+
+message FetchClusterViewRequest {
+  NameSpace ns = 1;
+}
+
+message SignalAllFetchViewRequest {
+  NameSpace ns = 1;
+}
+
+message ResponseHeader {
+  bool success = 1;
+  string error = 2;
+}
+
+message RegisterNodeResponse {
+  ResponseHeader header = 1;
+  string node = 2;
+  int64 last_touch_time = 3;
+  int64 original_last_touch_time = 4;
+}
+
+message ClusterViewResponse {
+  ResponseHeader header = 1;
+  ClusterMetaDataStruct.ClusterState state = 2;
+  int64 meta_version = 3;
+  map<string, SingleShardView> schema_shards = 4;
+}
+
+message SignalAllFetchViewResponse {
+  ResponseHeader header = 1;
+  NameSpace ns = 2;
+}

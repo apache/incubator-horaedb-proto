@@ -1,0 +1,169 @@
+syntax = "proto3";
+
+package ceresmetaxv2;
+option java_multiple_files = false;
+option java_package = "com.alipay.ceres.metax.protov2";
+option java_outer_classname = "MetaGrpcProtoV2";
+import "metaV2.proto";
+
+service CeresmetaRpcService {
+  rpc AllocSchemaId(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
+  rpc AllocTableId(AllocTableIdRequest) returns (AllocTableIdResponse) {}
+  rpc GetTables(GetTablesRequest) returns (GetTablesResponse) {}
+  rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
+  rpc NodeHeartbeat(stream NodeHeartbeatRequest) returns (stream NodeHeartbeatResponse) {}
+}
+
+service CeresmetaForwardRpcService {
+  rpc signalAllNodeHeartbeat (SignalAllNodeHeartbeatRequest) returns (SignalAllNodeHeartbeatResponse) {}
+}
+
+message RequestHeader {
+  string node = 1;
+  string cluster_name = 2;
+}
+
+enum ErrorType {
+  UNKNOWN = 0;
+}
+
+message Error {
+  ErrorType error_type = 1;
+  string message = 2;
+}
+
+message ResponseHeader {
+  bool success = 1;
+  Error error = 2;
+}
+
+message AllocSchemaIdRequest {
+  RequestHeader header = 1;
+
+  string name = 2;
+}
+
+message AllocSchemaIdResponse {
+  ResponseHeader header = 1;
+
+  string name = 2;
+  uint32 id = 3;
+}
+
+message AllocTableIdRequest {
+  RequestHeader header = 1;
+
+  string schema_name = 2;
+  string name = 3;
+}
+
+message AllocTableIdResponse {
+  ResponseHeader header = 1;
+
+  string schema_name = 2;
+  string name = 3;
+  uint32 shard_id = 4;
+  uint32 schema_id = 5;
+  uint64 id = 6;
+}
+
+message GetTablesRequest {
+  RequestHeader header = 1;
+
+  repeated uint32 shard_id = 2;
+}
+
+message TableInfo {
+  uint64 id = 1;
+  string name = 2;
+  uint32 schema_id = 3;
+  string schema_name = 4;
+}
+
+message ShardTables {
+  ShardRole role = 1;
+  repeated TableInfo tables = 2;
+  uint64 version = 3;
+}
+
+message GetTablesResponse {
+  ResponseHeader header = 1;
+  // shard_id ->Tables
+  map<uint32, ShardTables> tables_map = 2;
+}
+
+message DropTableRequest {
+  RequestHeader header = 1;
+
+  string schema_name = 2;
+  string name = 3;
+  uint64 id = 4;
+}
+
+message DropTableResponse {
+  ResponseHeader header = 1;
+}
+
+message NodeHeartbeatRequest {
+  RequestHeader header = 1;
+
+  NodeInfo info = 2;
+}
+
+message ShardInfo {
+  uint32 shard_id = 1;
+  ShardRole role = 2;
+}
+
+message NodeInfo {
+  // ip:port
+  string node = 1;
+  uint32 lease = 2;
+  string zone = 3;
+  string binary_version = 4;
+  repeated ShardInfo shardsInfo = 5;
+}
+
+message NodeHeartbeatResponse {
+  ResponseHeader header = 1;
+
+  uint64 timestamp = 2;
+  oneof cmd {
+    NoneCmd none_cmd = 3;
+    OpenCmd open_cmd = 4;
+    SplitCmd split_cmd = 5;
+    CloseCmd close_cmd = 6;
+    ChangeRoleCmd change_role_cmd = 7;
+  }
+}
+
+message NoneCmd {
+
+}
+
+message OpenCmd {
+  repeated uint32 shard_ids = 1;
+}
+
+message SplitCmd {
+  uint32 source_shard_id = 1;
+  repeated uint32 target_shard_ids = 2;
+}
+
+message CloseCmd {
+  repeated uint32  shard_ids = 1;
+}
+
+message ChangeRoleCmd {
+  repeated ShardRole shard_roles = 1;
+}
+
+message SignalAllNodeHeartbeatRequest {
+  string cluster = 1;
+}
+
+message SignalAllNodeHeartbeatResponse {
+  ResponseHeader header = 1;
+  uint64 timestamp = 2;
+  string cluster = 3;
+}
