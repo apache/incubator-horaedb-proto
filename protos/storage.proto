@@ -3,7 +3,7 @@ syntax = "proto3";
 package storage;
 option java_package = "com.alipay.ceresdbx.proto";
 option java_outer_classname = "Storage";
-option go_package = "go/ceresdbxproto";
+option go_package = "go/ceresdbproto";
 
 import "common.proto";
 import "prometheus.proto";
