@@ -1,6 +1,6 @@
 # ceresdbproto
 
-Protocol buffer files for CeresDB
+Protocol buffer files for CeresDB.
 
 # Usage
 ## Rust
@@ -19,6 +19,8 @@ go get github.com/CeresDB/ceresdbproto/go/ceresdbproto
 
 # Generate code
 
+Install [Protocol Buffers 3.7.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.7.1)+ compiler.
+
 ## Rust
 
 Nothing required
@@ -30,4 +32,3 @@ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
 sh gen-go.sh
 ```
-- https://grpc.io/docs/languages/go/quickstart/
