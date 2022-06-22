@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package ceresmeta;
+option go_package = "go/ceresdbproto";
+
+message Member {
+  string name = 1;
+  uint64 id = 2;
+  int32 leader_prority = 3;
+}

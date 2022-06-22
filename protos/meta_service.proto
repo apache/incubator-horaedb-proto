@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package ceresmetaxv2;
-option java_multiple_files = false;
-option java_package = "com.alipay.ceres.metax.protov2";
-option java_outer_classname = "MetaGrpcProtoV2";
-import "metaV2.proto";
+package ceresmeta;
+option go_package = "go/ceresdbproto";
+
+import "common.proto";
+import "meta_cluster.proto";
 
 service CeresmetaRpcService {
   rpc AllocSchemaId(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
@@ -23,20 +23,6 @@ message RequestHeader {
   string cluster_name = 2;
 }
 
-enum ErrorType {
-  UNKNOWN = 0;
-}
-
-message Error {
-  ErrorType error_type = 1;
-  string message = 2;
-}
-
-message ResponseHeader {
-  bool success = 1;
-  Error error = 2;
-}
-
 message AllocSchemaIdRequest {
   RequestHeader header = 1;
 
@@ -44,7 +30,7 @@ message AllocSchemaIdRequest {
 }
 
 message AllocSchemaIdResponse {
-  ResponseHeader header = 1;
+  storage.ResponseHeader header = 1;
 
   string name = 2;
   uint32 id = 3;
@@ -58,7 +44,7 @@ message AllocTableIdRequest {
 }
 
 message AllocTableIdResponse {
-  ResponseHeader header = 1;
+  storage.ResponseHeader header = 1;
 
   string schema_name = 2;
   string name = 3;
@@ -87,7 +73,7 @@ message ShardTables {
 }
 
 message GetTablesResponse {
-  ResponseHeader header = 1;
+  storage.ResponseHeader header = 1;
   // shard_id ->Tables
   map<uint32, ShardTables> tables_map = 2;
 }
@@ -101,7 +87,7 @@ message DropTableRequest {
 }
 
 message DropTableResponse {
-  ResponseHeader header = 1;
+  storage.ResponseHeader header = 1;
 }
 
 message NodeHeartbeatRequest {
@@ -125,7 +111,7 @@ message NodeInfo {
 }
 
 message NodeHeartbeatResponse {
-  ResponseHeader header = 1;
+  storage.ResponseHeader header = 1;
 
   uint64 timestamp = 2;
   oneof cmd {
@@ -163,7 +149,7 @@ message SignalAllNodeHeartbeatRequest {
 }
 
 message SignalAllNodeHeartbeatResponse {
-  ResponseHeader header = 1;
+  storage.ResponseHeader header = 1;
   uint64 timestamp = 2;
   string cluster = 3;
 }
