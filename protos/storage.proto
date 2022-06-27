@@ -3,7 +3,7 @@ syntax = "proto3";
 package storage;
 option java_package = "com.alipay.ceresdbx.proto";
 option java_outer_classname = "Storage";
-option go_package = "go/ceresdbproto";
+option go_package = "pkg/storagepb";
 
 import "common.proto";
 import "prometheus.proto";
@@ -14,7 +14,7 @@ service StorageService {
   rpc StreamWrite(stream WriteRequest) returns (WriteResponse) {}
   rpc Query(QueryRequest) returns (QueryResponse) {}
   rpc StreamQuery(QueryRequest) returns (stream QueryResponse) {}
-  rpc PromQuery(PrometheusQueryRequest) returns (PrometheusQueryResponse) {}
+  rpc PromQuery(prometheus.PrometheusQueryRequest) returns (prometheus.PrometheusQueryResponse) {}
 }
 
 message RouteRequest {
@@ -33,7 +33,7 @@ message Route {
 }
 
 message RouteResponse {
-  ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
   repeated Route routes = 2;
 }
 
@@ -88,7 +88,7 @@ message WriteRequest {
 }
 
 message WriteResponse {
-  ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
   uint32 success = 2;
   uint32 failed = 3;
 }
@@ -99,7 +99,7 @@ message QueryRequest {
 }
 
 message QueryResponse {
-  ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
   enum SchemaType {
     AVRO = 0;
     JSON = 1;

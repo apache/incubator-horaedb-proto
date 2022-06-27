@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package ceresmeta;
-option go_package = "go/ceresdbproto";
+option go_package = "pkg/metapb";
 
 import "common.proto";
 import "meta_cluster.proto";
@@ -30,7 +30,7 @@ message AllocSchemaIdRequest {
 }
 
 message AllocSchemaIdResponse {
-  storage.ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
 
   string name = 2;
   uint32 id = 3;
@@ -44,7 +44,7 @@ message AllocTableIdRequest {
 }
 
 message AllocTableIdResponse {
-  storage.ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
 
   string schema_name = 2;
   string name = 3;
@@ -73,7 +73,7 @@ message ShardTables {
 }
 
 message GetTablesResponse {
-  storage.ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
   // shard_id ->Tables
   map<uint32, ShardTables> tables_map = 2;
 }
@@ -87,7 +87,7 @@ message DropTableRequest {
 }
 
 message DropTableResponse {
-  storage.ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
 }
 
 message NodeHeartbeatRequest {
@@ -111,7 +111,7 @@ message NodeInfo {
 }
 
 message NodeHeartbeatResponse {
-  storage.ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
 
   uint64 timestamp = 2;
   oneof cmd {
@@ -149,7 +149,7 @@ message SignalAllNodeHeartbeatRequest {
 }
 
 message SignalAllNodeHeartbeatResponse {
-  storage.ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
   uint64 timestamp = 2;
   string cluster = 3;
 }
