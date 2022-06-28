@@ -3,7 +3,7 @@ syntax = "proto3";
 package prometheus;
 option java_package = "com.alipay.ceresdbx.proto";
 option java_outer_classname = "Storage";
-option go_package = "pkg/ceresprompb";
+option go_package = "github.com/CeresDB/ceresdbproto/pkg/ceresprompb";
 
 import "common.proto";
 

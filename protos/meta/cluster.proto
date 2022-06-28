@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package ceresmeta;
-option go_package = "pkg/metapb";
+option go_package = "github.com/CeresDB/ceresdbproto/pkg/metapb";
 
 enum NodeState {
   ONLINE = 0;

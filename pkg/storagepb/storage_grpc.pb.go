@@ -4,10 +4,10 @@ package storagepb
 
 import (
 	context "context"
+	ceresprompb "github.com/CeresDB/ceresdbproto/pkg/ceresprompb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	ceresprompb "pkg/ceresprompb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
