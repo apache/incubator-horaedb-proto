@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package storage;
+package common;
 option java_package = "com.alipay.ceresdbx.proto";
 option java_outer_classname = "Common";
-option go_package = "go/ceresdbproto";
+option go_package = "pkg/commonpb";
 
 message ResponseHeader {
   uint32 code = 1;

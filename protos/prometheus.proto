@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package storage;
+package prometheus;
 option java_package = "com.alipay.ceresdbx.proto";
 option java_outer_classname = "Storage";
-option go_package = "go/ceresdbproto";
+option go_package = "pkg/ceresprompb";
 
 import "common.proto";
 
@@ -102,7 +102,7 @@ message PrometheusQueryRequest {
 }
 
 message PrometheusQueryResponse {
-  ResponseHeader header = 1;
+  common.ResponseHeader header = 1;
   // Samples within a time series must be ordered by time.
   repeated TimeSeries timeseries = 2;
 }
