@@ -14,7 +14,7 @@ ceresdbproto = { git = "https://github.com/CeresDB/ceresdbproto.git"}
 ## Go
 
 ```
-go get github.com/CeresDB/ceresdbproto/go/ceresdbproto
+go get github.com/CeresDB/ceresdbproto
 ```
 
 # Generate code

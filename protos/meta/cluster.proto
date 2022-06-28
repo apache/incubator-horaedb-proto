@@ -1,8 +1,7 @@
 syntax = "proto3";
 
-package ceresmetaxv2;
-option java_package = "com.alipay.ceres.metaxv2.proto";
-option java_outer_classname = "MetaProtosV2";
+package ceresmeta;
+option go_package = "pkg/metapb";
 
 enum NodeState {
   ONLINE = 0;
