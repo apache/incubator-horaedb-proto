@@ -6,5 +6,5 @@ option go_package = "pkg/metapb";
 message Member {
   string name = 1;
   uint64 id = 2;
-  int32 leader_prority = 3;
+  int32 leader_priority = 3;
 }
