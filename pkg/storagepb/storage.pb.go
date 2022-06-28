@@ -9,8 +9,8 @@ package storagepb
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	ceresprompb "pkg/ceresprompb"
 	commonpb "pkg/commonpb"
-	prompb "pkg/prompb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -1228,24 +1228,24 @@ func file_storage_proto_rawDescGZIP() []byte {
 var file_storage_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_storage_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_storage_proto_goTypes = []interface{}{
-	(QueryResponse_SchemaType)(0),          // 0: storage.QueryResponse.SchemaType
-	(*RouteRequest)(nil),                   // 1: storage.RouteRequest
-	(*Endpoint)(nil),                       // 2: storage.Endpoint
-	(*Route)(nil),                          // 3: storage.Route
-	(*RouteResponse)(nil),                  // 4: storage.RouteResponse
-	(*Value)(nil),                          // 5: storage.Value
-	(*Field)(nil),                          // 6: storage.Field
-	(*FieldGroup)(nil),                     // 7: storage.FieldGroup
-	(*Tag)(nil),                            // 8: storage.Tag
-	(*WriteEntry)(nil),                     // 9: storage.WriteEntry
-	(*WriteMetric)(nil),                    // 10: storage.WriteMetric
-	(*WriteRequest)(nil),                   // 11: storage.WriteRequest
-	(*WriteResponse)(nil),                  // 12: storage.WriteResponse
-	(*QueryRequest)(nil),                   // 13: storage.QueryRequest
-	(*QueryResponse)(nil),                  // 14: storage.QueryResponse
-	(*commonpb.ResponseHeader)(nil),        // 15: common.ResponseHeader
-	(*prompb.PrometheusQueryRequest)(nil),  // 16: prometheus.PrometheusQueryRequest
-	(*prompb.PrometheusQueryResponse)(nil), // 17: prometheus.PrometheusQueryResponse
+	(QueryResponse_SchemaType)(0),               // 0: storage.QueryResponse.SchemaType
+	(*RouteRequest)(nil),                        // 1: storage.RouteRequest
+	(*Endpoint)(nil),                            // 2: storage.Endpoint
+	(*Route)(nil),                               // 3: storage.Route
+	(*RouteResponse)(nil),                       // 4: storage.RouteResponse
+	(*Value)(nil),                               // 5: storage.Value
+	(*Field)(nil),                               // 6: storage.Field
+	(*FieldGroup)(nil),                          // 7: storage.FieldGroup
+	(*Tag)(nil),                                 // 8: storage.Tag
+	(*WriteEntry)(nil),                          // 9: storage.WriteEntry
+	(*WriteMetric)(nil),                         // 10: storage.WriteMetric
+	(*WriteRequest)(nil),                        // 11: storage.WriteRequest
+	(*WriteResponse)(nil),                       // 12: storage.WriteResponse
+	(*QueryRequest)(nil),                        // 13: storage.QueryRequest
+	(*QueryResponse)(nil),                       // 14: storage.QueryResponse
+	(*commonpb.ResponseHeader)(nil),             // 15: common.ResponseHeader
+	(*ceresprompb.PrometheusQueryRequest)(nil),  // 16: prometheus.PrometheusQueryRequest
+	(*ceresprompb.PrometheusQueryResponse)(nil), // 17: prometheus.PrometheusQueryResponse
 }
 var file_storage_proto_depIdxs = []int32{
 	2,  // 0: storage.Route.endpoint:type_name -> storage.Endpoint

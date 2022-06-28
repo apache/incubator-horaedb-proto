@@ -274,7 +274,7 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: "meta_service.proto",
+	Metadata: "meta/service.proto",
 }
 
 // CeresmetaForwardRpcServiceClient is the client API for CeresmetaForwardRpcService service.
@@ -361,5 +361,5 @@ var CeresmetaForwardRpcService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "meta_service.proto",
+	Metadata: "meta/service.proto",
 }

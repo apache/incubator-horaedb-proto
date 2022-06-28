@@ -4,7 +4,7 @@ package ceresmeta;
 option go_package = "pkg/metapb";
 
 import "common.proto";
-import "meta_cluster.proto";
+import "meta/cluster.proto";
 
 service CeresmetaRpcService {
   rpc AllocSchemaId(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
