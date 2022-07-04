@@ -13,8 +13,9 @@ enum ShardRole {
   FOLLOWER = 1;
 }
 
-//key: version,magicCode,cluster
-//demo: v1/00010000/cluster
+// demo:
+// cluster 1 -> v1/cluster/1, value is ceresmeta.Cluster
+// cluster 2 -> v1/cluster/2, value is ceresmeta.Cluster
 message Cluster {
   uint32 id = 1;
   string name = 2;
@@ -24,9 +25,11 @@ message Cluster {
   uint32 shard_total = 5;
 }
 
-//key: version,magicCode,cluster,metaVersion
-//demo: v1/00010110/cluster/current
-message ClusterMetaData {
+// demo:
+// cluster 1 -> v1/cluster/1/topology/current, value is ceresmeta.ClusterTopology, latest version is 100
+//           -> v1/cluster/1/topology/99, value is ceresmeta.ClusterTopology
+//           -> v1/cluster/1/topology/98, value is ceresmeta.ClusterTopology
+message ClusterTopology {
   enum ClusterState {
     EMPTY = 0;
     PREPARE_REBALANCE = 1;
@@ -56,16 +59,21 @@ message Shard {
   uint64 node_id = 3;
 }
 
-//key: version,magicCode,cluster,name
-//demo: v1/00010111/cluster/schema
+// demo:
+// cluster 1 -> v1/cluster/1/schema/1, value is ceresmeta.Schema
+//           -> v1/cluster/1/schema/2, value is ceresmeta.Schema
+//           -> v1/cluster/1/schema/3, value is ceresmeta.Schema
 message Schema {
   uint32 id = 1;
   uint32 cluster_id = 2;
   string name = 3;
 }
 
-//key: version,magicCode,cluster,schema,name
-//demo: v1/00011001/cluster/schema/table
+// demo:
+// cluster 1 -> v1/cluster/1/schema/1/table/1, value is ceresmeta.Table
+//           -> v1/cluster/1/schema/1/table/2, value is ceresmeta.Table
+//           -> v1/cluster/1/schema/1/table/3, value is ceresmeta.Table
+//           -> v1/cluster/1/schema/2/table/4, value is ceresmeta.Table
 message Table {
   uint64 id = 1;
   string name = 2;
@@ -74,26 +82,30 @@ message Table {
   string desc = 5;
 }
 
-//key: version,magicCode,cluster,shardId
-//demo: v1/00100010/cluster/1/version
-message ShardTableInfo {
+// demo:
+// cluster 1 -> v1/cluster/1/shard/1/current, value is ceresmeta.ShardTopology, latest version is 10
+//           -> v1/cluster/1/shard/1/9, value is ceresmeta.ShardTopology
+//           -> v1/cluster/1/shard/1/8, value is ceresmeta.ShardTopology
+//           -> v1/cluster/1/shard/2/current, value is ceresmeta.ShardTopology, latest version is 4
+//           -> v1/cluster/1/shard/2/3, value is ceresmeta.ShardTopology
+message ShardTopology {
   repeated uint64 table_ids = 1;
   uint64 version = 2;
 }
 
-
-//key: version,magicCode,cluster,node
-//demo: v1/00010011/cluster/127.0.0.1:5000
+// demo:
+// cluster 1 -> v1/cluster/1/node/1, value is ceresmeta.Node
+//           -> v1/cluster/1/node/2, value is ceresmeta.Node
 message Node {
-  uint64 id = 1;
-  CommonNodeInfo node_info = 2;
+  uint32 id = 1;
+  NodeInfo node_info = 2;
   uint64 create_time = 3;
   uint64 last_touch_time = 4;
   NodeState state = 5;
   HeartbeatSamplingInfo heartbeat_sampling_info = 6;
 }
 
-message CommonNodeInfo {
+message NodeInfo {
   string node = 1;
   uint32 lease = 2;
   string zone = 3;
