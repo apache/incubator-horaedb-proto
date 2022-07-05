@@ -13,9 +13,9 @@ enum ShardRole {
   FOLLOWER = 1;
 }
 
-// demo:
-// cluster 1 -> v1/cluster/1, value is ceresmeta.Cluster
-// cluster 2 -> v1/cluster/2, value is ceresmeta.Cluster
+// example:
+// cluster 1: v1/cluster/1 -> ceresmeta.Cluster
+// cluster 2: v1/cluster/2 -> ceresmeta.Cluster
 message Cluster {
   uint32 id = 1;
   string name = 2;
@@ -25,10 +25,10 @@ message Cluster {
   uint32 shard_total = 5;
 }
 
-// demo:
-// cluster 1 -> v1/cluster/1/topology/current, value is ceresmeta.ClusterTopology, latest version is 100
-//           -> v1/cluster/1/topology/99, value is ceresmeta.ClusterTopology
-//           -> v1/cluster/1/topology/98, value is ceresmeta.ClusterTopology
+// example:
+// cluster 1: v1/cluster/1/topo/latest_version -> 99
+//            v1/cluster/1/topo/99 -> ceresmeta.ClusterTopology
+//            v1/cluster/1/topo/98 -> ceresmeta.ClusterTopology
 message ClusterTopology {
   enum ClusterState {
     EMPTY = 0;
@@ -59,21 +59,21 @@ message Shard {
   uint64 node_id = 3;
 }
 
-// demo:
-// cluster 1 -> v1/cluster/1/schema/1, value is ceresmeta.Schema
-//           -> v1/cluster/1/schema/2, value is ceresmeta.Schema
-//           -> v1/cluster/1/schema/3, value is ceresmeta.Schema
+// example:
+// cluster 1: v1/cluster/1/schema/1 -> ceresmeta.Schema
+//            v1/cluster/1/schema/2 -> ceresmeta.Schema
+//            v1/cluster/1/schema/3 -> ceresmeta.Schema
 message Schema {
   uint32 id = 1;
   uint32 cluster_id = 2;
   string name = 3;
 }
 
-// demo:
-// cluster 1 -> v1/cluster/1/schema/1/table/1, value is ceresmeta.Table
-//           -> v1/cluster/1/schema/1/table/2, value is ceresmeta.Table
-//           -> v1/cluster/1/schema/1/table/3, value is ceresmeta.Table
-//           -> v1/cluster/1/schema/2/table/4, value is ceresmeta.Table
+// example:
+// cluster 1: v1/cluster/1/schema/1/table/1 -> ceresmeta.Table
+//            v1/cluster/1/schema/1/table/2 -> ceresmeta.Table
+//            v1/cluster/1/schema/1/table/3 -> ceresmeta.Table
+//            v1/cluster/1/schema/2/table/4 -> ceresmeta.Table
 message Table {
   uint64 id = 1;
   string name = 2;
@@ -82,30 +82,30 @@ message Table {
   string desc = 5;
 }
 
-// demo:
-// cluster 1 -> v1/cluster/1/shard/1/current, value is ceresmeta.ShardTopology, latest version is 10
-//           -> v1/cluster/1/shard/1/9, value is ceresmeta.ShardTopology
-//           -> v1/cluster/1/shard/1/8, value is ceresmeta.ShardTopology
-//           -> v1/cluster/1/shard/2/current, value is ceresmeta.ShardTopology, latest version is 4
-//           -> v1/cluster/1/shard/2/3, value is ceresmeta.ShardTopology
+// example:
+// cluster 1: v1/cluster/1/shard/1/latest_version -> 9
+//            v1/cluster/1/shard/1/9 -> ceresmeta.ShardTopology
+//            v1/cluster/1/shard/1/8 -> ceresmeta.ShardTopology
+//            v1/cluster/1/shard/2/latest_version -> 3
+//            v1/cluster/1/shard/2/3 -> ceresmeta.ShardTopology
 message ShardTopology {
   repeated uint64 table_ids = 1;
   uint64 version = 2;
 }
 
-// demo:
-// cluster 1 -> v1/cluster/1/node/1, value is ceresmeta.Node
-//           -> v1/cluster/1/node/2, value is ceresmeta.Node
+// example:
+// cluster 1: v1/cluster/1/node/1 -> value is ceresmeta.Node
+//            v1/cluster/1/node/2 -> value is ceresmeta.Node
 message Node {
   uint32 id = 1;
-  NodeInfo node_info = 2;
+  NodeStats node_stats = 2;
   uint64 create_time = 3;
   uint64 last_touch_time = 4;
   NodeState state = 5;
   HeartbeatSamplingInfo heartbeat_sampling_info = 6;
 }
 
-message NodeInfo {
+message NodeStats {
   string node = 1;
   uint32 lease = 2;
   string zone = 3;
