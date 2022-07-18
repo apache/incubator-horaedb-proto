@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package ceresmeta;
-option go_package = "github.com/CeresDB/ceresdbproto/pkg/metapb";
+package meta_service;
+option go_package = "github.com/CeresDB/ceresdbproto/pkg/metaservicepb";
 
 import "common.proto";
-import "meta/cluster.proto";
+import "cluster.proto";
 
 service CeresmetaRpcService {
   rpc AllocSchemaId(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
@@ -67,7 +67,7 @@ message TableInfo {
 }
 
 message ShardTables {
-  ShardRole role = 1;
+  cluster.ShardRole role = 1;
   repeated TableInfo tables = 2;
   uint64 version = 3;
 }
@@ -98,7 +98,7 @@ message NodeHeartbeatRequest {
 
 message ShardInfo {
   uint32 shard_id = 1;
-  ShardRole role = 2;
+  cluster.ShardRole role = 2;
 }
 
 message NodeInfo {
@@ -141,7 +141,7 @@ message CloseCmd {
 }
 
 message ChangeRoleCmd {
-  repeated ShardRole shard_roles = 1;
+  repeated cluster.ShardRole shard_roles = 1;
 }
 
 message SignalAllNodeHeartbeatRequest {
