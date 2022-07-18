@@ -107,4 +107,5 @@ message QueryResponse {
   SchemaType schema_type = 2;
   string schema_content = 3;
   repeated bytes rows = 4;
+  uint32 affected_rows = 5;
 }
