@@ -102,7 +102,7 @@ message ShardTopology {
 // cluster 1: v1/cluster/1/node/127.0.0.1:8081 -> value is ceresmeta.Node
 //            v1/cluster/1/node/127.0.0.2:8081 -> value is ceresmeta.Node
 message Node {
-  string node = 1;
+  string name = 1;
   NodeStats node_stats = 2;
   uint64 create_time = 3;
   uint64 last_touch_time = 4;
