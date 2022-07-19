@@ -23,6 +23,7 @@ message Cluster {
   //the number of shard replication
   uint32 replication_factor = 4;
   uint32 shard_total = 5;
+  uint64 created_at = 6;
 }
 
 // example:
@@ -56,7 +57,7 @@ message ChangeShards {
 message Shard {
   uint32 id = 1;
   ShardRole shard_role = 2;
-  uint64 node_id = 3;
+  string node = 3;
 }
 
 // example:
@@ -67,6 +68,7 @@ message Schema {
   uint32 id = 1;
   uint32 cluster_id = 2;
   string name = 3;
+  uint64 created_at = 4;
 }
 
 // example:
@@ -80,6 +82,7 @@ message Table {
   uint32 schema_id = 3;
   uint32 shard_id = 4;
   string desc = 5;
+  uint64 created_at = 6;
 }
 
 // example:
@@ -89,15 +92,17 @@ message Table {
 //            v1/cluster/1/shard/2/latest_version -> 3
 //            v1/cluster/1/shard/2/3 -> ceresmeta.ShardTopology
 message ShardTopology {
-  repeated uint64 table_ids = 1;
-  uint64 version = 2;
+  uint32 shard_id = 1;
+  repeated uint64 table_ids = 2;
+  uint64 version = 3;
+  uint64 created_at = 4;
 }
 
 // example:
-// cluster 1: v1/cluster/1/node/1 -> value is ceresmeta.Node
-//            v1/cluster/1/node/2 -> value is ceresmeta.Node
+// cluster 1: v1/cluster/1/node/127.0.0.1:8081 -> value is ceresmeta.Node
+//            v1/cluster/1/node/127.0.0.2:8081 -> value is ceresmeta.Node
 message Node {
-  uint32 id = 1;
+  string name = 1;
   NodeStats node_stats = 2;
   uint64 create_time = 3;
   uint64 last_touch_time = 4;
@@ -106,10 +111,9 @@ message Node {
 }
 
 message NodeStats {
-  string node = 1;
-  uint32 lease = 2;
-  string zone = 3;
-  string node_version = 4;
+  uint32 lease = 1;
+  string zone = 2;
+  string node_version = 3;
 }
 
 message HeartbeatSamplingInfo {
