@@ -18,8 +18,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CeresmetaRpcServiceClient interface {
-	AllocSchemaId(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error)
-	AllocTableId(ctx context.Context, in *AllocTableIdRequest, opts ...grpc.CallOption) (*AllocTableIdResponse, error)
+	AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error)
+	AllocTableID(ctx context.Context, in *AllocTableIdRequest, opts ...grpc.CallOption) (*AllocTableIdResponse, error)
 	GetTables(ctx context.Context, in *GetTablesRequest, opts ...grpc.CallOption) (*GetTablesResponse, error)
 	DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error)
 	NodeHeartbeat(ctx context.Context, opts ...grpc.CallOption) (CeresmetaRpcService_NodeHeartbeatClient, error)
@@ -33,18 +33,18 @@ func NewCeresmetaRpcServiceClient(cc grpc.ClientConnInterface) CeresmetaRpcServi
 	return &ceresmetaRpcServiceClient{cc}
 }
 
-func (c *ceresmetaRpcServiceClient) AllocSchemaId(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error) {
+func (c *ceresmetaRpcServiceClient) AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error) {
 	out := new(AllocSchemaIdResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/AllocSchemaId", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/AllocSchemaID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) AllocTableId(ctx context.Context, in *AllocTableIdRequest, opts ...grpc.CallOption) (*AllocTableIdResponse, error) {
+func (c *ceresmetaRpcServiceClient) AllocTableID(ctx context.Context, in *AllocTableIdRequest, opts ...grpc.CallOption) (*AllocTableIdResponse, error) {
 	out := new(AllocTableIdResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/AllocTableId", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/AllocTableID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -104,8 +104,8 @@ func (x *ceresmetaRpcServiceNodeHeartbeatClient) Recv() (*NodeHeartbeatResponse,
 // All implementations must embed UnimplementedCeresmetaRpcServiceServer
 // for forward compatibility
 type CeresmetaRpcServiceServer interface {
-	AllocSchemaId(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error)
-	AllocTableId(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error)
+	AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error)
+	AllocTableID(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error)
 	GetTables(context.Context, *GetTablesRequest) (*GetTablesResponse, error)
 	DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error)
 	NodeHeartbeat(CeresmetaRpcService_NodeHeartbeatServer) error
@@ -116,11 +116,11 @@ type CeresmetaRpcServiceServer interface {
 type UnimplementedCeresmetaRpcServiceServer struct {
 }
 
-func (UnimplementedCeresmetaRpcServiceServer) AllocSchemaId(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AllocSchemaId not implemented")
+func (UnimplementedCeresmetaRpcServiceServer) AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AllocSchemaID not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) AllocTableId(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AllocTableId not implemented")
+func (UnimplementedCeresmetaRpcServiceServer) AllocTableID(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AllocTableID not implemented")
 }
 func (UnimplementedCeresmetaRpcServiceServer) GetTables(context.Context, *GetTablesRequest) (*GetTablesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTables not implemented")
@@ -144,38 +144,38 @@ func RegisterCeresmetaRpcServiceServer(s grpc.ServiceRegistrar, srv CeresmetaRpc
 	s.RegisterService(&CeresmetaRpcService_ServiceDesc, srv)
 }
 
-func _CeresmetaRpcService_AllocSchemaId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CeresmetaRpcService_AllocSchemaID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AllocSchemaIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).AllocSchemaId(ctx, in)
+		return srv.(CeresmetaRpcServiceServer).AllocSchemaID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/AllocSchemaId",
+		FullMethod: "/meta_service.CeresmetaRpcService/AllocSchemaID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).AllocSchemaId(ctx, req.(*AllocSchemaIdRequest))
+		return srv.(CeresmetaRpcServiceServer).AllocSchemaID(ctx, req.(*AllocSchemaIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_AllocTableId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CeresmetaRpcService_AllocTableID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AllocTableIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).AllocTableId(ctx, in)
+		return srv.(CeresmetaRpcServiceServer).AllocTableID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/AllocTableId",
+		FullMethod: "/meta_service.CeresmetaRpcService/AllocTableID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).AllocTableId(ctx, req.(*AllocTableIdRequest))
+		return srv.(CeresmetaRpcServiceServer).AllocTableID(ctx, req.(*AllocTableIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -250,12 +250,12 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CeresmetaRpcServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AllocSchemaId",
-			Handler:    _CeresmetaRpcService_AllocSchemaId_Handler,
+			MethodName: "AllocSchemaID",
+			Handler:    _CeresmetaRpcService_AllocSchemaID_Handler,
 		},
 		{
-			MethodName: "AllocTableId",
-			Handler:    _CeresmetaRpcService_AllocTableId_Handler,
+			MethodName: "AllocTableID",
+			Handler:    _CeresmetaRpcService_AllocTableID_Handler,
 		},
 		{
 			MethodName: "GetTables",

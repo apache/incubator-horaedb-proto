@@ -7,8 +7,8 @@ import "common.proto";
 import "cluster.proto";
 
 service CeresmetaRpcService {
-  rpc AllocSchemaId(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
-  rpc AllocTableId(AllocTableIdRequest) returns (AllocTableIdResponse) {}
+  rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
+  rpc AllocTableID(AllocTableIdRequest) returns (AllocTableIdResponse) {}
   rpc GetTables(GetTablesRequest) returns (GetTablesResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc NodeHeartbeat(stream NodeHeartbeatRequest) returns (stream NodeHeartbeatResponse) {}
