@@ -130,7 +130,7 @@ message NodeInfo {
   uint32 lease = 2;
   string zone = 3;
   string binary_version = 4;
-  repeated ShardInfo shards_info = 5;
+  repeated ShardInfo shard_infos = 5;
 }
 
 message NodeHeartbeatResponse {
