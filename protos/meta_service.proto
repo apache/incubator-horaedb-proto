@@ -16,11 +16,6 @@ service CeresmetaRpcService {
       returns (stream NodeHeartbeatResponse) {}
 }
 
-service CeresmetaForwardRpcService {
-  rpc signalAllNodeHeartbeat(SignalAllNodeHeartbeatRequest)
-      returns (SignalAllNodeHeartbeatResponse) {}
-}
-
 message RequestHeader {
   string node = 1;
   string cluster_name = 2;
@@ -114,7 +109,9 @@ message DropTableRequest {
   uint64 id = 4;
 }
 
-message DropTableResponse { common.ResponseHeader header = 1; }
+message DropTableResponse {
+  common.ResponseHeader header = 1;
+}
 
 message NodeHeartbeatRequest {
   RequestHeader header = 1;
@@ -151,18 +148,26 @@ message NodeHeartbeatResponse {
 
 message NoneCmd {}
 
-message OpenCmd { repeated uint32 shard_ids = 1; }
+message OpenCmd {
+  repeated uint32 shard_ids = 1;
+}
 
 message SplitCmd {
   uint32 source_shard_id = 1;
   repeated uint32 target_shard_ids = 2;
 }
 
-message CloseCmd { repeated uint32 shard_ids = 1; }
+message CloseCmd {
+  repeated uint32 shard_ids = 1;
+}
 
-message ChangeRoleCmd { repeated cluster.ShardRole shard_roles = 1; }
+message ChangeRoleCmd {
+  repeated cluster.ShardRole shard_roles = 1;
+}
 
-message SignalAllNodeHeartbeatRequest { string cluster = 1; }
+message SignalAllNodeHeartbeatRequest {
+  string cluster = 1;
+}
 
 message SignalAllNodeHeartbeatResponse {
   common.ResponseHeader header = 1;
