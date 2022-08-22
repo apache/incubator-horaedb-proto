@@ -708,18 +708,17 @@ func (x *NodeShard) GetShardInfo() *ShardInfo {
 	return nil
 }
 
-type TableRouteEntry struct {
+type RouteEntry struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TableName  string       `protobuf:"bytes,1,opt,name=table_name,json=tableName,proto3" json:"table_name,omitempty"`
-	TableId    uint64       `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	NodeShards []*NodeShard `protobuf:"bytes,3,rep,name=node_shards,json=nodeShards,proto3" json:"node_shards,omitempty"`
+	Table      *TableInfo   `protobuf:"bytes,1,opt,name=table,proto3" json:"table,omitempty"`
+	NodeShards []*NodeShard `protobuf:"bytes,2,rep,name=node_shards,json=nodeShards,proto3" json:"node_shards,omitempty"`
 }
 
-func (x *TableRouteEntry) Reset() {
-	*x = TableRouteEntry{}
+func (x *RouteEntry) Reset() {
+	*x = RouteEntry{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_meta_service_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -727,13 +726,13 @@ func (x *TableRouteEntry) Reset() {
 	}
 }
 
-func (x *TableRouteEntry) String() string {
+func (x *RouteEntry) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TableRouteEntry) ProtoMessage() {}
+func (*RouteEntry) ProtoMessage() {}
 
-func (x *TableRouteEntry) ProtoReflect() protoreflect.Message {
+func (x *RouteEntry) ProtoReflect() protoreflect.Message {
 	mi := &file_meta_service_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -745,26 +744,19 @@ func (x *TableRouteEntry) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TableRouteEntry.ProtoReflect.Descriptor instead.
-func (*TableRouteEntry) Descriptor() ([]byte, []int) {
+// Deprecated: Use RouteEntry.ProtoReflect.Descriptor instead.
+func (*RouteEntry) Descriptor() ([]byte, []int) {
 	return file_meta_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *TableRouteEntry) GetTableName() string {
+func (x *RouteEntry) GetTable() *TableInfo {
 	if x != nil {
-		return x.TableName
+		return x.Table
 	}
-	return ""
+	return nil
 }
 
-func (x *TableRouteEntry) GetTableId() uint64 {
-	if x != nil {
-		return x.TableId
-	}
-	return 0
-}
-
-func (x *TableRouteEntry) GetNodeShards() []*NodeShard {
+func (x *RouteEntry) GetNodeShards() []*NodeShard {
 	if x != nil {
 		return x.NodeShards
 	}
@@ -778,7 +770,7 @@ type RouteTablesResponse struct {
 
 	Header                 *commonpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	ClusterTopologyVersion uint64                   `protobuf:"varint,2,opt,name=cluster_topology_version,json=clusterTopologyVersion,proto3" json:"cluster_topology_version,omitempty"`
-	TableRouteEntries      []*TableRouteEntry       `protobuf:"bytes,3,rep,name=table_route_entries,json=tableRouteEntries,proto3" json:"table_route_entries,omitempty"`
+	Entries                map[string]*RouteEntry   `protobuf:"bytes,3,rep,name=entries,proto3" json:"entries,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (x *RouteTablesResponse) Reset() {
@@ -827,9 +819,9 @@ func (x *RouteTablesResponse) GetClusterTopologyVersion() uint64 {
 	return 0
 }
 
-func (x *RouteTablesResponse) GetTableRouteEntries() []*TableRouteEntry {
+func (x *RouteTablesResponse) GetEntries() map[string]*RouteEntry {
 	if x != nil {
-		return x.TableRouteEntries
+		return x.Entries
 	}
 	return nil
 }
@@ -1721,29 +1713,33 @@ var file_meta_service_proto_rawDesc = []byte{
 	0x12, 0x36, 0x0a, 0x0a, 0x73, 0x68, 0x61, 0x72, 0x64, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x02,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x5f, 0x73, 0x65, 0x72, 0x76,
 	0x69, 0x63, 0x65, 0x2e, 0x53, 0x68, 0x61, 0x72, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x09, 0x73,
-	0x68, 0x61, 0x72, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x85, 0x01, 0x0a, 0x0f, 0x54, 0x61, 0x62,
-	0x6c, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x1d, 0x0a, 0x0a,
-	0x74, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x09, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x74,
-	0x61, 0x62, 0x6c, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x74,
-	0x61, 0x62, 0x6c, 0x65, 0x49, 0x64, 0x12, 0x38, 0x0a, 0x0b, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x73,
-	0x68, 0x61, 0x72, 0x64, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6d, 0x65,
-	0x74, 0x61, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x4e, 0x6f, 0x64, 0x65, 0x53,
-	0x68, 0x61, 0x72, 0x64, 0x52, 0x0a, 0x6e, 0x6f, 0x64, 0x65, 0x53, 0x68, 0x61, 0x72, 0x64, 0x73,
-	0x22, 0xce, 0x01, 0x0a, 0x13, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x73,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x06, 0x68, 0x65, 0x61, 0x64,
-	0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
-	0x6e, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x48, 0x65, 0x61, 0x64, 0x65, 0x72,
-	0x52, 0x06, 0x68, 0x65, 0x61, 0x64, 0x65, 0x72, 0x12, 0x38, 0x0a, 0x18, 0x63, 0x6c, 0x75, 0x73,
-	0x74, 0x65, 0x72, 0x5f, 0x74, 0x6f, 0x70, 0x6f, 0x6c, 0x6f, 0x67, 0x79, 0x5f, 0x76, 0x65, 0x72,
-	0x73, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x16, 0x63, 0x6c, 0x75, 0x73,
-	0x74, 0x65, 0x72, 0x54, 0x6f, 0x70, 0x6f, 0x6c, 0x6f, 0x67, 0x79, 0x56, 0x65, 0x72, 0x73, 0x69,
-	0x6f, 0x6e, 0x12, 0x4d, 0x0a, 0x13, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x72, 0x6f, 0x75, 0x74,
-	0x65, 0x5f, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32,
-	0x1d, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x54,
-	0x61, 0x62, 0x6c, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x11,
-	0x74, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x45, 0x6e, 0x74, 0x72, 0x69, 0x65,
-	0x73, 0x22, 0x8c, 0x01, 0x0a, 0x10, 0x44, 0x72, 0x6f, 0x70, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x52,
+	0x68, 0x61, 0x72, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x75, 0x0a, 0x0a, 0x52, 0x6f, 0x75, 0x74,
+	0x65, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x2d, 0x0a, 0x05, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x5f, 0x73, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x2e, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x05,
+	0x74, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x38, 0x0a, 0x0b, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x73, 0x68,
+	0x61, 0x72, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6d, 0x65, 0x74,
+	0x61, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x68,
+	0x61, 0x72, 0x64, 0x52, 0x0a, 0x6e, 0x6f, 0x64, 0x65, 0x53, 0x68, 0x61, 0x72, 0x64, 0x73, 0x22,
+	0x9f, 0x02, 0x0a, 0x13, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x73, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x06, 0x68, 0x65, 0x61, 0x64, 0x65,
+	0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x48, 0x65, 0x61, 0x64, 0x65, 0x72, 0x52,
+	0x06, 0x68, 0x65, 0x61, 0x64, 0x65, 0x72, 0x12, 0x38, 0x0a, 0x18, 0x63, 0x6c, 0x75, 0x73, 0x74,
+	0x65, 0x72, 0x5f, 0x74, 0x6f, 0x70, 0x6f, 0x6c, 0x6f, 0x67, 0x79, 0x5f, 0x76, 0x65, 0x72, 0x73,
+	0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x16, 0x63, 0x6c, 0x75, 0x73, 0x74,
+	0x65, 0x72, 0x54, 0x6f, 0x70, 0x6f, 0x6c, 0x6f, 0x67, 0x79, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f,
+	0x6e, 0x12, 0x48, 0x0a, 0x07, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x2e, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x45, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0x45, 0x6e, 0x74,
+	0x72, 0x79, 0x52, 0x07, 0x65, 0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0x1a, 0x54, 0x0a, 0x0c, 0x45,
+	0x6e, 0x74, 0x72, 0x69, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b,
+	0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x2e, 0x0a,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6d,
+	0x65, 0x74, 0x61, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x52, 0x6f, 0x75, 0x74,
+	0x65, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38,
+	0x01, 0x22, 0x8c, 0x01, 0x0a, 0x10, 0x44, 0x72, 0x6f, 0x70, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x33, 0x0a, 0x06, 0x68, 0x65, 0x61, 0x64, 0x65, 0x72,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x5f, 0x73, 0x65,
 	0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x48, 0x65, 0x61,
@@ -1886,7 +1882,7 @@ func file_meta_service_proto_rawDescGZIP() []byte {
 	return file_meta_service_proto_rawDescData
 }
 
-var file_meta_service_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_meta_service_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_meta_service_proto_goTypes = []interface{}{
 	(*RequestHeader)(nil),                  // 0: meta_service.RequestHeader
 	(*AllocSchemaIdRequest)(nil),           // 1: meta_service.AllocSchemaIdRequest
@@ -1899,7 +1895,7 @@ var file_meta_service_proto_goTypes = []interface{}{
 	(*GetShardTablesResponse)(nil),         // 8: meta_service.GetShardTablesResponse
 	(*RouteTablesRequest)(nil),             // 9: meta_service.RouteTablesRequest
 	(*NodeShard)(nil),                      // 10: meta_service.NodeShard
-	(*TableRouteEntry)(nil),                // 11: meta_service.TableRouteEntry
+	(*RouteEntry)(nil),                     // 11: meta_service.RouteEntry
 	(*RouteTablesResponse)(nil),            // 12: meta_service.RouteTablesResponse
 	(*DropTableRequest)(nil),               // 13: meta_service.DropTableRequest
 	(*DropTableResponse)(nil),              // 14: meta_service.DropTableResponse
@@ -1915,56 +1911,59 @@ var file_meta_service_proto_goTypes = []interface{}{
 	(*SignalAllNodeHeartbeatRequest)(nil),  // 24: meta_service.SignalAllNodeHeartbeatRequest
 	(*SignalAllNodeHeartbeatResponse)(nil), // 25: meta_service.SignalAllNodeHeartbeatResponse
 	nil,                                    // 26: meta_service.GetShardTablesResponse.ShardTablesEntry
-	(*commonpb.ResponseHeader)(nil),        // 27: common.ResponseHeader
-	(clusterpb.ShardRole)(0),               // 28: cluster.ShardRole
+	nil,                                    // 27: meta_service.RouteTablesResponse.EntriesEntry
+	(*commonpb.ResponseHeader)(nil),        // 28: common.ResponseHeader
+	(clusterpb.ShardRole)(0),               // 29: cluster.ShardRole
 }
 var file_meta_service_proto_depIdxs = []int32{
 	0,  // 0: meta_service.AllocSchemaIdRequest.header:type_name -> meta_service.RequestHeader
-	27, // 1: meta_service.AllocSchemaIdResponse.header:type_name -> common.ResponseHeader
+	28, // 1: meta_service.AllocSchemaIdResponse.header:type_name -> common.ResponseHeader
 	0,  // 2: meta_service.AllocTableIdRequest.header:type_name -> meta_service.RequestHeader
-	27, // 3: meta_service.AllocTableIdResponse.header:type_name -> common.ResponseHeader
+	28, // 3: meta_service.AllocTableIdResponse.header:type_name -> common.ResponseHeader
 	0,  // 4: meta_service.GetShardTablesRequest.header:type_name -> meta_service.RequestHeader
-	28, // 5: meta_service.ShardTables.role:type_name -> cluster.ShardRole
+	29, // 5: meta_service.ShardTables.role:type_name -> cluster.ShardRole
 	6,  // 6: meta_service.ShardTables.tables:type_name -> meta_service.TableInfo
-	27, // 7: meta_service.GetShardTablesResponse.header:type_name -> common.ResponseHeader
+	28, // 7: meta_service.GetShardTablesResponse.header:type_name -> common.ResponseHeader
 	26, // 8: meta_service.GetShardTablesResponse.shard_tables:type_name -> meta_service.GetShardTablesResponse.ShardTablesEntry
 	0,  // 9: meta_service.RouteTablesRequest.header:type_name -> meta_service.RequestHeader
 	16, // 10: meta_service.NodeShard.shard_info:type_name -> meta_service.ShardInfo
-	10, // 11: meta_service.TableRouteEntry.node_shards:type_name -> meta_service.NodeShard
-	27, // 12: meta_service.RouteTablesResponse.header:type_name -> common.ResponseHeader
-	11, // 13: meta_service.RouteTablesResponse.table_route_entries:type_name -> meta_service.TableRouteEntry
-	0,  // 14: meta_service.DropTableRequest.header:type_name -> meta_service.RequestHeader
-	27, // 15: meta_service.DropTableResponse.header:type_name -> common.ResponseHeader
-	0,  // 16: meta_service.NodeHeartbeatRequest.header:type_name -> meta_service.RequestHeader
-	17, // 17: meta_service.NodeHeartbeatRequest.info:type_name -> meta_service.NodeInfo
-	28, // 18: meta_service.ShardInfo.role:type_name -> cluster.ShardRole
-	16, // 19: meta_service.NodeInfo.shard_infos:type_name -> meta_service.ShardInfo
-	27, // 20: meta_service.NodeHeartbeatResponse.header:type_name -> common.ResponseHeader
-	19, // 21: meta_service.NodeHeartbeatResponse.none_cmd:type_name -> meta_service.NoneCmd
-	20, // 22: meta_service.NodeHeartbeatResponse.open_cmd:type_name -> meta_service.OpenCmd
-	21, // 23: meta_service.NodeHeartbeatResponse.split_cmd:type_name -> meta_service.SplitCmd
-	22, // 24: meta_service.NodeHeartbeatResponse.close_cmd:type_name -> meta_service.CloseCmd
-	23, // 25: meta_service.NodeHeartbeatResponse.change_role_cmd:type_name -> meta_service.ChangeRoleCmd
-	28, // 26: meta_service.ChangeRoleCmd.shard_roles:type_name -> cluster.ShardRole
-	27, // 27: meta_service.SignalAllNodeHeartbeatResponse.header:type_name -> common.ResponseHeader
-	7,  // 28: meta_service.GetShardTablesResponse.ShardTablesEntry.value:type_name -> meta_service.ShardTables
-	1,  // 29: meta_service.CeresmetaRpcService.AllocSchemaID:input_type -> meta_service.AllocSchemaIdRequest
-	3,  // 30: meta_service.CeresmetaRpcService.AllocTableID:input_type -> meta_service.AllocTableIdRequest
-	5,  // 31: meta_service.CeresmetaRpcService.GetTables:input_type -> meta_service.GetShardTablesRequest
-	13, // 32: meta_service.CeresmetaRpcService.DropTable:input_type -> meta_service.DropTableRequest
-	9,  // 33: meta_service.CeresmetaRpcService.RouteTables:input_type -> meta_service.RouteTablesRequest
-	15, // 34: meta_service.CeresmetaRpcService.NodeHeartbeat:input_type -> meta_service.NodeHeartbeatRequest
-	2,  // 35: meta_service.CeresmetaRpcService.AllocSchemaID:output_type -> meta_service.AllocSchemaIdResponse
-	4,  // 36: meta_service.CeresmetaRpcService.AllocTableID:output_type -> meta_service.AllocTableIdResponse
-	8,  // 37: meta_service.CeresmetaRpcService.GetTables:output_type -> meta_service.GetShardTablesResponse
-	14, // 38: meta_service.CeresmetaRpcService.DropTable:output_type -> meta_service.DropTableResponse
-	12, // 39: meta_service.CeresmetaRpcService.RouteTables:output_type -> meta_service.RouteTablesResponse
-	18, // 40: meta_service.CeresmetaRpcService.NodeHeartbeat:output_type -> meta_service.NodeHeartbeatResponse
-	35, // [35:41] is the sub-list for method output_type
-	29, // [29:35] is the sub-list for method input_type
-	29, // [29:29] is the sub-list for extension type_name
-	29, // [29:29] is the sub-list for extension extendee
-	0,  // [0:29] is the sub-list for field type_name
+	6,  // 11: meta_service.RouteEntry.table:type_name -> meta_service.TableInfo
+	10, // 12: meta_service.RouteEntry.node_shards:type_name -> meta_service.NodeShard
+	28, // 13: meta_service.RouteTablesResponse.header:type_name -> common.ResponseHeader
+	27, // 14: meta_service.RouteTablesResponse.entries:type_name -> meta_service.RouteTablesResponse.EntriesEntry
+	0,  // 15: meta_service.DropTableRequest.header:type_name -> meta_service.RequestHeader
+	28, // 16: meta_service.DropTableResponse.header:type_name -> common.ResponseHeader
+	0,  // 17: meta_service.NodeHeartbeatRequest.header:type_name -> meta_service.RequestHeader
+	17, // 18: meta_service.NodeHeartbeatRequest.info:type_name -> meta_service.NodeInfo
+	29, // 19: meta_service.ShardInfo.role:type_name -> cluster.ShardRole
+	16, // 20: meta_service.NodeInfo.shard_infos:type_name -> meta_service.ShardInfo
+	28, // 21: meta_service.NodeHeartbeatResponse.header:type_name -> common.ResponseHeader
+	19, // 22: meta_service.NodeHeartbeatResponse.none_cmd:type_name -> meta_service.NoneCmd
+	20, // 23: meta_service.NodeHeartbeatResponse.open_cmd:type_name -> meta_service.OpenCmd
+	21, // 24: meta_service.NodeHeartbeatResponse.split_cmd:type_name -> meta_service.SplitCmd
+	22, // 25: meta_service.NodeHeartbeatResponse.close_cmd:type_name -> meta_service.CloseCmd
+	23, // 26: meta_service.NodeHeartbeatResponse.change_role_cmd:type_name -> meta_service.ChangeRoleCmd
+	29, // 27: meta_service.ChangeRoleCmd.shard_roles:type_name -> cluster.ShardRole
+	28, // 28: meta_service.SignalAllNodeHeartbeatResponse.header:type_name -> common.ResponseHeader
+	7,  // 29: meta_service.GetShardTablesResponse.ShardTablesEntry.value:type_name -> meta_service.ShardTables
+	11, // 30: meta_service.RouteTablesResponse.EntriesEntry.value:type_name -> meta_service.RouteEntry
+	1,  // 31: meta_service.CeresmetaRpcService.AllocSchemaID:input_type -> meta_service.AllocSchemaIdRequest
+	3,  // 32: meta_service.CeresmetaRpcService.AllocTableID:input_type -> meta_service.AllocTableIdRequest
+	5,  // 33: meta_service.CeresmetaRpcService.GetTables:input_type -> meta_service.GetShardTablesRequest
+	13, // 34: meta_service.CeresmetaRpcService.DropTable:input_type -> meta_service.DropTableRequest
+	9,  // 35: meta_service.CeresmetaRpcService.RouteTables:input_type -> meta_service.RouteTablesRequest
+	15, // 36: meta_service.CeresmetaRpcService.NodeHeartbeat:input_type -> meta_service.NodeHeartbeatRequest
+	2,  // 37: meta_service.CeresmetaRpcService.AllocSchemaID:output_type -> meta_service.AllocSchemaIdResponse
+	4,  // 38: meta_service.CeresmetaRpcService.AllocTableID:output_type -> meta_service.AllocTableIdResponse
+	8,  // 39: meta_service.CeresmetaRpcService.GetTables:output_type -> meta_service.GetShardTablesResponse
+	14, // 40: meta_service.CeresmetaRpcService.DropTable:output_type -> meta_service.DropTableResponse
+	12, // 41: meta_service.CeresmetaRpcService.RouteTables:output_type -> meta_service.RouteTablesResponse
+	18, // 42: meta_service.CeresmetaRpcService.NodeHeartbeat:output_type -> meta_service.NodeHeartbeatResponse
+	37, // [37:43] is the sub-list for method output_type
+	31, // [31:37] is the sub-list for method input_type
+	31, // [31:31] is the sub-list for extension type_name
+	31, // [31:31] is the sub-list for extension extendee
+	0,  // [0:31] is the sub-list for field type_name
 }
 
 func init() { file_meta_service_proto_init() }
@@ -2106,7 +2105,7 @@ func file_meta_service_proto_init() {
 			}
 		}
 		file_meta_service_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TableRouteEntry); i {
+			switch v := v.(*RouteEntry); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2299,7 +2298,7 @@ func file_meta_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_meta_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   27,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
