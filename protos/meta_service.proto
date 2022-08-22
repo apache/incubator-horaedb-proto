@@ -9,13 +9,16 @@ import "cluster.proto";
 service CeresmetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
   rpc AllocTableID(AllocTableIdRequest) returns (AllocTableIdResponse) {}
-  rpc GetTables(GetTablesRequest) returns (GetTablesResponse) {}
+  rpc GetTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
-  rpc NodeHeartbeat(stream NodeHeartbeatRequest) returns (stream NodeHeartbeatResponse) {}
+  rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
+  rpc NodeHeartbeat(stream NodeHeartbeatRequest)
+      returns (stream NodeHeartbeatResponse) {}
 }
 
 service CeresmetaForwardRpcService {
-  rpc signalAllNodeHeartbeat (SignalAllNodeHeartbeatRequest) returns (SignalAllNodeHeartbeatResponse) {}
+  rpc signalAllNodeHeartbeat(SignalAllNodeHeartbeatRequest)
+      returns (SignalAllNodeHeartbeatResponse) {}
 }
 
 message RequestHeader {
@@ -53,10 +56,10 @@ message AllocTableIdResponse {
   uint64 id = 6;
 }
 
-message GetTablesRequest {
+message GetShardTablesRequest {
   RequestHeader header = 1;
 
-  repeated uint32 shard_id = 2;
+  repeated uint32 shard_ids = 2;
 }
 
 message TableInfo {
@@ -72,10 +75,35 @@ message ShardTables {
   uint64 version = 3;
 }
 
-message GetTablesResponse {
+message GetShardTablesResponse {
   common.ResponseHeader header = 1;
-  // shard_id ->Tables
-  map<uint32, ShardTables> tables_map = 2;
+  // ShardId -> ShardTables
+  map<uint32, ShardTables> shard_tables = 2;
+}
+
+message RouteTablesRequest {
+  RequestHeader header = 1;
+
+  string schema_name = 2;
+  repeated string table_names = 3;
+}
+
+message NodeShard {
+  string endpoint = 1;
+  ShardInfo shard_info = 2;
+}
+
+message TableRouteEntry {
+  string table_name = 1;
+  uint64 table_id = 2;
+  repeated NodeShard node_shards = 3;
+}
+
+message RouteTablesResponse {
+  common.ResponseHeader header = 1;
+
+  uint64 cluster_topology_version = 2;
+  repeated TableRouteEntry table_route_entries = 3;
 }
 
 message DropTableRequest {
@@ -86,9 +114,7 @@ message DropTableRequest {
   uint64 id = 4;
 }
 
-message DropTableResponse {
-  common.ResponseHeader header = 1;
-}
+message DropTableResponse { common.ResponseHeader header = 1; }
 
 message NodeHeartbeatRequest {
   RequestHeader header = 1;
@@ -103,11 +129,11 @@ message ShardInfo {
 
 message NodeInfo {
   // ip:port
-  string node = 1;
+  string endpoint = 1;
   uint32 lease = 2;
   string zone = 3;
   string binary_version = 4;
-  repeated ShardInfo shardsInfo = 5;
+  repeated ShardInfo shards_info = 5;
 }
 
 message NodeHeartbeatResponse {
@@ -123,30 +149,20 @@ message NodeHeartbeatResponse {
   }
 }
 
-message NoneCmd {
+message NoneCmd {}
 
-}
-
-message OpenCmd {
-  repeated uint32 shard_ids = 1;
-}
+message OpenCmd { repeated uint32 shard_ids = 1; }
 
 message SplitCmd {
   uint32 source_shard_id = 1;
   repeated uint32 target_shard_ids = 2;
 }
 
-message CloseCmd {
-  repeated uint32  shard_ids = 1;
-}
+message CloseCmd { repeated uint32 shard_ids = 1; }
 
-message ChangeRoleCmd {
-  repeated cluster.ShardRole shard_roles = 1;
-}
+message ChangeRoleCmd { repeated cluster.ShardRole shard_roles = 1; }
 
-message SignalAllNodeHeartbeatRequest {
-  string cluster = 1;
-}
+message SignalAllNodeHeartbeatRequest { string cluster = 1; }
 
 message SignalAllNodeHeartbeatResponse {
   common.ResponseHeader header = 1;
