@@ -88,17 +88,16 @@ message NodeShard {
   ShardInfo shard_info = 2;
 }
 
-message TableRouteEntry {
-  string table_name = 1;
-  uint64 table_id = 2;
-  repeated NodeShard node_shards = 3;
+message RouteEntry {
+  TableInfo table = 1;
+  repeated NodeShard node_shards = 2;
 }
 
 message RouteTablesResponse {
   common.ResponseHeader header = 1;
 
   uint64 cluster_topology_version = 2;
-  repeated TableRouteEntry table_route_entries = 3;
+  map<string, RouteEntry> entries = 3;
 }
 
 message DropTableRequest {
