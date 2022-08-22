@@ -20,8 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 type CeresmetaRpcServiceClient interface {
 	AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error)
 	AllocTableID(ctx context.Context, in *AllocTableIdRequest, opts ...grpc.CallOption) (*AllocTableIdResponse, error)
-	GetTables(ctx context.Context, in *GetTablesRequest, opts ...grpc.CallOption) (*GetTablesResponse, error)
+	GetTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error)
 	DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error)
+	RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error)
 	NodeHeartbeat(ctx context.Context, opts ...grpc.CallOption) (CeresmetaRpcService_NodeHeartbeatClient, error)
 }
 
@@ -51,8 +52,8 @@ func (c *ceresmetaRpcServiceClient) AllocTableID(ctx context.Context, in *AllocT
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) GetTables(ctx context.Context, in *GetTablesRequest, opts ...grpc.CallOption) (*GetTablesResponse, error) {
-	out := new(GetTablesResponse)
+func (c *ceresmetaRpcServiceClient) GetTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error) {
+	out := new(GetShardTablesResponse)
 	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetTables", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,6 +64,15 @@ func (c *ceresmetaRpcServiceClient) GetTables(ctx context.Context, in *GetTables
 func (c *ceresmetaRpcServiceClient) DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error) {
 	out := new(DropTableResponse)
 	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/DropTable", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ceresmetaRpcServiceClient) RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error) {
+	out := new(RouteTablesResponse)
+	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/RouteTables", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,8 +116,9 @@ func (x *ceresmetaRpcServiceNodeHeartbeatClient) Recv() (*NodeHeartbeatResponse,
 type CeresmetaRpcServiceServer interface {
 	AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error)
 	AllocTableID(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error)
-	GetTables(context.Context, *GetTablesRequest) (*GetTablesResponse, error)
+	GetTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error)
 	DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error)
+	RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error)
 	NodeHeartbeat(CeresmetaRpcService_NodeHeartbeatServer) error
 	mustEmbedUnimplementedCeresmetaRpcServiceServer()
 }
@@ -122,11 +133,14 @@ func (UnimplementedCeresmetaRpcServiceServer) AllocSchemaID(context.Context, *Al
 func (UnimplementedCeresmetaRpcServiceServer) AllocTableID(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllocTableID not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) GetTables(context.Context, *GetTablesRequest) (*GetTablesResponse, error) {
+func (UnimplementedCeresmetaRpcServiceServer) GetTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTables not implemented")
 }
 func (UnimplementedCeresmetaRpcServiceServer) DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DropTable not implemented")
+}
+func (UnimplementedCeresmetaRpcServiceServer) RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RouteTables not implemented")
 }
 func (UnimplementedCeresmetaRpcServiceServer) NodeHeartbeat(CeresmetaRpcService_NodeHeartbeatServer) error {
 	return status.Errorf(codes.Unimplemented, "method NodeHeartbeat not implemented")
@@ -181,7 +195,7 @@ func _CeresmetaRpcService_AllocTableID_Handler(srv interface{}, ctx context.Cont
 }
 
 func _CeresmetaRpcService_GetTables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTablesRequest)
+	in := new(GetShardTablesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -193,7 +207,7 @@ func _CeresmetaRpcService_GetTables_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/meta_service.CeresmetaRpcService/GetTables",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).GetTables(ctx, req.(*GetTablesRequest))
+		return srv.(CeresmetaRpcServiceServer).GetTables(ctx, req.(*GetShardTablesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -212,6 +226,24 @@ func _CeresmetaRpcService_DropTable_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CeresmetaRpcServiceServer).DropTable(ctx, req.(*DropTableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CeresmetaRpcService_RouteTables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RouteTablesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CeresmetaRpcServiceServer).RouteTables(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/meta_service.CeresmetaRpcService/RouteTables",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CeresmetaRpcServiceServer).RouteTables(ctx, req.(*RouteTablesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -265,6 +297,10 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DropTable",
 			Handler:    _CeresmetaRpcService_DropTable_Handler,
 		},
+		{
+			MethodName: "RouteTables",
+			Handler:    _CeresmetaRpcService_RouteTables_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -274,92 +310,5 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: "meta_service.proto",
-}
-
-// CeresmetaForwardRpcServiceClient is the client API for CeresmetaForwardRpcService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CeresmetaForwardRpcServiceClient interface {
-	SignalAllNodeHeartbeat(ctx context.Context, in *SignalAllNodeHeartbeatRequest, opts ...grpc.CallOption) (*SignalAllNodeHeartbeatResponse, error)
-}
-
-type ceresmetaForwardRpcServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewCeresmetaForwardRpcServiceClient(cc grpc.ClientConnInterface) CeresmetaForwardRpcServiceClient {
-	return &ceresmetaForwardRpcServiceClient{cc}
-}
-
-func (c *ceresmetaForwardRpcServiceClient) SignalAllNodeHeartbeat(ctx context.Context, in *SignalAllNodeHeartbeatRequest, opts ...grpc.CallOption) (*SignalAllNodeHeartbeatResponse, error) {
-	out := new(SignalAllNodeHeartbeatResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaForwardRpcService/signalAllNodeHeartbeat", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// CeresmetaForwardRpcServiceServer is the server API for CeresmetaForwardRpcService service.
-// All implementations must embed UnimplementedCeresmetaForwardRpcServiceServer
-// for forward compatibility
-type CeresmetaForwardRpcServiceServer interface {
-	SignalAllNodeHeartbeat(context.Context, *SignalAllNodeHeartbeatRequest) (*SignalAllNodeHeartbeatResponse, error)
-	mustEmbedUnimplementedCeresmetaForwardRpcServiceServer()
-}
-
-// UnimplementedCeresmetaForwardRpcServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedCeresmetaForwardRpcServiceServer struct {
-}
-
-func (UnimplementedCeresmetaForwardRpcServiceServer) SignalAllNodeHeartbeat(context.Context, *SignalAllNodeHeartbeatRequest) (*SignalAllNodeHeartbeatResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignalAllNodeHeartbeat not implemented")
-}
-func (UnimplementedCeresmetaForwardRpcServiceServer) mustEmbedUnimplementedCeresmetaForwardRpcServiceServer() {
-}
-
-// UnsafeCeresmetaForwardRpcServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CeresmetaForwardRpcServiceServer will
-// result in compilation errors.
-type UnsafeCeresmetaForwardRpcServiceServer interface {
-	mustEmbedUnimplementedCeresmetaForwardRpcServiceServer()
-}
-
-func RegisterCeresmetaForwardRpcServiceServer(s grpc.ServiceRegistrar, srv CeresmetaForwardRpcServiceServer) {
-	s.RegisterService(&CeresmetaForwardRpcService_ServiceDesc, srv)
-}
-
-func _CeresmetaForwardRpcService_SignalAllNodeHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignalAllNodeHeartbeatRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CeresmetaForwardRpcServiceServer).SignalAllNodeHeartbeat(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaForwardRpcService/signalAllNodeHeartbeat",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaForwardRpcServiceServer).SignalAllNodeHeartbeat(ctx, req.(*SignalAllNodeHeartbeatRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// CeresmetaForwardRpcService_ServiceDesc is the grpc.ServiceDesc for CeresmetaForwardRpcService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var CeresmetaForwardRpcService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "meta_service.CeresmetaForwardRpcService",
-	HandlerType: (*CeresmetaForwardRpcServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "signalAllNodeHeartbeat",
-			Handler:    _CeresmetaForwardRpcService_SignalAllNodeHeartbeat_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
 	Metadata: "meta_service.proto",
 }
