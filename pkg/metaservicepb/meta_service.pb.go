@@ -770,7 +770,7 @@ type RouteTablesResponse struct {
 
 	Header                 *commonpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	ClusterTopologyVersion uint64                   `protobuf:"varint,2,opt,name=cluster_topology_version,json=clusterTopologyVersion,proto3" json:"cluster_topology_version,omitempty"`
-	// tableName -> RouteEntry
+	// TableName -> RouteEntry
 	Entries map[string]*RouteEntry `protobuf:"bytes,3,rep,name=entries,proto3" json:"entries,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
