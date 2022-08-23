@@ -98,7 +98,7 @@ message RouteTablesResponse {
   common.ResponseHeader header = 1;
 
   uint64 cluster_topology_version = 2;
-  // tableName -> RouteEntry
+  // TableName -> RouteEntry
   map<string, RouteEntry> entries = 3;
 }
 
