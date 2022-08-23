@@ -72,6 +72,7 @@ message ShardTables {
 
 message GetShardTablesResponse {
   common.ResponseHeader header = 1;
+
   // ShardId -> ShardTables
   map<uint32, ShardTables> shard_tables = 2;
 }
@@ -88,17 +89,17 @@ message NodeShard {
   ShardInfo shard_info = 2;
 }
 
-message TableRouteEntry {
-  string table_name = 1;
-  uint64 table_id = 2;
-  repeated NodeShard node_shards = 3;
+message RouteEntry {
+  TableInfo table = 1;
+  repeated NodeShard node_shards = 2;
 }
 
 message RouteTablesResponse {
   common.ResponseHeader header = 1;
 
   uint64 cluster_topology_version = 2;
-  repeated TableRouteEntry table_route_entries = 3;
+  // TableName -> RouteEntry
+  map<string, RouteEntry> entries = 3;
 }
 
 message DropTableRequest {
@@ -163,14 +164,4 @@ message CloseCmd {
 
 message ChangeRoleCmd {
   repeated cluster.ShardRole shard_roles = 1;
-}
-
-message SignalAllNodeHeartbeatRequest {
-  string cluster = 1;
-}
-
-message SignalAllNodeHeartbeatResponse {
-  common.ResponseHeader header = 1;
-  uint64 timestamp = 2;
-  string cluster = 3;
 }
