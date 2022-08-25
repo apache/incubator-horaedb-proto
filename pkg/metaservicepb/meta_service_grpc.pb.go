@@ -23,6 +23,7 @@ type CeresmetaRpcServiceClient interface {
 	GetTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error)
 	DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error)
 	RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error)
+	GetNodeShards(ctx context.Context, in *GetNodesRequest, opts ...grpc.CallOption) (*GetNodesResponse, error)
 	NodeHeartbeat(ctx context.Context, opts ...grpc.CallOption) (CeresmetaRpcService_NodeHeartbeatClient, error)
 }
 
@@ -79,6 +80,15 @@ func (c *ceresmetaRpcServiceClient) RouteTables(ctx context.Context, in *RouteTa
 	return out, nil
 }
 
+func (c *ceresmetaRpcServiceClient) GetNodeShards(ctx context.Context, in *GetNodesRequest, opts ...grpc.CallOption) (*GetNodesResponse, error) {
+	out := new(GetNodesResponse)
+	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetNodeShards", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *ceresmetaRpcServiceClient) NodeHeartbeat(ctx context.Context, opts ...grpc.CallOption) (CeresmetaRpcService_NodeHeartbeatClient, error) {
 	stream, err := c.cc.NewStream(ctx, &CeresmetaRpcService_ServiceDesc.Streams[0], "/meta_service.CeresmetaRpcService/NodeHeartbeat", opts...)
 	if err != nil {
@@ -119,6 +129,7 @@ type CeresmetaRpcServiceServer interface {
 	GetTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error)
 	DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error)
 	RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error)
+	GetNodeShards(context.Context, *GetNodesRequest) (*GetNodesResponse, error)
 	NodeHeartbeat(CeresmetaRpcService_NodeHeartbeatServer) error
 	mustEmbedUnimplementedCeresmetaRpcServiceServer()
 }
@@ -141,6 +152,9 @@ func (UnimplementedCeresmetaRpcServiceServer) DropTable(context.Context, *DropTa
 }
 func (UnimplementedCeresmetaRpcServiceServer) RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RouteTables not implemented")
+}
+func (UnimplementedCeresmetaRpcServiceServer) GetNodeShards(context.Context, *GetNodesRequest) (*GetNodesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNodeShards not implemented")
 }
 func (UnimplementedCeresmetaRpcServiceServer) NodeHeartbeat(CeresmetaRpcService_NodeHeartbeatServer) error {
 	return status.Errorf(codes.Unimplemented, "method NodeHeartbeat not implemented")
@@ -248,6 +262,24 @@ func _CeresmetaRpcService_RouteTables_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CeresmetaRpcService_GetNodeShards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNodesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CeresmetaRpcServiceServer).GetNodeShards(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/meta_service.CeresmetaRpcService/GetNodeShards",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CeresmetaRpcServiceServer).GetNodeShards(ctx, req.(*GetNodesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CeresmetaRpcService_NodeHeartbeat_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(CeresmetaRpcServiceServer).NodeHeartbeat(&ceresmetaRpcServiceNodeHeartbeatServer{stream})
 }
@@ -300,6 +332,10 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RouteTables",
 			Handler:    _CeresmetaRpcService_RouteTables_Handler,
+		},
+		{
+			MethodName: "GetNodeShards",
+			Handler:    _CeresmetaRpcService_GetNodeShards_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
