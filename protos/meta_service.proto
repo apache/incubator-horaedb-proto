@@ -12,7 +12,7 @@ service CeresmetaRpcService {
   rpc GetShadTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
-  rpc GetNodeShards(GetNodesRequest) returns (GetNodesResponse) {}
+  rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
   rpc NodeHeartbeat(stream NodeHeartbeatRequest)
       returns (stream NodeHeartbeatResponse) {}
 }
