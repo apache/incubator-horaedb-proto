@@ -9,9 +9,10 @@ import "cluster.proto";
 service CeresmetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
   rpc AllocTableID(AllocTableIdRequest) returns (AllocTableIdResponse) {}
-  rpc GetTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
+  rpc GetShadTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
+  rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
   rpc NodeHeartbeat(stream NodeHeartbeatRequest)
       returns (stream NodeHeartbeatResponse) {}
 }
@@ -102,6 +103,17 @@ message RouteTablesResponse {
   map<string, RouteEntry> entries = 3;
 }
 
+message GetNodesRequest {
+  RequestHeader header = 1;
+}
+
+message GetNodesResponse {
+  common.ResponseHeader header = 1;
+
+  uint64 cluster_topology_vesion = 2;
+  repeated NodeShard node_shards = 3;
+}
+
 message DropTableRequest {
   RequestHeader header = 1;
 
@@ -123,6 +135,7 @@ message NodeHeartbeatRequest {
 message ShardInfo {
   uint32 shard_id = 1;
   cluster.ShardRole role = 2;
+  uint64 version = 3;
 }
 
 message NodeInfo {
