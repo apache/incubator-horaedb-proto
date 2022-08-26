@@ -9,7 +9,7 @@ import "cluster.proto";
 service CeresmetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
   rpc AllocTableID(AllocTableIdRequest) returns (AllocTableIdResponse) {}
-  rpc GetShadTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
+  rpc GetShardTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
   rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}

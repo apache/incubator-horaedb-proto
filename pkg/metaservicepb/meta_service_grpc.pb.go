@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type CeresmetaRpcServiceClient interface {
 	AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error)
 	AllocTableID(ctx context.Context, in *AllocTableIdRequest, opts ...grpc.CallOption) (*AllocTableIdResponse, error)
-	GetShadTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error)
+	GetShardTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error)
 	DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error)
 	RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error)
 	GetNodes(ctx context.Context, in *GetNodesRequest, opts ...grpc.CallOption) (*GetNodesResponse, error)
@@ -53,9 +53,9 @@ func (c *ceresmetaRpcServiceClient) AllocTableID(ctx context.Context, in *AllocT
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) GetShadTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error) {
+func (c *ceresmetaRpcServiceClient) GetShardTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error) {
 	out := new(GetShardTablesResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetShadTables", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetShardTables", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +126,7 @@ func (x *ceresmetaRpcServiceNodeHeartbeatClient) Recv() (*NodeHeartbeatResponse,
 type CeresmetaRpcServiceServer interface {
 	AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error)
 	AllocTableID(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error)
-	GetShadTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error)
+	GetShardTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error)
 	DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error)
 	RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error)
 	GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error)
@@ -144,8 +144,8 @@ func (UnimplementedCeresmetaRpcServiceServer) AllocSchemaID(context.Context, *Al
 func (UnimplementedCeresmetaRpcServiceServer) AllocTableID(context.Context, *AllocTableIdRequest) (*AllocTableIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllocTableID not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) GetShadTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetShadTables not implemented")
+func (UnimplementedCeresmetaRpcServiceServer) GetShardTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShardTables not implemented")
 }
 func (UnimplementedCeresmetaRpcServiceServer) DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DropTable not implemented")
@@ -208,20 +208,20 @@ func _CeresmetaRpcService_AllocTableID_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_GetShadTables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CeresmetaRpcService_GetShardTables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetShardTablesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).GetShadTables(ctx, in)
+		return srv.(CeresmetaRpcServiceServer).GetShardTables(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/GetShadTables",
+		FullMethod: "/meta_service.CeresmetaRpcService/GetShardTables",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).GetShadTables(ctx, req.(*GetShardTablesRequest))
+		return srv.(CeresmetaRpcServiceServer).GetShardTables(ctx, req.(*GetShardTablesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -322,8 +322,8 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CeresmetaRpcService_AllocTableID_Handler,
 		},
 		{
-			MethodName: "GetShadTables",
-			Handler:    _CeresmetaRpcService_GetShadTables_Handler,
+			MethodName: "GetShardTables",
+			Handler:    _CeresmetaRpcService_GetShardTables_Handler,
 		},
 		{
 			MethodName: "DropTable",
