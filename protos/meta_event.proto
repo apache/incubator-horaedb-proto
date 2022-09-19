@@ -9,9 +9,9 @@ import "meta_service.proto";
 service MetaEventService {
   rpc Noop(NoopAction) returns (NoopResponse) {}
   rpc OpenShards(OpenShardsAction) returns (OpenShardsResponse) {}
-  rpc SplitShard(SplitShardAction) returns (SplitShardResponse) {}
-  rpc MergeShard(MergeShardAction) returns (MergeShardResponse) {}
   rpc CloseShards(CloseShardsAction) returns (CloseShardsResponse) {}
+  rpc SplitShard(SplitShardAction) returns (SplitShardResponse) {}
+  rpc MergeShards(MergeShardsAction) returns (MergeShardsResponse) {}
   rpc ChangeShardRole(ChangeShardRoleAction) returns (ChangeShardRoleResponse) {
   }
   rpc CreateTable(CreateTableAction) returns (CreateTableResponse) {}
@@ -32,23 +32,23 @@ message OpenShardsResponse {
   common.ResponseHeader header = 1;
 }
 
+message CloseShardsAction {
+  repeated uint32 shard_ids = 1;
+}
+
+message CloseShardsResponse {
+  common.ResponseHeader header = 1;
+}
+
 message SplitShardAction {}
 
 message SplitShardResponse {
   common.ResponseHeader header = 1;
 }
 
-message MergeShardAction {}
+message MergeShardsAction {}
 
-message MergeShardResponse {
-  common.ResponseHeader header = 1;
-}
-
-message CloseShardsAction {
-  repeated uint32 shard_ids = 1;
-}
-
-message CloseShardsResponse {
+message MergeShardsResponse {
   common.ResponseHeader header = 1;
 }
 
