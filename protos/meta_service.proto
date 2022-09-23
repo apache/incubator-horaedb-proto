@@ -13,8 +13,7 @@ service CeresmetaRpcService {
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
   rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
-  rpc NodeHeartbeat(stream NodeHeartbeatRequest)
-      returns (stream NodeHeartbeatResponse) {}
+  rpc NodeHeartbeat(NodeHeartbeatRequest) returns (NodeHeartbeatResponse) {}
 }
 
 message RequestHeader {
@@ -110,7 +109,7 @@ message GetNodesRequest {
 message GetNodesResponse {
   common.ResponseHeader header = 1;
 
-  uint64 cluster_topology_vesion = 2;
+  uint64 cluster_topology_version = 2;
   repeated NodeShard node_shards = 3;
 }
 
@@ -149,32 +148,4 @@ message NodeInfo {
 
 message NodeHeartbeatResponse {
   common.ResponseHeader header = 1;
-
-  uint64 timestamp = 2;
-  oneof cmd {
-    NoneCmd none_cmd = 3;
-    OpenCmd open_cmd = 4;
-    SplitCmd split_cmd = 5;
-    CloseCmd close_cmd = 6;
-    ChangeRoleCmd change_role_cmd = 7;
-  }
-}
-
-message NoneCmd {}
-
-message OpenCmd {
-  repeated uint32 shard_ids = 1;
-}
-
-message SplitCmd {
-  uint32 source_shard_id = 1;
-  repeated uint32 target_shard_ids = 2;
-}
-
-message CloseCmd {
-  repeated uint32 shard_ids = 1;
-}
-
-message ChangeRoleCmd {
-  repeated cluster.ShardRole shard_roles = 1;
 }

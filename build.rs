@@ -1,9 +1,16 @@
-use protobuf_builder::Builder;
 
-fn generate_pb() {
-    Builder::new().search_dir_for_protos("protos").out_dir("./src/protos").generate();
-}
-
-fn main() {
-    generate_pb();
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tonic_build::configure().out_dir("./src").compile(
+        &[
+            "protos/cluster.proto",
+            "protos/common.proto",
+            "protos/meta_event.proto",
+            "protos/meta_service.proto",
+            "protos/meta_storage.proto",
+            "protos/prometheus.proto",
+            "protos/storage.proto",
+        ],
+        &["protos"]
+    )?;
+    Ok(())
 }
