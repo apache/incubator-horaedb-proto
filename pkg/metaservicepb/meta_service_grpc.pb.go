@@ -28,7 +28,7 @@ type CeresmetaRpcServiceClient interface {
 	DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error)
 	RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error)
 	GetNodes(ctx context.Context, in *GetNodesRequest, opts ...grpc.CallOption) (*GetNodesResponse, error)
-	NodeHeartbeat(ctx context.Context, opts ...grpc.CallOption) (CeresmetaRpcService_NodeHeartbeatClient, error)
+	NodeHeartbeat(ctx context.Context, in *NodeHeartbeatRequest, opts ...grpc.CallOption) (*NodeHeartbeatResponse, error)
 }
 
 type ceresmetaRpcServiceClient struct {
@@ -93,35 +93,13 @@ func (c *ceresmetaRpcServiceClient) GetNodes(ctx context.Context, in *GetNodesRe
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) NodeHeartbeat(ctx context.Context, opts ...grpc.CallOption) (CeresmetaRpcService_NodeHeartbeatClient, error) {
-	stream, err := c.cc.NewStream(ctx, &CeresmetaRpcService_ServiceDesc.Streams[0], "/meta_service.CeresmetaRpcService/NodeHeartbeat", opts...)
+func (c *ceresmetaRpcServiceClient) NodeHeartbeat(ctx context.Context, in *NodeHeartbeatRequest, opts ...grpc.CallOption) (*NodeHeartbeatResponse, error) {
+	out := new(NodeHeartbeatResponse)
+	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/NodeHeartbeat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &ceresmetaRpcServiceNodeHeartbeatClient{stream}
-	return x, nil
-}
-
-type CeresmetaRpcService_NodeHeartbeatClient interface {
-	Send(*NodeHeartbeatRequest) error
-	Recv() (*NodeHeartbeatResponse, error)
-	grpc.ClientStream
-}
-
-type ceresmetaRpcServiceNodeHeartbeatClient struct {
-	grpc.ClientStream
-}
-
-func (x *ceresmetaRpcServiceNodeHeartbeatClient) Send(m *NodeHeartbeatRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *ceresmetaRpcServiceNodeHeartbeatClient) Recv() (*NodeHeartbeatResponse, error) {
-	m := new(NodeHeartbeatResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 // CeresmetaRpcServiceServer is the server API for CeresmetaRpcService service.
@@ -134,7 +112,7 @@ type CeresmetaRpcServiceServer interface {
 	DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error)
 	RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error)
 	GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error)
-	NodeHeartbeat(CeresmetaRpcService_NodeHeartbeatServer) error
+	NodeHeartbeat(context.Context, *NodeHeartbeatRequest) (*NodeHeartbeatResponse, error)
 	mustEmbedUnimplementedCeresmetaRpcServiceServer()
 }
 
@@ -160,8 +138,8 @@ func (UnimplementedCeresmetaRpcServiceServer) RouteTables(context.Context, *Rout
 func (UnimplementedCeresmetaRpcServiceServer) GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNodes not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) NodeHeartbeat(CeresmetaRpcService_NodeHeartbeatServer) error {
-	return status.Errorf(codes.Unimplemented, "method NodeHeartbeat not implemented")
+func (UnimplementedCeresmetaRpcServiceServer) NodeHeartbeat(context.Context, *NodeHeartbeatRequest) (*NodeHeartbeatResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NodeHeartbeat not implemented")
 }
 func (UnimplementedCeresmetaRpcServiceServer) mustEmbedUnimplementedCeresmetaRpcServiceServer() {}
 
@@ -284,30 +262,22 @@ func _CeresmetaRpcService_GetNodes_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_NodeHeartbeat_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(CeresmetaRpcServiceServer).NodeHeartbeat(&ceresmetaRpcServiceNodeHeartbeatServer{stream})
-}
-
-type CeresmetaRpcService_NodeHeartbeatServer interface {
-	Send(*NodeHeartbeatResponse) error
-	Recv() (*NodeHeartbeatRequest, error)
-	grpc.ServerStream
-}
-
-type ceresmetaRpcServiceNodeHeartbeatServer struct {
-	grpc.ServerStream
-}
-
-func (x *ceresmetaRpcServiceNodeHeartbeatServer) Send(m *NodeHeartbeatResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *ceresmetaRpcServiceNodeHeartbeatServer) Recv() (*NodeHeartbeatRequest, error) {
-	m := new(NodeHeartbeatRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
+func _CeresmetaRpcService_NodeHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NodeHeartbeatRequest)
+	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return m, nil
+	if interceptor == nil {
+		return srv.(CeresmetaRpcServiceServer).NodeHeartbeat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/meta_service.CeresmetaRpcService/NodeHeartbeat",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CeresmetaRpcServiceServer).NodeHeartbeat(ctx, req.(*NodeHeartbeatRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 // CeresmetaRpcService_ServiceDesc is the grpc.ServiceDesc for CeresmetaRpcService service.
@@ -341,14 +311,11 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "GetNodes",
 			Handler:    _CeresmetaRpcService_GetNodes_Handler,
 		},
-	},
-	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "NodeHeartbeat",
-			Handler:       _CeresmetaRpcService_NodeHeartbeat_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
+			MethodName: "NodeHeartbeat",
+			Handler:    _CeresmetaRpcService_NodeHeartbeat_Handler,
 		},
 	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "meta_service.proto",
 }
