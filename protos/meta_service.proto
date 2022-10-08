@@ -8,8 +8,8 @@ import "cluster.proto";
 
 service CeresmetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
-  rpc AllocTableID(AllocTableIdRequest) returns (AllocTableIdResponse) {}
   rpc GetShardTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
+  rpc CreateTable(CreateTableRequest) returns (CreateTableResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
   rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
@@ -34,14 +34,15 @@ message AllocSchemaIdResponse {
   uint32 id = 3;
 }
 
-message AllocTableIdRequest {
+message CreateTableRequest {
   RequestHeader header = 1;
 
   string schema_name = 2;
   string name = 3;
+  string create_sql = 4;
 }
 
-message AllocTableIdResponse {
+message CreateTableResponse {
   common.ResponseHeader header = 1;
 
   string schema_name = 2;
@@ -62,12 +63,13 @@ message TableInfo {
   string name = 2;
   uint32 schema_id = 3;
   string schema_name = 4;
+  // This field is required only if create table by open shards.
+  string create_sql = 5;
 }
 
 message ShardTables {
-  cluster.ShardRole role = 1;
+  ShardInfo shard_info = 1;
   repeated TableInfo tables = 2;
-  uint64 version = 3;
 }
 
 message GetShardTablesResponse {

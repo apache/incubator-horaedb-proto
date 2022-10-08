@@ -6,33 +6,25 @@ option go_package = "github.com/CeresDB/ceresdbproto/pkg/metaeventpb";
 import "common.proto";
 import "meta_service.proto";
 
+// The service is hosted by CeresDB to handle the events from CeresMeta.
 service MetaEventService {
-  rpc Noop(NoopAction) returns (NoopResponse) {}
-  rpc OpenShards(OpenShardsAction) returns (OpenShardsResponse) {}
-  rpc CloseShards(CloseShardsAction) returns (CloseShardsResponse) {}
-  rpc SplitShard(SplitShardAction) returns (SplitShardResponse) {}
-  rpc MergeShards(MergeShardsAction) returns (MergeShardsResponse) {}
-  rpc ChangeShardRole(ChangeShardRoleAction) returns (ChangeShardRoleResponse) {
-  }
-  rpc CreateTable(CreateTableAction) returns (CreateTableResponse) {}
-  rpc DropTable(DropTableAction) returns (DropTableResponse) {}
+  rpc OpenShards(OpenShardsRequest) returns (OpenShardsResponse) {}
+  rpc CloseShards(CloseShardsRequest) returns (CloseShardsResponse) {}
+  rpc SplitShard(SplitShardRequest) returns (SplitShardResponse) {}
+  rpc MergeShards(MergeShardsRequest) returns (MergeShardsResponse) {}
+  rpc ChangeShardRole(ChangeShardRoleRequest)
+      returns (ChangeShardRoleResponse) {}
 }
 
-message NoopAction {}
-
-message NoopResponse {
-  common.ResponseHeader header = 1;
-}
-
-message OpenShardsAction {
-  repeated meta_service.ShardInfo shards = 1;
+message OpenShardsRequest {
+  repeated meta_service.ShardTables shard_tables = 1;
 }
 
 message OpenShardsResponse {
   common.ResponseHeader header = 1;
 }
 
-message CloseShardsAction {
+message CloseShardsRequest {
   repeated uint32 shard_ids = 1;
 }
 
@@ -40,19 +32,19 @@ message CloseShardsResponse {
   common.ResponseHeader header = 1;
 }
 
-message SplitShardAction {}
+message SplitShardRequest {}
 
 message SplitShardResponse {
   common.ResponseHeader header = 1;
 }
 
-message MergeShardsAction {}
+message MergeShardsRequest {}
 
 message MergeShardsResponse {
   common.ResponseHeader header = 1;
 }
 
-message ChangeShardRoleAction {}
+message ChangeShardRoleRequest {}
 
 message ChangeShardRoleResponse {
   common.ResponseHeader header = 1;
