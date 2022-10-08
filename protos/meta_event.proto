@@ -3,6 +3,7 @@ syntax = "proto3";
 package meta_event;
 option go_package = "github.com/CeresDB/ceresdbproto/pkg/metaeventpb";
 
+import "cluster.proto";
 import "common.proto";
 import "meta_service.proto";
 
@@ -10,14 +11,23 @@ import "meta_service.proto";
 service MetaEventService {
   rpc OpenShards(OpenShardsRequest) returns (OpenShardsResponse) {}
   rpc CloseShards(CloseShardsRequest) returns (CloseShardsResponse) {}
+  rpc CreateTableOnShard(CreateTableOnShardRequest)
+      returns (CreateTableOnShardResponse) {}
+  rpc DropTableOnShard(DropTableOnShardRequest)
+      returns (DropTableOnShardResponse) {}
   rpc SplitShard(SplitShardRequest) returns (SplitShardResponse) {}
   rpc MergeShards(MergeShardsRequest) returns (MergeShardsResponse) {}
   rpc ChangeShardRole(ChangeShardRoleRequest)
       returns (ChangeShardRoleResponse) {}
 }
 
+message UpdateShardInfo {
+  meta_service.ShardInfo curr_shard_info = 1;
+  uint64 prev_version = 2;
+}
+
 message OpenShardsRequest {
-  repeated meta_service.ShardTables shard_tables = 1;
+  repeated meta_service.ShardInfo shards = 1;
 }
 
 message OpenShardsResponse {
@@ -29,6 +39,25 @@ message CloseShardsRequest {
 }
 
 message CloseShardsResponse {
+  common.ResponseHeader header = 1;
+}
+
+message CreateTableOnShardRequest {
+  UpdateShardInfo update_shard_info = 1;
+  meta_service.TableInfo table_info = 2;
+  string create_sql = 3;
+}
+
+message CreateTableOnShardResponse {
+  common.ResponseHeader header = 1;
+}
+
+message DropTableOnShardRequest {
+  UpdateShardInfo update_shard_info = 1;
+  meta_service.TableInfo table_info = 2;
+}
+
+message DropTableOnShardResponse {
   common.ResponseHeader header = 1;
 }
 
@@ -47,29 +76,5 @@ message MergeShardsResponse {
 message ChangeShardRoleRequest {}
 
 message ChangeShardRoleResponse {
-  common.ResponseHeader header = 1;
-}
-
-message CreateTableAction {
-  string catalog_name = 1;
-  // reserve for catalog_id
-  string schema_name = 3;
-  uint32 schema_id = 4;
-  string table_name = 5;
-  uint64 table_id = 6;
-  uint32 shard_id = 7;
-}
-
-message CreateTableResponse {
-  common.ResponseHeader header = 1;
-}
-
-message DropTableAction {
-  string catalog_name = 1;
-  string schema_name = 2;
-  string table_name = 3;
-}
-
-message DropTableResponse {
   common.ResponseHeader header = 1;
 }
