@@ -63,8 +63,6 @@ message TableInfo {
   string name = 2;
   uint32 schema_id = 3;
   string schema_name = 4;
-  // This field is required only if create table by open shards.
-  string create_sql = 5;
 }
 
 message ShardTables {

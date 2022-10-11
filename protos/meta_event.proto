@@ -3,14 +3,13 @@ syntax = "proto3";
 package meta_event;
 option go_package = "github.com/CeresDB/ceresdbproto/pkg/metaeventpb";
 
-import "cluster.proto";
 import "common.proto";
 import "meta_service.proto";
 
 // The service is hosted by CeresDB to handle the events from CeresMeta.
 service MetaEventService {
-  rpc OpenShards(OpenShardsRequest) returns (OpenShardsResponse) {}
-  rpc CloseShards(CloseShardsRequest) returns (CloseShardsResponse) {}
+  rpc OpenShard(OpenShardRequest) returns (OpenShardResponse) {}
+  rpc CloseShard(CloseShardRequest) returns (CloseShardResponse) {}
   rpc CreateTableOnShard(CreateTableOnShardRequest)
       returns (CreateTableOnShardResponse) {}
   rpc DropTableOnShard(DropTableOnShardRequest)
@@ -26,19 +25,19 @@ message UpdateShardInfo {
   uint64 prev_version = 2;
 }
 
-message OpenShardsRequest {
-  repeated meta_service.ShardInfo shards = 1;
+message OpenShardRequest {
+  meta_service.ShardInfo shard = 1;
 }
 
-message OpenShardsResponse {
+message OpenShardResponse {
   common.ResponseHeader header = 1;
 }
 
-message CloseShardsRequest {
-  repeated uint32 shard_ids = 1;
+message CloseShardRequest {
+  uint32 shard_id = 1;
 }
 
-message CloseShardsResponse {
+message CloseShardResponse {
   common.ResponseHeader header = 1;
 }
 
