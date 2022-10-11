@@ -22,8 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MetaEventServiceClient interface {
-	OpenShards(ctx context.Context, in *OpenShardsRequest, opts ...grpc.CallOption) (*OpenShardsResponse, error)
-	CloseShards(ctx context.Context, in *CloseShardsRequest, opts ...grpc.CallOption) (*CloseShardsResponse, error)
+	OpenShard(ctx context.Context, in *OpenShardRequest, opts ...grpc.CallOption) (*OpenShardResponse, error)
+	CloseShard(ctx context.Context, in *CloseShardRequest, opts ...grpc.CallOption) (*CloseShardResponse, error)
 	CreateTableOnShard(ctx context.Context, in *CreateTableOnShardRequest, opts ...grpc.CallOption) (*CreateTableOnShardResponse, error)
 	DropTableOnShard(ctx context.Context, in *DropTableOnShardRequest, opts ...grpc.CallOption) (*DropTableOnShardResponse, error)
 	SplitShard(ctx context.Context, in *SplitShardRequest, opts ...grpc.CallOption) (*SplitShardResponse, error)
@@ -39,18 +39,18 @@ func NewMetaEventServiceClient(cc grpc.ClientConnInterface) MetaEventServiceClie
 	return &metaEventServiceClient{cc}
 }
 
-func (c *metaEventServiceClient) OpenShards(ctx context.Context, in *OpenShardsRequest, opts ...grpc.CallOption) (*OpenShardsResponse, error) {
-	out := new(OpenShardsResponse)
-	err := c.cc.Invoke(ctx, "/meta_event.MetaEventService/OpenShards", in, out, opts...)
+func (c *metaEventServiceClient) OpenShard(ctx context.Context, in *OpenShardRequest, opts ...grpc.CallOption) (*OpenShardResponse, error) {
+	out := new(OpenShardResponse)
+	err := c.cc.Invoke(ctx, "/meta_event.MetaEventService/OpenShard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *metaEventServiceClient) CloseShards(ctx context.Context, in *CloseShardsRequest, opts ...grpc.CallOption) (*CloseShardsResponse, error) {
-	out := new(CloseShardsResponse)
-	err := c.cc.Invoke(ctx, "/meta_event.MetaEventService/CloseShards", in, out, opts...)
+func (c *metaEventServiceClient) CloseShard(ctx context.Context, in *CloseShardRequest, opts ...grpc.CallOption) (*CloseShardResponse, error) {
+	out := new(CloseShardResponse)
+	err := c.cc.Invoke(ctx, "/meta_event.MetaEventService/CloseShard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,8 +106,8 @@ func (c *metaEventServiceClient) ChangeShardRole(ctx context.Context, in *Change
 // All implementations must embed UnimplementedMetaEventServiceServer
 // for forward compatibility
 type MetaEventServiceServer interface {
-	OpenShards(context.Context, *OpenShardsRequest) (*OpenShardsResponse, error)
-	CloseShards(context.Context, *CloseShardsRequest) (*CloseShardsResponse, error)
+	OpenShard(context.Context, *OpenShardRequest) (*OpenShardResponse, error)
+	CloseShard(context.Context, *CloseShardRequest) (*CloseShardResponse, error)
 	CreateTableOnShard(context.Context, *CreateTableOnShardRequest) (*CreateTableOnShardResponse, error)
 	DropTableOnShard(context.Context, *DropTableOnShardRequest) (*DropTableOnShardResponse, error)
 	SplitShard(context.Context, *SplitShardRequest) (*SplitShardResponse, error)
@@ -120,11 +120,11 @@ type MetaEventServiceServer interface {
 type UnimplementedMetaEventServiceServer struct {
 }
 
-func (UnimplementedMetaEventServiceServer) OpenShards(context.Context, *OpenShardsRequest) (*OpenShardsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method OpenShards not implemented")
+func (UnimplementedMetaEventServiceServer) OpenShard(context.Context, *OpenShardRequest) (*OpenShardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OpenShard not implemented")
 }
-func (UnimplementedMetaEventServiceServer) CloseShards(context.Context, *CloseShardsRequest) (*CloseShardsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CloseShards not implemented")
+func (UnimplementedMetaEventServiceServer) CloseShard(context.Context, *CloseShardRequest) (*CloseShardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseShard not implemented")
 }
 func (UnimplementedMetaEventServiceServer) CreateTableOnShard(context.Context, *CreateTableOnShardRequest) (*CreateTableOnShardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTableOnShard not implemented")
@@ -154,38 +154,38 @@ func RegisterMetaEventServiceServer(s grpc.ServiceRegistrar, srv MetaEventServic
 	s.RegisterService(&MetaEventService_ServiceDesc, srv)
 }
 
-func _MetaEventService_OpenShards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OpenShardsRequest)
+func _MetaEventService_OpenShard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OpenShardRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetaEventServiceServer).OpenShards(ctx, in)
+		return srv.(MetaEventServiceServer).OpenShard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_event.MetaEventService/OpenShards",
+		FullMethod: "/meta_event.MetaEventService/OpenShard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetaEventServiceServer).OpenShards(ctx, req.(*OpenShardsRequest))
+		return srv.(MetaEventServiceServer).OpenShard(ctx, req.(*OpenShardRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MetaEventService_CloseShards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CloseShardsRequest)
+func _MetaEventService_CloseShard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloseShardRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetaEventServiceServer).CloseShards(ctx, in)
+		return srv.(MetaEventServiceServer).CloseShard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_event.MetaEventService/CloseShards",
+		FullMethod: "/meta_event.MetaEventService/CloseShard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetaEventServiceServer).CloseShards(ctx, req.(*CloseShardsRequest))
+		return srv.(MetaEventServiceServer).CloseShard(ctx, req.(*CloseShardRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -288,12 +288,12 @@ var MetaEventService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*MetaEventServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "OpenShards",
-			Handler:    _MetaEventService_OpenShards_Handler,
+			MethodName: "OpenShard",
+			Handler:    _MetaEventService_OpenShard_Handler,
 		},
 		{
-			MethodName: "CloseShards",
-			Handler:    _MetaEventService_CloseShards_Handler,
+			MethodName: "CloseShard",
+			Handler:    _MetaEventService_CloseShard_Handler,
 		},
 		{
 			MethodName: "CreateTableOnShard",
