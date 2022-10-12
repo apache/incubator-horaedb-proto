@@ -9,3 +9,28 @@ message Member {
   string endpoint = 3;
   int32 leader_priority = 4;
 }
+
+message meta {
+  enum State{
+    StateInit = 0;
+    StateRunning = 1;
+    StateFinished = 2;
+    StateFailed = 3;
+    StateCancelled = 4;
+  }
+
+  enum Typ{
+    Create = 0;
+    Delete = 1;
+    TransferLeader = 2;
+    Migrate = 3;
+    Split = 4;
+    Merge = 5;
+    Scatter = 6;
+  }
+
+  uint64 id = 1;
+  Typ typ = 2;
+  State state = 3;
+  string raw_data = 4;
+}

@@ -20,6 +20,122 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Meta_State int32
+
+const (
+	Meta_StateInit      Meta_State = 0
+	Meta_StateRunning   Meta_State = 1
+	Meta_StateFinished  Meta_State = 2
+	Meta_StateFailed    Meta_State = 3
+	Meta_StateCancelled Meta_State = 4
+)
+
+// Enum value maps for Meta_State.
+var (
+	Meta_State_name = map[int32]string{
+		0: "StateInit",
+		1: "StateRunning",
+		2: "StateFinished",
+		3: "StateFailed",
+		4: "StateCancelled",
+	}
+	Meta_State_value = map[string]int32{
+		"StateInit":      0,
+		"StateRunning":   1,
+		"StateFinished":  2,
+		"StateFailed":    3,
+		"StateCancelled": 4,
+	}
+)
+
+func (x Meta_State) Enum() *Meta_State {
+	p := new(Meta_State)
+	*p = x
+	return p
+}
+
+func (x Meta_State) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Meta_State) Descriptor() protoreflect.EnumDescriptor {
+	return file_meta_storage_proto_enumTypes[0].Descriptor()
+}
+
+func (Meta_State) Type() protoreflect.EnumType {
+	return &file_meta_storage_proto_enumTypes[0]
+}
+
+func (x Meta_State) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Meta_State.Descriptor instead.
+func (Meta_State) EnumDescriptor() ([]byte, []int) {
+	return file_meta_storage_proto_rawDescGZIP(), []int{1, 0}
+}
+
+type Meta_Typ int32
+
+const (
+	Meta_Create         Meta_Typ = 0
+	Meta_Delete         Meta_Typ = 1
+	Meta_TransferLeader Meta_Typ = 2
+	Meta_Migrate        Meta_Typ = 3
+	Meta_Split          Meta_Typ = 4
+	Meta_Merge          Meta_Typ = 5
+	Meta_Scatter        Meta_Typ = 6
+)
+
+// Enum value maps for Meta_Typ.
+var (
+	Meta_Typ_name = map[int32]string{
+		0: "Create",
+		1: "Delete",
+		2: "TransferLeader",
+		3: "Migrate",
+		4: "Split",
+		5: "Merge",
+		6: "Scatter",
+	}
+	Meta_Typ_value = map[string]int32{
+		"Create":         0,
+		"Delete":         1,
+		"TransferLeader": 2,
+		"Migrate":        3,
+		"Split":          4,
+		"Merge":          5,
+		"Scatter":        6,
+	}
+)
+
+func (x Meta_Typ) Enum() *Meta_Typ {
+	p := new(Meta_Typ)
+	*p = x
+	return p
+}
+
+func (x Meta_Typ) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Meta_Typ) Descriptor() protoreflect.EnumDescriptor {
+	return file_meta_storage_proto_enumTypes[1].Descriptor()
+}
+
+func (Meta_Typ) Type() protoreflect.EnumType {
+	return &file_meta_storage_proto_enumTypes[1]
+}
+
+func (x Meta_Typ) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Meta_Typ.Descriptor instead.
+func (Meta_Typ) EnumDescriptor() ([]byte, []int) {
+	return file_meta_storage_proto_rawDescGZIP(), []int{1, 1}
+}
+
 type Member struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -91,6 +207,77 @@ func (x *Member) GetLeaderPriority() int32 {
 	return 0
 }
 
+type Meta struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id      uint64     `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Typ     Meta_Typ   `protobuf:"varint,2,opt,name=typ,proto3,enum=meta_storage.Meta_Typ" json:"typ,omitempty"`
+	State   Meta_State `protobuf:"varint,3,opt,name=state,proto3,enum=meta_storage.Meta_State" json:"state,omitempty"`
+	RawData string     `protobuf:"bytes,4,opt,name=raw_data,json=rawData,proto3" json:"raw_data,omitempty"`
+}
+
+func (x *Meta) Reset() {
+	*x = Meta{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_meta_storage_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Meta) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Meta) ProtoMessage() {}
+
+func (x *Meta) ProtoReflect() protoreflect.Message {
+	mi := &file_meta_storage_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Meta.ProtoReflect.Descriptor instead.
+func (*Meta) Descriptor() ([]byte, []int) {
+	return file_meta_storage_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Meta) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Meta) GetTyp() Meta_Typ {
+	if x != nil {
+		return x.Typ
+	}
+	return Meta_Create
+}
+
+func (x *Meta) GetState() Meta_State {
+	if x != nil {
+		return x.State
+	}
+	return Meta_StateInit
+}
+
+func (x *Meta) GetRawData() string {
+	if x != nil {
+		return x.RawData
+	}
+	return ""
+}
+
 var File_meta_storage_proto protoreflect.FileDescriptor
 
 var file_meta_storage_proto_rawDesc = []byte{
@@ -103,11 +290,32 @@ var file_meta_storage_proto_rawDesc = []byte{
 	0x28, 0x09, 0x52, 0x08, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x12, 0x27, 0x0a, 0x0f,
 	0x6c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x5f, 0x70, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x18,
 	0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x6c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x50, 0x72, 0x69,
-	0x6f, 0x72, 0x69, 0x74, 0x79, 0x42, 0x33, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x65, 0x72, 0x65, 0x73, 0x44, 0x42, 0x2f, 0x63, 0x65, 0x72, 0x65,
-	0x73, 0x64, 0x62, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x6d, 0x65, 0x74,
-	0x61, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x6f, 0x72, 0x69, 0x74, 0x79, 0x22, 0xd0, 0x02, 0x0a, 0x04, 0x6d, 0x65, 0x74, 0x61, 0x12, 0x0e,
+	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x28,
+	0x0a, 0x03, 0x74, 0x79, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x16, 0x2e, 0x6d, 0x65,
+	0x74, 0x61, 0x5f, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x2e,
+	0x54, 0x79, 0x70, 0x52, 0x03, 0x74, 0x79, 0x70, 0x12, 0x2e, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74,
+	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x18, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x5f, 0x73,
+	0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x2e, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x72, 0x61, 0x77, 0x5f,
+	0x64, 0x61, 0x74, 0x61, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x72, 0x61, 0x77, 0x44,
+	0x61, 0x74, 0x61, 0x22, 0x60, 0x0a, 0x05, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x0d, 0x0a, 0x09,
+	0x53, 0x74, 0x61, 0x74, 0x65, 0x49, 0x6e, 0x69, 0x74, 0x10, 0x00, 0x12, 0x10, 0x0a, 0x0c, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x52, 0x75, 0x6e, 0x6e, 0x69, 0x6e, 0x67, 0x10, 0x01, 0x12, 0x11, 0x0a,
+	0x0d, 0x53, 0x74, 0x61, 0x74, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x10, 0x02,
+	0x12, 0x0f, 0x0a, 0x0b, 0x53, 0x74, 0x61, 0x74, 0x65, 0x46, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x10,
+	0x03, 0x12, 0x12, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c,
+	0x6c, 0x65, 0x64, 0x10, 0x04, 0x22, 0x61, 0x0a, 0x03, 0x54, 0x79, 0x70, 0x12, 0x0a, 0x0a, 0x06,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x10, 0x01, 0x12, 0x12, 0x0a, 0x0e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72,
+	0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x4d, 0x69, 0x67, 0x72,
+	0x61, 0x74, 0x65, 0x10, 0x03, 0x12, 0x09, 0x0a, 0x05, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x10, 0x04,
+	0x12, 0x09, 0x0a, 0x05, 0x4d, 0x65, 0x72, 0x67, 0x65, 0x10, 0x05, 0x12, 0x0b, 0x0a, 0x07, 0x53,
+	0x63, 0x61, 0x74, 0x74, 0x65, 0x72, 0x10, 0x06, 0x42, 0x33, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x65, 0x72, 0x65, 0x73, 0x44, 0x42, 0x2f, 0x63,
+	0x65, 0x72, 0x65, 0x73, 0x64, 0x62, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70, 0x6b, 0x67, 0x2f,
+	0x6d, 0x65, 0x74, 0x61, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x70, 0x62, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -122,16 +330,22 @@ func file_meta_storage_proto_rawDescGZIP() []byte {
 	return file_meta_storage_proto_rawDescData
 }
 
-var file_meta_storage_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_meta_storage_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_meta_storage_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_meta_storage_proto_goTypes = []interface{}{
-	(*Member)(nil), // 0: meta_storage.Member
+	(Meta_State)(0), // 0: meta_storage.meta.State
+	(Meta_Typ)(0),   // 1: meta_storage.meta.Typ
+	(*Member)(nil),  // 2: meta_storage.Member
+	(*Meta)(nil),    // 3: meta_storage.meta
 }
 var file_meta_storage_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: meta_storage.meta.typ:type_name -> meta_storage.meta.Typ
+	0, // 1: meta_storage.meta.state:type_name -> meta_storage.meta.State
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_meta_storage_proto_init() }
@@ -152,19 +366,32 @@ func file_meta_storage_proto_init() {
 				return nil
 			}
 		}
+		file_meta_storage_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Meta); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_meta_storage_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   1,
+			NumEnums:      2,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_meta_storage_proto_goTypes,
 		DependencyIndexes: file_meta_storage_proto_depIdxs,
+		EnumInfos:         file_meta_storage_proto_enumTypes,
 		MessageInfos:      file_meta_storage_proto_msgTypes,
 	}.Build()
 	File_meta_storage_proto = out.File
