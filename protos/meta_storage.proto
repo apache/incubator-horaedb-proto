@@ -11,7 +11,7 @@ message Member {
 }
 
 message meta {
-  enum State{
+  enum State {
     StateInit = 0;
     StateRunning = 1;
     StateFinished = 2;
@@ -19,7 +19,7 @@ message meta {
     StateCancelled = 4;
   }
 
-  enum Typ{
+  enum Typ {
     Create = 0;
     Delete = 1;
     TransferLeader = 2;
