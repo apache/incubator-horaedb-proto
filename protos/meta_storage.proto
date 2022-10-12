@@ -9,3 +9,28 @@ message Member {
   string endpoint = 3;
   int32 leader_priority = 4;
 }
+
+message ProcedureInfo {
+  enum State {
+    STATE_INIT = 0;
+    STATE_RUNNING = 1;
+    STATE_FINISHED = 2;
+    STATE_FAILED = 3;
+    STATE_CANCELED = 4;
+  }
+
+  enum Typ {
+    CREATE = 0;
+    DELETE = 1;
+    TRANSFER_LEADER = 2;
+    MIGRATE = 3;
+    SPLIT = 4;
+    MERGE = 5;
+    SCATTER = 6;
+  }
+
+  uint64 id = 1;
+  Typ typ = 2;
+  State state = 3;
+  bytes extended_info = 4;
+}
