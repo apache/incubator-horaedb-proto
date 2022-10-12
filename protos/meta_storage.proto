@@ -10,7 +10,7 @@ message Member {
   int32 leader_priority = 4;
 }
 
-message meta {
+message ProcedureInfo {
   enum State {
     StateInit = 0;
     StateRunning = 1;
@@ -32,5 +32,5 @@ message meta {
   uint64 id = 1;
   Typ typ = 2;
   State state = 3;
-  string raw_data = 4;
+  bytes extended_info = 4;
 }
