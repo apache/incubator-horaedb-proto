@@ -12,21 +12,21 @@ message Member {
 
 message ProcedureInfo {
   enum State {
-    StateInit = 0;
-    StateRunning = 1;
-    StateFinished = 2;
-    StateFailed = 3;
-    StateCancelled = 4;
+    STATE_INIT = 0;
+    STATE_RUNNING = 1;
+    STATE_FINISHED = 2;
+    STATE_FAILED = 3;
+    STATE_CANCELED = 4;
   }
 
   enum Typ {
-    Create = 0;
-    Delete = 1;
-    TransferLeader = 2;
-    Migrate = 3;
-    Split = 4;
-    Merge = 5;
-    Scatter = 6;
+    CREATE = 0;
+    DELETE = 1;
+    TRANSFER_LEADER = 2;
+    MIGRATE = 3;
+    SPLIT = 4;
+    MERGE = 5;
+    SCATTER = 6;
   }
 
   uint64 id = 1;
