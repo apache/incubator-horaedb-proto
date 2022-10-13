@@ -8,7 +8,8 @@ import "cluster.proto";
 
 service CeresmetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
-  rpc GetShardTables(GetShardTablesRequest) returns (GetShardTablesResponse) {}
+  rpc GetTablesOfShards(GetTablesOfShardsRequest)
+      returns (GetTablesOfShardsResponse) {}
   rpc CreateTable(CreateTableRequest) returns (CreateTableResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
@@ -52,7 +53,7 @@ message CreateTableResponse {
   uint64 id = 6;
 }
 
-message GetShardTablesRequest {
+message GetTablesOfShardsRequest {
   RequestHeader header = 1;
 
   repeated uint32 shard_ids = 2;
@@ -65,16 +66,16 @@ message TableInfo {
   string schema_name = 4;
 }
 
-message ShardTables {
+message TablesOfShard {
   ShardInfo shard_info = 1;
   repeated TableInfo tables = 2;
 }
 
-message GetShardTablesResponse {
+message GetTablesOfShardsResponse {
   common.ResponseHeader header = 1;
 
-  // ShardId -> ShardTables
-  map<uint32, ShardTables> shard_tables = 2;
+  // ShardId -> TablesOfShard
+  map<uint32, TablesOfShard> tables_by_shard = 2;
 }
 
 message RouteTablesRequest {
@@ -132,7 +133,7 @@ message NodeHeartbeatRequest {
 }
 
 message ShardInfo {
-  uint32 shard_id = 1;
+  uint32 id = 1;
   cluster.ShardRole role = 2;
   uint64 version = 3;
 }

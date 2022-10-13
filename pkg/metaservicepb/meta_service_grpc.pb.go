@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CeresmetaRpcServiceClient interface {
 	AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error)
-	GetShardTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error)
+	GetTablesOfShards(ctx context.Context, in *GetTablesOfShardsRequest, opts ...grpc.CallOption) (*GetTablesOfShardsResponse, error)
 	CreateTable(ctx context.Context, in *CreateTableRequest, opts ...grpc.CallOption) (*CreateTableResponse, error)
 	DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error)
 	RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error)
@@ -48,9 +48,9 @@ func (c *ceresmetaRpcServiceClient) AllocSchemaID(ctx context.Context, in *Alloc
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) GetShardTables(ctx context.Context, in *GetShardTablesRequest, opts ...grpc.CallOption) (*GetShardTablesResponse, error) {
-	out := new(GetShardTablesResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetShardTables", in, out, opts...)
+func (c *ceresmetaRpcServiceClient) GetTablesOfShards(ctx context.Context, in *GetTablesOfShardsRequest, opts ...grpc.CallOption) (*GetTablesOfShardsResponse, error) {
+	out := new(GetTablesOfShardsResponse)
+	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetTablesOfShards", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (c *ceresmetaRpcServiceClient) NodeHeartbeat(ctx context.Context, in *NodeH
 // for forward compatibility
 type CeresmetaRpcServiceServer interface {
 	AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error)
-	GetShardTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error)
+	GetTablesOfShards(context.Context, *GetTablesOfShardsRequest) (*GetTablesOfShardsResponse, error)
 	CreateTable(context.Context, *CreateTableRequest) (*CreateTableResponse, error)
 	DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error)
 	RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error)
@@ -123,8 +123,8 @@ type UnimplementedCeresmetaRpcServiceServer struct {
 func (UnimplementedCeresmetaRpcServiceServer) AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllocSchemaID not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) GetShardTables(context.Context, *GetShardTablesRequest) (*GetShardTablesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetShardTables not implemented")
+func (UnimplementedCeresmetaRpcServiceServer) GetTablesOfShards(context.Context, *GetTablesOfShardsRequest) (*GetTablesOfShardsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTablesOfShards not implemented")
 }
 func (UnimplementedCeresmetaRpcServiceServer) CreateTable(context.Context, *CreateTableRequest) (*CreateTableResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTable not implemented")
@@ -172,20 +172,20 @@ func _CeresmetaRpcService_AllocSchemaID_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_GetShardTables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetShardTablesRequest)
+func _CeresmetaRpcService_GetTablesOfShards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTablesOfShardsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).GetShardTables(ctx, in)
+		return srv.(CeresmetaRpcServiceServer).GetTablesOfShards(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/GetShardTables",
+		FullMethod: "/meta_service.CeresmetaRpcService/GetTablesOfShards",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).GetShardTables(ctx, req.(*GetShardTablesRequest))
+		return srv.(CeresmetaRpcServiceServer).GetTablesOfShards(ctx, req.(*GetTablesOfShardsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -292,8 +292,8 @@ var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CeresmetaRpcService_AllocSchemaID_Handler,
 		},
 		{
-			MethodName: "GetShardTables",
-			Handler:    _CeresmetaRpcService_GetShardTables_Handler,
+			MethodName: "GetTablesOfShards",
+			Handler:    _CeresmetaRpcService_GetTablesOfShards_Handler,
 		},
 		{
 			MethodName: "CreateTable",
