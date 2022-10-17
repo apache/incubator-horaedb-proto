@@ -122,11 +122,12 @@ message DropTableRequest {
 
   string schema_name = 2;
   string name = 3;
-  uint64 id = 4;
 }
 
 message DropTableResponse {
   common.ResponseHeader header = 1;
+
+  TableInfo dropped_table = 2;
 }
 
 message NodeHeartbeatRequest {
