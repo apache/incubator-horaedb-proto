@@ -40,16 +40,19 @@ message CreateTableRequest {
 
   string schema_name = 2;
   string name = 3;
-  string create_sql = 4;
+  bytes encoded_schema = 4;
+  string engine = 5;
+  bool create_if_not_exist = 6;
+  map<string, string> options = 7;
 }
 
 message CreateTableResponse {
   common.ResponseHeader header = 1;
 
   string schema_name = 2;
-  string name = 3;
+  uint32 schema_id = 3;
   uint32 shard_id = 4;
-  uint32 schema_id = 5;
+  string name = 5;
   uint64 id = 6;
 }
 
