@@ -46,27 +46,24 @@ message CreateTableRequest {
   map<string, string> options = 7;
 }
 
+message TableInfo {
+  uint64 id = 1;
+  string name = 2;
+  uint32 schema_id = 3;
+  string schema_name = 4;
+}
+
 message CreateTableResponse {
   common.ResponseHeader header = 1;
 
-  string schema_name = 2;
-  uint32 schema_id = 3;
-  uint32 shard_id = 4;
-  string name = 5;
-  uint64 id = 6;
+  TableInfo created_table = 2;
+  ShardInfo shard_info = 3;
 }
 
 message GetTablesOfShardsRequest {
   RequestHeader header = 1;
 
   repeated uint32 shard_ids = 2;
-}
-
-message TableInfo {
-  uint64 id = 1;
-  string name = 2;
-  uint32 schema_id = 3;
-  string schema_name = 4;
 }
 
 message TablesOfShard {
