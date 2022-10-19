@@ -44,7 +44,10 @@ message CloseShardResponse {
 message CreateTableOnShardRequest {
   UpdateShardInfo update_shard_info = 1;
   meta_service.TableInfo table_info = 2;
-  string create_sql = 3;
+  bytes encoded_schema = 3;
+  string engine = 4;
+  bool create_if_not_exist = 5;
+  map<string, string> options = 6;
 }
 
 message CreateTableOnShardResponse {
