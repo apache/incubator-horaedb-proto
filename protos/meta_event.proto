@@ -5,6 +5,7 @@ option go_package = "github.com/CeresDB/ceresdbproto/pkg/metaeventpb";
 
 import "common.proto";
 import "meta_service.proto";
+import "cluster.proto";
 
 // The service is hosted by CeresDB to handle the events from CeresMeta.
 service MetaEventService {
@@ -21,12 +22,12 @@ service MetaEventService {
 }
 
 message UpdateShardInfo {
-  meta_service.ShardInfo curr_shard_info = 1;
+  cluster.ShardInfo curr_shard_info = 1;
   uint64 prev_version = 2;
 }
 
 message OpenShardRequest {
-  meta_service.ShardInfo shard = 1;
+  cluster.ShardInfo shard = 1;
 }
 
 message OpenShardResponse {
