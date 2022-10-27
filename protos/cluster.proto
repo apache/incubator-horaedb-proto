@@ -29,10 +29,10 @@ message Cluster {
 }
 
 // example:
-// cluster 1: v1/cluster/1/topo/latest_version -> 99
-//            v1/cluster/1/topo/99 -> ceresmeta.ClusterTopology
-//            v1/cluster/1/topo/98 -> ceresmeta.ClusterTopology
-message ClusterTopology {
+// cluster 1: v1/cluster/1/view/latest_version -> 99
+//            v1/cluster/1/view/99 -> ceresmeta.ClusterView
+//            v1/cluster/1/view/98 -> ceresmeta.ClusterView
+message ClusterView {
   enum ClusterState {
     EMPTY = 0;
     PREPARE_REBALANCE = 1;
@@ -44,19 +44,13 @@ message ClusterTopology {
   uint32 cluster_id = 1;
   uint64 version = 2;
   ClusterState state = 3;
-  repeated Shard shard_view = 4;
+  repeated ShardNode shard_nodes = 4;
   // cluster view's changed cause
   string cause = 5;
   uint64 created_at = 6;
-  map<string, ChangeShards> change_node_shards = 7;
 }
 
-message ChangeShards {
-  repeated Shard close_shards = 1;
-  repeated Shard open_shards = 2;
-}
-
-message Shard {
+message ShardNode {
   uint32 id = 1;
   ShardRole shard_role = 2;
   string node = 3;
@@ -78,25 +72,29 @@ message Schema {
 //            v1/cluster/1/schema/1/table/2 -> ceresmeta.Table
 //            v1/cluster/1/schema/1/table/3 -> ceresmeta.Table
 //            v1/cluster/1/schema/2/table/4 -> ceresmeta.Table
+// cluster 1 tableName-> ID :
+//            v1/cluster/1/schema/1/table_name_to_id/table1 -> 1
+//            v1/cluster/1/schema/1/table_name_to_id/table2 -> 2
+//            v1/cluster/1/schema/1/table_name_to_id/table3 -> 3
+//            v1/cluster/1/schema/2/table_name_to_id/table4 -> 4
 message Table {
   uint64 id = 1;
   string name = 2;
   uint32 schema_id = 3;
-  uint32 shard_id = 4;
-  string desc = 5;
-  uint64 created_at = 6;
+  string desc = 4;
+  uint64 created_at = 5;
 }
 
 // example:
-// cluster 1: v1/cluster/1/shard/1/latest_version -> 9
-//            v1/cluster/1/shard/1/9 -> ceresmeta.ShardTopology
-//            v1/cluster/1/shard/1/8 -> ceresmeta.ShardTopology
-//            v1/cluster/1/shard/2/latest_version -> 3
-//            v1/cluster/1/shard/2/3 -> ceresmeta.ShardTopology
-message ShardTopology {
+// cluster 1: v1/cluster/1/shard_view/1/latest_version -> 9
+//            v1/cluster/1/shard_view/1/9 -> ceresmeta.ShardView
+//            v1/cluster/1/shard_view/1/8 -> ceresmeta.ShardView
+//            v1/cluster/1/shard_view/2/latest_version -> 3
+//            v1/cluster/1/shard_view/2/3 -> ceresmeta.ShardView
+message ShardView {
   uint32 shard_id = 1;
-  repeated uint64 table_ids = 2;
-  uint64 version = 3;
+  uint64 version = 2;
+  repeated uint64 table_ids = 3;
   uint64 created_at = 4;
 }
 
@@ -105,27 +103,13 @@ message ShardTopology {
 //            v1/cluster/1/node/127.0.0.2:8081 -> value is ceresmeta.Node
 message Node {
   string name = 1;
-  NodeStats node_stats = 2;
-  uint64 create_time = 3;
-  uint64 last_touch_time = 4;
-  NodeState state = 5;
-  HeartbeatSamplingInfo heartbeat_sampling_info = 6;
+  NodeStats stats = 2;
+  uint64 last_touch_time = 3;
+  NodeState state = 4;
 }
 
 message NodeStats {
   uint32 lease = 1;
   string zone = 2;
   string node_version = 3;
-}
-
-message HeartbeatSamplingInfo {
-  double threshold = 1;
-  double min_std_deviation_millis = 2;
-  uint64 acceptable_heartbeat_pause_millis = 3;
-  uint64 first_heartbeat_estimate_millis = 4;
-  uint32 max_sample_size = 5;
-  repeated int64 intervals = 6;
-  uint64 interval_sum = 7;
-  uint64 squared_interval_sum = 8;
-  uint64 last_timestamp_millis = 9;
 }
