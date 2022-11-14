@@ -19,7 +19,7 @@ go get github.com/CeresDB/ceresdbproto
 
 # Generate code
 
-Install [Protocol Buffers 3.20.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1)+ compiler.
+Install [Protocol Buffers (above 3.20.1)](https://github.com/protocolbuffers/protobuf/releases) compiler.
 
 ## Rust
 
