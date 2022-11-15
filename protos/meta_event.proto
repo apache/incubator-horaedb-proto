@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package meta_event;
-option go_package = "github.com/CeresDB/ceresdbproto/pkg/metaeventpb";
+option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/metaeventpb";
 
 import "common.proto";
 import "meta_service.proto";

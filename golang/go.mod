@@ -1,4 +1,4 @@
-module github.com/CeresDB/ceresdbproto
+module github.com/CeresDB/ceresdbproto/golang
 
 go 1.18
 

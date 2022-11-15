@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package meta_service;
-option go_package = "github.com/CeresDB/ceresdbproto/pkg/metaservicepb";
+option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/metaservicepb";
 
 import "common.proto";
 import "cluster.proto";
