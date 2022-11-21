@@ -2,10 +2,11 @@
 
 Protocol buffer files for CeresDB.
 
-# Usage
+# User Guides
+
 ## Rust
 
-Add this to your Cargo.toml:
+Add the following dependency to your Cargo.toml, and specify a precise commit hash:
 
 ```
 ceresdbproto = { git = "https://github.com/CeresDB/ceresdbproto.git"}
@@ -13,22 +14,39 @@ ceresdbproto = { git = "https://github.com/CeresDB/ceresdbproto.git"}
 
 ## Go
 
-```
-go get github.com/CeresDB/ceresdbproto
+```sh
+go get github.com/CeresDB/ceresdbproto/golang
 ```
 
-# Generate code
+## Java
 
-Install [Protocol Buffers (above 3.20.1)](https://github.com/protocolbuffers/protobuf/releases) compiler.
+Add a maven dependency to your project
+
+```xml
+<dependency>
+    <groupId>io.ceresdb</groupId>
+    <artifactId>kotlin-stdlib-common</artifactId>
+    <version>${kotlin.version}</version>
+</dependency>
+```
+
+# Developer Guides
+After modifying the proto files, someting else for different programming languages should be done.
+
+## Java
+1. Name the maven project to a new version.
+2. Rebuild the maven project lies in the `java` directory (During the build process, java code for the latest proto will be generated).
+2. Publish the build result to the central maven repository.
 
 ## Rust
+As for the Rust projects that depends on this project, everything will be generated during the build process of themselves. So nothing else needs to be done for `Rust`.
 
-Nothing required
-
-## Go
-
-```sh
-go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-sh gen-go.sh
-```
+## Golang
+1. Install the prerequisites:
+* Install [Protocol Buffers (above 3.20.1)](https://github.com/protocolbuffers/protobuf/releases) compiler.
+* Install golang specific protocal and grpc toolsets.
+    ```sh
+    go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+    ```
+2. execute the `gen-go.sh` in the `golang` directory
