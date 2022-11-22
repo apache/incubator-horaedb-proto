@@ -1,4 +1,4 @@
-# Protocal of CeresDB
+# Protocol of [CeresDB](https://github.com/CeresDB/ceresdb)
 
 Protocol buffer files for CeresDB. Projects that manage generated code of different languages are also in this repository. They acts as underlying dependency of client, server and meta.
 
