@@ -20,18 +20,18 @@ go get github.com/CeresDB/ceresdbproto/golang
 
 ## Java
 
-Add a maven dependency to your project
+Add a maven dependency to your project.
 
 ```xml
 <dependency>
     <groupId>io.ceresdb</groupId>
-    <artifactId>kotlin-stdlib-common</artifactId>
-    <version>${kotlin.version}</version>
+    <artifactId>ceresdb-proto-internal</artifactId>
+    <version>0.1.0</version>
 </dependency>
 ```
 
 # Developer Guides
-After modifying the proto files, someting else for different programming languages should be done.
+After modifying the proto files, something else for different programming languages should be done.
 
 ## Java
 1. Name the maven project to a new version.
@@ -49,4 +49,4 @@ As for the Rust projects that depends on this project, everything will be genera
     go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
     go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
     ```
-2. execute the `gen-go.sh` in the `golang` directory
+2. execute the `gen-go.sh` in the `golang` directory.
