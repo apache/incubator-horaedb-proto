@@ -1,6 +1,6 @@
-# ceresdbproto
+# Protocal of CeresDB
 
-Protocol buffer files for CeresDB. Projects that manage code generation for different languages are also in this repo.
+Protocol buffer files for CeresDB. Projects that manage generated code of different languages are also in this repository. They acts as underlying dependency of client, server and meta.
 
 ---
 
