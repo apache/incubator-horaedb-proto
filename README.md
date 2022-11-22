@@ -14,7 +14,7 @@ Add the following dependency to your Cargo.toml, and specify a precise commit ha
 ceresdbproto = { git = "https://github.com/CeresDB/ceresdbproto.git"}
 ```
 
-### Go
+### Golang
 
 ```sh
 go get github.com/CeresDB/ceresdbproto/golang
