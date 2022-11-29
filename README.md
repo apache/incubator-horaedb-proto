@@ -48,9 +48,4 @@ As for the Rust projects that depends on this project, everything will be genera
 ### Golang
 1. Install the prerequisites:
 * Install [Protocol Buffers (above 3.20.1)](https://github.com/protocolbuffers/protobuf/releases) compiler.
-* Install golang specific protocal and grpc toolsets.
-    ```sh
-    go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-    ```
-2. execute the `gen-go.sh` in the `golang` directory.
+2. Execute `make build`.
