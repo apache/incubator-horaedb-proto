@@ -26,6 +26,7 @@ message Cluster {
   uint32 replication_factor = 4;
   uint32 shard_total = 5;
   uint64 created_at = 6;
+  uint32 table_partition_num = 7;
 }
 
 // example:
