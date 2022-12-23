@@ -84,6 +84,7 @@ message Table {
   uint32 schema_id = 3;
   string desc = 4;
   uint64 created_at = 5;
+  bool is_partition_table = 6;
 }
 
 // example:
