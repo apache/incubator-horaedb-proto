@@ -44,11 +44,12 @@ message CreateTableRequest {
   string engine = 5;
   bool create_if_not_exist = 6;
   map<string, string> options = 7;
-  PartitionInfo partition_info = 8;
+  bytes encoded_partition_info = 8;
+  PartitionTableInfo partition_table_info = 9;
 }
 
-message PartitionInfo {
-  repeated string names = 1;
+message PartitionTableInfo {
+  repeated string sub_table_names = 1;
 }
 
 message TableInfo {
