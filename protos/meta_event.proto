@@ -14,6 +14,8 @@ service MetaEventService {
       returns (CreateTableOnShardResponse) {}
   rpc DropTableOnShard(DropTableOnShardRequest)
       returns (DropTableOnShardResponse) {}
+  rpc OpenTableOnShard(OpenTableOnShardRequest)
+      returns (OpenTableOnShardResponse) {}
   rpc CloseTableOnShard(CloseTableOnShardRequest)
       returns (CloseTableOnShardResponse) {}
   rpc SplitShard(SplitShardRequest) returns (SplitShardResponse) {}
@@ -63,6 +65,15 @@ message DropTableOnShardRequest {
 }
 
 message DropTableOnShardResponse {
+  common.ResponseHeader header = 1;
+}
+
+message OpenTableOnShardRequest {
+  UpdateShardInfo update_shard_info = 1;
+  meta_service.TableInfo table_info = 2;
+}
+
+message OpenTableOnShardResponse {
   common.ResponseHeader header = 1;
 }
 
