@@ -26,6 +26,8 @@ type MetaEventServiceClient interface {
 	CloseShard(ctx context.Context, in *CloseShardRequest, opts ...grpc.CallOption) (*CloseShardResponse, error)
 	CreateTableOnShard(ctx context.Context, in *CreateTableOnShardRequest, opts ...grpc.CallOption) (*CreateTableOnShardResponse, error)
 	DropTableOnShard(ctx context.Context, in *DropTableOnShardRequest, opts ...grpc.CallOption) (*DropTableOnShardResponse, error)
+	OpenTableOnShard(ctx context.Context, in *OpenTableOnShardRequest, opts ...grpc.CallOption) (*OpenTableOnShardResponse, error)
+	CloseTableOnShard(ctx context.Context, in *CloseTableOnShardRequest, opts ...grpc.CallOption) (*CloseTableOnShardResponse, error)
 	SplitShard(ctx context.Context, in *SplitShardRequest, opts ...grpc.CallOption) (*SplitShardResponse, error)
 	MergeShards(ctx context.Context, in *MergeShardsRequest, opts ...grpc.CallOption) (*MergeShardsResponse, error)
 	ChangeShardRole(ctx context.Context, in *ChangeShardRoleRequest, opts ...grpc.CallOption) (*ChangeShardRoleResponse, error)
@@ -75,6 +77,24 @@ func (c *metaEventServiceClient) DropTableOnShard(ctx context.Context, in *DropT
 	return out, nil
 }
 
+func (c *metaEventServiceClient) OpenTableOnShard(ctx context.Context, in *OpenTableOnShardRequest, opts ...grpc.CallOption) (*OpenTableOnShardResponse, error) {
+	out := new(OpenTableOnShardResponse)
+	err := c.cc.Invoke(ctx, "/meta_event.MetaEventService/OpenTableOnShard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *metaEventServiceClient) CloseTableOnShard(ctx context.Context, in *CloseTableOnShardRequest, opts ...grpc.CallOption) (*CloseTableOnShardResponse, error) {
+	out := new(CloseTableOnShardResponse)
+	err := c.cc.Invoke(ctx, "/meta_event.MetaEventService/CloseTableOnShard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *metaEventServiceClient) SplitShard(ctx context.Context, in *SplitShardRequest, opts ...grpc.CallOption) (*SplitShardResponse, error) {
 	out := new(SplitShardResponse)
 	err := c.cc.Invoke(ctx, "/meta_event.MetaEventService/SplitShard", in, out, opts...)
@@ -110,6 +130,8 @@ type MetaEventServiceServer interface {
 	CloseShard(context.Context, *CloseShardRequest) (*CloseShardResponse, error)
 	CreateTableOnShard(context.Context, *CreateTableOnShardRequest) (*CreateTableOnShardResponse, error)
 	DropTableOnShard(context.Context, *DropTableOnShardRequest) (*DropTableOnShardResponse, error)
+	OpenTableOnShard(context.Context, *OpenTableOnShardRequest) (*OpenTableOnShardResponse, error)
+	CloseTableOnShard(context.Context, *CloseTableOnShardRequest) (*CloseTableOnShardResponse, error)
 	SplitShard(context.Context, *SplitShardRequest) (*SplitShardResponse, error)
 	MergeShards(context.Context, *MergeShardsRequest) (*MergeShardsResponse, error)
 	ChangeShardRole(context.Context, *ChangeShardRoleRequest) (*ChangeShardRoleResponse, error)
@@ -131,6 +153,12 @@ func (UnimplementedMetaEventServiceServer) CreateTableOnShard(context.Context, *
 }
 func (UnimplementedMetaEventServiceServer) DropTableOnShard(context.Context, *DropTableOnShardRequest) (*DropTableOnShardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DropTableOnShard not implemented")
+}
+func (UnimplementedMetaEventServiceServer) OpenTableOnShard(context.Context, *OpenTableOnShardRequest) (*OpenTableOnShardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OpenTableOnShard not implemented")
+}
+func (UnimplementedMetaEventServiceServer) CloseTableOnShard(context.Context, *CloseTableOnShardRequest) (*CloseTableOnShardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseTableOnShard not implemented")
 }
 func (UnimplementedMetaEventServiceServer) SplitShard(context.Context, *SplitShardRequest) (*SplitShardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SplitShard not implemented")
@@ -226,6 +254,42 @@ func _MetaEventService_DropTableOnShard_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MetaEventService_OpenTableOnShard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OpenTableOnShardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MetaEventServiceServer).OpenTableOnShard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/meta_event.MetaEventService/OpenTableOnShard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MetaEventServiceServer).OpenTableOnShard(ctx, req.(*OpenTableOnShardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MetaEventService_CloseTableOnShard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloseTableOnShardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MetaEventServiceServer).CloseTableOnShard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/meta_event.MetaEventService/CloseTableOnShard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MetaEventServiceServer).CloseTableOnShard(ctx, req.(*CloseTableOnShardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _MetaEventService_SplitShard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SplitShardRequest)
 	if err := dec(in); err != nil {
@@ -302,6 +366,14 @@ var MetaEventService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DropTableOnShard",
 			Handler:    _MetaEventService_DropTableOnShard_Handler,
+		},
+		{
+			MethodName: "OpenTableOnShard",
+			Handler:    _MetaEventService_OpenTableOnShard_Handler,
+		},
+		{
+			MethodName: "CloseTableOnShard",
+			Handler:    _MetaEventService_CloseTableOnShard_Handler,
 		},
 		{
 			MethodName: "SplitShard",
