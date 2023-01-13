@@ -15,6 +15,34 @@ enum ShardRole {
   PENDING_FOLLOWER = 3;
 }
 
+message PartitionInfo {
+  oneof partition_info_enum {
+    HashPartitionInfo hash = 1;
+    KeyPartitionInfo key = 2;
+  }
+}
+
+message PartitionDefinition {
+  string name = 1;
+  oneof origin_name {
+    string origin = 2;
+  }
+}
+
+message HashPartitionInfo {
+  int32 version = 1;
+  repeated PartitionDefinition partition_definitions = 2;
+  bytes expr = 3;
+  bool linear = 4;
+}
+
+message KeyPartitionInfo {
+  int32 version = 1;
+  repeated PartitionDefinition partition_definitions = 2;
+  repeated string partition_key = 3;
+  bool linear = 4;
+}
+
 // example:
 // cluster 1: v1/cluster/1 -> ceresmeta.Cluster
 // cluster 2: v1/cluster/2 -> ceresmeta.Cluster
@@ -84,7 +112,7 @@ message Table {
   uint32 schema_id = 3;
   string desc = 4;
   uint64 created_at = 5;
-  bool partitioned = 6;
+  PartitionInfo partition_info = 6;
 }
 
 // example:

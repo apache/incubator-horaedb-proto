@@ -5,6 +5,7 @@ option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/metaeventpb";
 
 import "common.proto";
 import "meta_service.proto";
+import "cluster.proto";
 
 // The service is hosted by CeresDB to handle the events from CeresMeta.
 service MetaEventService {
@@ -52,7 +53,7 @@ message CreateTableOnShardRequest {
   string engine = 4;
   bool create_if_not_exist = 5;
   map<string, string> options = 6;
-  bytes encoded_partition_info = 7;
+  cluster.PartitionInfo partition_info = 7;
 }
 
 message CreateTableOnShardResponse {
