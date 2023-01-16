@@ -5,7 +5,6 @@ option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/metaeventpb";
 
 import "common.proto";
 import "meta_service.proto";
-import "cluster.proto";
 
 // The service is hosted by CeresDB to handle the events from CeresMeta.
 service MetaEventService {

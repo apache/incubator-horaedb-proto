@@ -16,7 +16,7 @@ enum ShardRole {
 }
 
 message PartitionInfo {
-  oneof partition_info_enum {
+  oneof info {
     HashPartitionInfo hash = 1;
     KeyPartitionInfo key = 2;
   }
@@ -31,14 +31,14 @@ message PartitionDefinition {
 
 message HashPartitionInfo {
   int32 version = 1;
-  repeated PartitionDefinition partition_definitions = 2;
+  repeated PartitionDefinition definitions = 2;
   bytes expr = 3;
   bool linear = 4;
 }
 
 message KeyPartitionInfo {
   int32 version = 1;
-  repeated PartitionDefinition partition_definitions = 2;
+  repeated PartitionDefinition definitions = 2;
   repeated string partition_key = 3;
   bool linear = 4;
 }
