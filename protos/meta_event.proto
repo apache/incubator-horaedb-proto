@@ -53,7 +53,6 @@ message CreateTableOnShardRequest {
   string engine = 4;
   bool create_if_not_exist = 5;
   map<string, string> options = 6;
-  cluster.PartitionInfo partition_info = 7;
 }
 
 message CreateTableOnShardResponse {
