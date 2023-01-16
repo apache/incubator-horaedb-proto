@@ -105,7 +105,8 @@ message QueryResponse {
     JSON = 1;
   }
   SchemaType schema_type = 2;
-  string schema_content = 3;
+  string schema_content = 3; // versions after table_schema will be deprecated
   repeated bytes rows = 4;
   uint32 affected_rows = 5;
+  common.TableSchema table_schema = 6;
 }
