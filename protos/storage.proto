@@ -100,5 +100,12 @@ message QueryRequest {
 
 message QueryResponse {
   common.ResponseHeader header = 1;
-  bytes arrow_bytes = 2;
+  uint32 affected_rows = 2;
+  oneof rowsPayload {
+    ArrowPayload arrowPayload = 3;
+  }
+}
+
+message ArrowPayload {
+  bytes payload = 1;
 }
