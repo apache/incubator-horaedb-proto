@@ -18,7 +18,7 @@ service StorageService {
 }
 
 message RouteRequest {
-  repeated string metrics = 1;
+  repeated string tables = 1;
 }
 
 message Endpoint {
@@ -27,7 +27,7 @@ message Endpoint {
 }
 
 message Route {
-  string metric = 1;
+  string table = 1;
   Endpoint endpoint = 2;
   bytes ext = 3;
 }
@@ -76,15 +76,15 @@ message WriteEntry {
   repeated FieldGroup field_groups = 2;
 }
 
-message WriteMetric {
-  string metric = 1;
+message WriteTable {
+  string table = 1;
   repeated string tag_names = 2;
   repeated string field_names = 3;
   repeated WriteEntry entries = 4;
 }
 
 message WriteRequest {
-  repeated WriteMetric metrics = 1;
+  repeated WriteTable tables = 1;
 }
 
 message WriteResponse {
@@ -94,7 +94,7 @@ message WriteResponse {
 }
 
 message QueryRequest {
-  repeated string metrics = 1;
+  repeated string tables = 1;
   string ql = 2;
 }
 
