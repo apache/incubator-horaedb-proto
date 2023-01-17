@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package storage;
-option java_package = "io.ceresdb.proto.internal";
+package storage.v1;
+option java_package = "io.ceresdb.proto.internal.v1";
 option java_outer_classname = "Storage";
-option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/storagepb";
+option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/storagepb/v1";
 
 import "common.proto";
 import "prometheus.proto";
@@ -100,12 +100,5 @@ message QueryRequest {
 
 message QueryResponse {
   common.ResponseHeader header = 1;
-  enum SerializationType {
-    AVRO = 0;
-    JSON = 1;
-  }
-  SerializationType serialization_type = 2;
-  repeated bytes rows = 3;
-  uint32 affected_rows = 4;
-  common.TableSchema table_schema = 5;
+  bytes arrow_bytes = 2;
 }
