@@ -4,7 +4,7 @@
 // - protoc             v3.20.1
 // source: storage.proto
 
-package v1
+package storagepb
 
 import (
 	context "context"
@@ -41,7 +41,7 @@ func NewStorageServiceClient(cc grpc.ClientConnInterface) StorageServiceClient {
 
 func (c *storageServiceClient) Route(ctx context.Context, in *RouteRequest, opts ...grpc.CallOption) (*RouteResponse, error) {
 	out := new(RouteResponse)
-	err := c.cc.Invoke(ctx, "/storage.v1.StorageService/Route", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/storage.StorageService/Route", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *storageServiceClient) Route(ctx context.Context, in *RouteRequest, opts
 
 func (c *storageServiceClient) Write(ctx context.Context, in *WriteRequest, opts ...grpc.CallOption) (*WriteResponse, error) {
 	out := new(WriteResponse)
-	err := c.cc.Invoke(ctx, "/storage.v1.StorageService/Write", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/storage.StorageService/Write", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (c *storageServiceClient) Write(ctx context.Context, in *WriteRequest, opts
 }
 
 func (c *storageServiceClient) StreamWrite(ctx context.Context, opts ...grpc.CallOption) (StorageService_StreamWriteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &StorageService_ServiceDesc.Streams[0], "/storage.v1.StorageService/StreamWrite", opts...)
+	stream, err := c.cc.NewStream(ctx, &StorageService_ServiceDesc.Streams[0], "/storage.StorageService/StreamWrite", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (x *storageServiceStreamWriteClient) CloseAndRecv() (*WriteResponse, error)
 
 func (c *storageServiceClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error) {
 	out := new(QueryResponse)
-	err := c.cc.Invoke(ctx, "/storage.v1.StorageService/Query", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/storage.StorageService/Query", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (c *storageServiceClient) Query(ctx context.Context, in *QueryRequest, opts
 }
 
 func (c *storageServiceClient) StreamQuery(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (StorageService_StreamQueryClient, error) {
-	stream, err := c.cc.NewStream(ctx, &StorageService_ServiceDesc.Streams[1], "/storage.v1.StorageService/StreamQuery", opts...)
+	stream, err := c.cc.NewStream(ctx, &StorageService_ServiceDesc.Streams[1], "/storage.StorageService/StreamQuery", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +134,7 @@ func (x *storageServiceStreamQueryClient) Recv() (*QueryResponse, error) {
 
 func (c *storageServiceClient) PromQuery(ctx context.Context, in *ceresprompb.PrometheusQueryRequest, opts ...grpc.CallOption) (*ceresprompb.PrometheusQueryResponse, error) {
 	out := new(ceresprompb.PrometheusQueryResponse)
-	err := c.cc.Invoke(ctx, "/storage.v1.StorageService/PromQuery", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/storage.StorageService/PromQuery", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func _StorageService_Route_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/storage.v1.StorageService/Route",
+		FullMethod: "/storage.StorageService/Route",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).Route(ctx, req.(*RouteRequest))
@@ -217,7 +217,7 @@ func _StorageService_Write_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/storage.v1.StorageService/Write",
+		FullMethod: "/storage.StorageService/Write",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).Write(ctx, req.(*WriteRequest))
@@ -261,7 +261,7 @@ func _StorageService_Query_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/storage.v1.StorageService/Query",
+		FullMethod: "/storage.StorageService/Query",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).Query(ctx, req.(*QueryRequest))
@@ -300,7 +300,7 @@ func _StorageService_PromQuery_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/storage.v1.StorageService/PromQuery",
+		FullMethod: "/storage.StorageService/PromQuery",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageServiceServer).PromQuery(ctx, req.(*ceresprompb.PrometheusQueryRequest))
@@ -312,7 +312,7 @@ func _StorageService_PromQuery_Handler(srv interface{}, ctx context.Context, dec
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var StorageService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "storage.v1.StorageService",
+	ServiceName: "storage.StorageService",
 	HandlerType: (*StorageServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

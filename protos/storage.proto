@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package storage.v1;
-option java_package = "io.ceresdb.proto.internal.v1";
+package storage;
+option java_package = "io.ceresdb.proto.internal";
 option java_outer_classname = "Storage";
-option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/storagepb/v1";
+option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/storagepb";
 
 import "common.proto";
 import "prometheus.proto";
