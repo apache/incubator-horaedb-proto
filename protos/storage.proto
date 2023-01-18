@@ -107,5 +107,5 @@ message SqlQueryResponse {
 }
 
 message ArrowPayload {
-  bytes bytes = 1;
+  repeated bytes record_batches = 1;
 }
