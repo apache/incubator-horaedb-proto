@@ -101,11 +101,11 @@ message QueryRequest {
 message QueryResponse {
   common.ResponseHeader header = 1;
   uint32 affected_rows = 2;
-  oneof rowsPayload {
-    ArrowPayload arrowPayload = 3;
+  oneof rows_payload {
+    ArrowPayload payload = 3;
   }
 }
 
 message ArrowPayload {
-  bytes payload = 1;
+  bytes bytes = 1;
 }
