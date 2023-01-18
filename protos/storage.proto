@@ -12,8 +12,8 @@ service StorageService {
   rpc Route(RouteRequest) returns (RouteResponse) {}
   rpc Write(WriteRequest) returns (WriteResponse) {}
   rpc StreamWrite(stream WriteRequest) returns (WriteResponse) {}
-  rpc Query(QueryRequest) returns (QueryResponse) {}
-  rpc StreamQuery(QueryRequest) returns (stream QueryResponse) {}
+  rpc SqlQuery(SqlQueryRequest) returns (SqlQueryResponse) {}
+  rpc StreamSqlQuery(SqlQueryRequest) returns (stream SqlQueryResponse) {}
   rpc PromQuery(prometheus.PrometheusQueryRequest) returns (prometheus.PrometheusQueryResponse) {}
 }
 
@@ -71,20 +71,20 @@ message Tag {
   Value value = 2;
 }
 
-message WriteEntry {
+message WriteSeriesEntry {
   repeated Tag tags = 1;
   repeated FieldGroup field_groups = 2;
 }
 
-message WriteTable {
+message WriteTableRequest {
   string table = 1;
   repeated string tag_names = 2;
   repeated string field_names = 3;
-  repeated WriteEntry entries = 4;
+  repeated WriteSeriesEntry entries = 4;
 }
 
 message WriteRequest {
-  repeated WriteTable tables = 1;
+  repeated WriteTableRequest table_requests = 1;
 }
 
 message WriteResponse {
@@ -93,12 +93,12 @@ message WriteResponse {
   uint32 failed = 3;
 }
 
-message QueryRequest {
+message SqlQueryRequest {
   repeated string tables = 1;
   string ql = 2;
 }
 
-message QueryResponse {
+message SqlQueryResponse {
   common.ResponseHeader header = 1;
   uint32 affected_rows = 2;
   oneof rows_payload {
