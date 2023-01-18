@@ -107,5 +107,10 @@ message SqlQueryResponse {
 }
 
 message ArrowPayload {
+  enum Compression {
+    NONE = 0;
+    ZSTD = 1;
+  }
   repeated bytes record_batches = 1;
+  Compression compression = 2;
 }
