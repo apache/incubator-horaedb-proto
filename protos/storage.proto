@@ -102,7 +102,7 @@ message SqlQueryResponse {
   common.ResponseHeader header = 1;
   uint32 affected_rows = 2;
   oneof rows_payload {
-    ArrowPayload payload = 3;
+    ArrowPayload arrow = 3;
   }
 }
 
