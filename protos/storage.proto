@@ -95,13 +95,13 @@ message WriteResponse {
 
 message SqlQueryRequest {
   repeated string tables = 1;
-  string ql = 2;
+  string sql = 2;
 }
 
 message SqlQueryResponse {
   common.ResponseHeader header = 1;
-  uint32 affected_rows = 2;
-  oneof rows_payload {
+  oneof output {
+    uint32 affected_rows = 2;
     ArrowPayload arrow = 3;
   }
 }
