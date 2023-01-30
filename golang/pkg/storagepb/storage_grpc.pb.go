@@ -26,8 +26,8 @@ type StorageServiceClient interface {
 	Route(ctx context.Context, in *RouteRequest, opts ...grpc.CallOption) (*RouteResponse, error)
 	Write(ctx context.Context, in *WriteRequest, opts ...grpc.CallOption) (*WriteResponse, error)
 	StreamWrite(ctx context.Context, opts ...grpc.CallOption) (StorageService_StreamWriteClient, error)
-	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
-	StreamQuery(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (StorageService_StreamQueryClient, error)
+	SqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (*SqlQueryResponse, error)
+	StreamSqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (StorageService_StreamSqlQueryClient, error)
 	PromQuery(ctx context.Context, in *ceresprompb.PrometheusQueryRequest, opts ...grpc.CallOption) (*ceresprompb.PrometheusQueryResponse, error)
 }
 
@@ -91,21 +91,21 @@ func (x *storageServiceStreamWriteClient) CloseAndRecv() (*WriteResponse, error)
 	return m, nil
 }
 
-func (c *storageServiceClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error) {
-	out := new(QueryResponse)
-	err := c.cc.Invoke(ctx, "/storage.StorageService/Query", in, out, opts...)
+func (c *storageServiceClient) SqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (*SqlQueryResponse, error) {
+	out := new(SqlQueryResponse)
+	err := c.cc.Invoke(ctx, "/storage.StorageService/SqlQuery", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storageServiceClient) StreamQuery(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (StorageService_StreamQueryClient, error) {
-	stream, err := c.cc.NewStream(ctx, &StorageService_ServiceDesc.Streams[1], "/storage.StorageService/StreamQuery", opts...)
+func (c *storageServiceClient) StreamSqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (StorageService_StreamSqlQueryClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StorageService_ServiceDesc.Streams[1], "/storage.StorageService/StreamSqlQuery", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &storageServiceStreamQueryClient{stream}
+	x := &storageServiceStreamSqlQueryClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -115,17 +115,17 @@ func (c *storageServiceClient) StreamQuery(ctx context.Context, in *QueryRequest
 	return x, nil
 }
 
-type StorageService_StreamQueryClient interface {
-	Recv() (*QueryResponse, error)
+type StorageService_StreamSqlQueryClient interface {
+	Recv() (*SqlQueryResponse, error)
 	grpc.ClientStream
 }
 
-type storageServiceStreamQueryClient struct {
+type storageServiceStreamSqlQueryClient struct {
 	grpc.ClientStream
 }
 
-func (x *storageServiceStreamQueryClient) Recv() (*QueryResponse, error) {
-	m := new(QueryResponse)
+func (x *storageServiceStreamSqlQueryClient) Recv() (*SqlQueryResponse, error) {
+	m := new(SqlQueryResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -148,8 +148,8 @@ type StorageServiceServer interface {
 	Route(context.Context, *RouteRequest) (*RouteResponse, error)
 	Write(context.Context, *WriteRequest) (*WriteResponse, error)
 	StreamWrite(StorageService_StreamWriteServer) error
-	Query(context.Context, *QueryRequest) (*QueryResponse, error)
-	StreamQuery(*QueryRequest, StorageService_StreamQueryServer) error
+	SqlQuery(context.Context, *SqlQueryRequest) (*SqlQueryResponse, error)
+	StreamSqlQuery(*SqlQueryRequest, StorageService_StreamSqlQueryServer) error
 	PromQuery(context.Context, *ceresprompb.PrometheusQueryRequest) (*ceresprompb.PrometheusQueryResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
@@ -167,11 +167,11 @@ func (UnimplementedStorageServiceServer) Write(context.Context, *WriteRequest) (
 func (UnimplementedStorageServiceServer) StreamWrite(StorageService_StreamWriteServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamWrite not implemented")
 }
-func (UnimplementedStorageServiceServer) Query(context.Context, *QueryRequest) (*QueryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+func (UnimplementedStorageServiceServer) SqlQuery(context.Context, *SqlQueryRequest) (*SqlQueryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SqlQuery not implemented")
 }
-func (UnimplementedStorageServiceServer) StreamQuery(*QueryRequest, StorageService_StreamQueryServer) error {
-	return status.Errorf(codes.Unimplemented, "method StreamQuery not implemented")
+func (UnimplementedStorageServiceServer) StreamSqlQuery(*SqlQueryRequest, StorageService_StreamSqlQueryServer) error {
+	return status.Errorf(codes.Unimplemented, "method StreamSqlQuery not implemented")
 }
 func (UnimplementedStorageServiceServer) PromQuery(context.Context, *ceresprompb.PrometheusQueryRequest) (*ceresprompb.PrometheusQueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PromQuery not implemented")
@@ -251,42 +251,42 @@ func (x *storageServiceStreamWriteServer) Recv() (*WriteRequest, error) {
 	return m, nil
 }
 
-func _StorageService_Query_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryRequest)
+func _StorageService_SqlQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SqlQueryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServiceServer).Query(ctx, in)
+		return srv.(StorageServiceServer).SqlQuery(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/storage.StorageService/Query",
+		FullMethod: "/storage.StorageService/SqlQuery",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).Query(ctx, req.(*QueryRequest))
+		return srv.(StorageServiceServer).SqlQuery(ctx, req.(*SqlQueryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StorageService_StreamQuery_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(QueryRequest)
+func _StorageService_StreamSqlQuery_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SqlQueryRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(StorageServiceServer).StreamQuery(m, &storageServiceStreamQueryServer{stream})
+	return srv.(StorageServiceServer).StreamSqlQuery(m, &storageServiceStreamSqlQueryServer{stream})
 }
 
-type StorageService_StreamQueryServer interface {
-	Send(*QueryResponse) error
+type StorageService_StreamSqlQueryServer interface {
+	Send(*SqlQueryResponse) error
 	grpc.ServerStream
 }
 
-type storageServiceStreamQueryServer struct {
+type storageServiceStreamSqlQueryServer struct {
 	grpc.ServerStream
 }
 
-func (x *storageServiceStreamQueryServer) Send(m *QueryResponse) error {
+func (x *storageServiceStreamSqlQueryServer) Send(m *SqlQueryResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -324,8 +324,8 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageService_Write_Handler,
 		},
 		{
-			MethodName: "Query",
-			Handler:    _StorageService_Query_Handler,
+			MethodName: "SqlQuery",
+			Handler:    _StorageService_SqlQuery_Handler,
 		},
 		{
 			MethodName: "PromQuery",
@@ -339,8 +339,8 @@ var StorageService_ServiceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 		{
-			StreamName:    "StreamQuery",
-			Handler:       _StorageService_StreamQuery_Handler,
+			StreamName:    "StreamSqlQuery",
+			Handler:       _StorageService_StreamSqlQuery_Handler,
 			ServerStreams: true,
 		},
 	},
