@@ -17,8 +17,13 @@ service StorageService {
   rpc PromQuery(prometheus.PrometheusQueryRequest) returns (prometheus.PrometheusQueryResponse) {}
 }
 
+message RequestContext {
+  string database = 1;
+}
+
 message RouteRequest {
-  repeated string tables = 1;
+  RequestContext context = 1;
+  repeated string tables = 2;
 }
 
 message Endpoint {
@@ -84,7 +89,8 @@ message WriteTableRequest {
 }
 
 message WriteRequest {
-  repeated WriteTableRequest table_requests = 1;
+  RequestContext context = 1;
+  repeated WriteTableRequest table_requests = 2;
 }
 
 message WriteResponse {
@@ -94,8 +100,9 @@ message WriteResponse {
 }
 
 message SqlQueryRequest {
-  repeated string tables = 1;
-  string sql = 2;
+  RequestContext context = 1;
+  repeated string tables = 2;
+  string sql = 3;
 }
 
 message SqlQueryResponse {
