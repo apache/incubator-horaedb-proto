@@ -14,7 +14,7 @@ service StorageService {
   rpc StreamWrite(stream WriteRequest) returns (WriteResponse) {}
   rpc SqlQuery(SqlQueryRequest) returns (SqlQueryResponse) {}
   rpc StreamSqlQuery(SqlQueryRequest) returns (stream SqlQueryResponse) {}
-  rpc PromQuery(prometheus.PrometheusQueryRequest) returns (prometheus.PrometheusQueryResponse) {}
+  rpc PromQuery(PrometheusQueryRequest) returns (PrometheusQueryResponse) {}
 }
 
 message RequestContext {
@@ -120,4 +120,20 @@ message ArrowPayload {
   }
   repeated bytes record_batches = 1;
   Compression compression = 2;
+}
+
+message PrometheusQueryRequest {
+  RequestContext context = 1;
+  prometheus.Expr expr = 2;
+  // use oneof to represent option for scalar value
+  // https://github.com/protocolbuffers/protobuf/issues/1606
+  oneof lookback_delta {
+    int64 delta = 3;
+  }
+}
+
+message PrometheusQueryResponse {
+  common.ResponseHeader header = 1;
+  // Samples within a time series must be ordered by time.
+  repeated prometheus.TimeSeries timeseries = 2;
 }

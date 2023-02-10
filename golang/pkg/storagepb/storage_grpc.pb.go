@@ -8,7 +8,6 @@ package storagepb
 
 import (
 	context "context"
-	ceresprompb "github.com/CeresDB/ceresdbproto/golang/pkg/ceresprompb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -28,7 +27,7 @@ type StorageServiceClient interface {
 	StreamWrite(ctx context.Context, opts ...grpc.CallOption) (StorageService_StreamWriteClient, error)
 	SqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (*SqlQueryResponse, error)
 	StreamSqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (StorageService_StreamSqlQueryClient, error)
-	PromQuery(ctx context.Context, in *ceresprompb.PrometheusQueryRequest, opts ...grpc.CallOption) (*ceresprompb.PrometheusQueryResponse, error)
+	PromQuery(ctx context.Context, in *PrometheusQueryRequest, opts ...grpc.CallOption) (*PrometheusQueryResponse, error)
 }
 
 type storageServiceClient struct {
@@ -132,8 +131,8 @@ func (x *storageServiceStreamSqlQueryClient) Recv() (*SqlQueryResponse, error) {
 	return m, nil
 }
 
-func (c *storageServiceClient) PromQuery(ctx context.Context, in *ceresprompb.PrometheusQueryRequest, opts ...grpc.CallOption) (*ceresprompb.PrometheusQueryResponse, error) {
-	out := new(ceresprompb.PrometheusQueryResponse)
+func (c *storageServiceClient) PromQuery(ctx context.Context, in *PrometheusQueryRequest, opts ...grpc.CallOption) (*PrometheusQueryResponse, error) {
+	out := new(PrometheusQueryResponse)
 	err := c.cc.Invoke(ctx, "/storage.StorageService/PromQuery", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -150,7 +149,7 @@ type StorageServiceServer interface {
 	StreamWrite(StorageService_StreamWriteServer) error
 	SqlQuery(context.Context, *SqlQueryRequest) (*SqlQueryResponse, error)
 	StreamSqlQuery(*SqlQueryRequest, StorageService_StreamSqlQueryServer) error
-	PromQuery(context.Context, *ceresprompb.PrometheusQueryRequest) (*ceresprompb.PrometheusQueryResponse, error)
+	PromQuery(context.Context, *PrometheusQueryRequest) (*PrometheusQueryResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
 
@@ -173,7 +172,7 @@ func (UnimplementedStorageServiceServer) SqlQuery(context.Context, *SqlQueryRequ
 func (UnimplementedStorageServiceServer) StreamSqlQuery(*SqlQueryRequest, StorageService_StreamSqlQueryServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamSqlQuery not implemented")
 }
-func (UnimplementedStorageServiceServer) PromQuery(context.Context, *ceresprompb.PrometheusQueryRequest) (*ceresprompb.PrometheusQueryResponse, error) {
+func (UnimplementedStorageServiceServer) PromQuery(context.Context, *PrometheusQueryRequest) (*PrometheusQueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PromQuery not implemented")
 }
 func (UnimplementedStorageServiceServer) mustEmbedUnimplementedStorageServiceServer() {}
@@ -291,7 +290,7 @@ func (x *storageServiceStreamSqlQueryServer) Send(m *SqlQueryResponse) error {
 }
 
 func _StorageService_PromQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ceresprompb.PrometheusQueryRequest)
+	in := new(PrometheusQueryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -303,7 +302,7 @@ func _StorageService_PromQuery_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/storage.StorageService/PromQuery",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServiceServer).PromQuery(ctx, req.(*ceresprompb.PrometheusQueryRequest))
+		return srv.(StorageServiceServer).PromQuery(ctx, req.(*PrometheusQueryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

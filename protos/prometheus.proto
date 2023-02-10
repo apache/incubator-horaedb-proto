@@ -5,8 +5,6 @@ option java_package = "io.ceresdb.proto.internal";
 option java_outer_classname = "Prometheus";
 option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/ceresprompb";
 
-import "common.proto";
-
 message Expr {
   oneof Node {
     Operand operand = 1;
@@ -90,19 +88,4 @@ message Label {
 
 message Labels {
   repeated Label labels = 1;
-}
-
-message PrometheusQueryRequest {
-  Expr expr = 1;
-  // use oneof to represent option for scalar value
-  // https://github.com/protocolbuffers/protobuf/issues/1606
-  oneof lookback_delta {
-    int64 delta = 2;
-  }
-}
-
-message PrometheusQueryResponse {
-  common.ResponseHeader header = 1;
-  // Samples within a time series must be ordered by time.
-  repeated TimeSeries timeseries = 2;
 }
