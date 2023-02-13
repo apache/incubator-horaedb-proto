@@ -1,0 +1,19 @@
+// Copyright 2023 CeresDB Project Authors. Licensed under Apache-2.0.
+
+// Types for table requests
+syntax = "proto3";
+package table_requests;
+
+import "engine/schema.proto";
+
+// Write table request
+message WriteRequest {
+  // Version of row encoding method
+  uint32 version = 1;
+  // Schema of rows
+  schema.TableSchema schema = 2;
+  // Rows in bytes
+  //
+  // Each row is encoded in the same format as memtable
+  repeated bytes rows = 3;
+}

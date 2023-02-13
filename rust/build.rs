@@ -14,6 +14,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "../protos/meta_storage.proto",
             "../protos/prometheus.proto",
             "../protos/storage.proto",
+            // engine
+            "../protos/engine/schema.proto",
+            "../protos/engine/manifest.proto",
+            "../protos/engine/oss_cache.proto",
+            "../protos/engine/remote_engine.proto",
+            "../protos/engine/sst.proto",
+            "../protos/engine/sys_catalog.proto",
+            "../protos/engine/table_requests.proto",
+            "../protos/engine/time_range.proto",
+            "../protos/engine/wal_on_mq.proto",
         ],
         &["../protos"],
     )?;
