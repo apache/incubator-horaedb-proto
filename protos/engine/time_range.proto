@@ -1,0 +1,12 @@
+// Copyright 2023 CeresDB Project Authors. Licensed under Apache-2.0.
+
+syntax = "proto3";
+package time_range;
+
+// Time range of [start, end)
+message TimeRange {
+  // inclusive start
+  int64 start = 1;
+  // exclusive end
+  int64 end = 2;
+}
