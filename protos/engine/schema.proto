@@ -30,7 +30,9 @@ message ColumnSchema {
   // Comment of the column
   string comment = 6;
   // Default value expr of the column
-  bytes default_value = 7;
+  oneof default_value {
+    bytes serde_json = 7;
+  }
 }
 
 // Data type of column

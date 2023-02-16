@@ -6,7 +6,7 @@ option java_outer_classname = "Prometheus";
 option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/ceresprompb";
 
 message Expr {
-  oneof Node {
+  oneof node {
     Operand operand = 1;
     SubExpr sub_expr = 2;
   };
@@ -33,7 +33,7 @@ message SubExpr {
 }
 
 message Operand {
-  oneof Value {
+  oneof value {
     double float_val = 1;
     string string_val = 2;
     Selector selector = 3;

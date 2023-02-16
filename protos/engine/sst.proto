@@ -8,18 +8,23 @@ import "engine/schema.proto";
 import "engine/time_range.proto";
 
 message SstMetaData {
-  oneof MetaData {
+  oneof meta_data {
     ParquetMetaData parquet = 1;
   }
 }
 
-message ParquetFilter {
-  message RowGroupFilter {
-    repeated bytes column_filters = 1;
-  };
+message ColumnFilter {
+  oneof filter {
+    bytes xor = 1;
+  }
+}
 
-  uint32 version = 1;
-  repeated RowGroupFilter row_group_filters = 2;
+message RowGroupFilter {
+  repeated ColumnFilter column_filters = 1;
+}
+
+message ParquetFilter {
+  repeated RowGroupFilter row_group_filters = 1;
 }
 
 /// Used by ssts encoded by parquet, incuding columar&hybrid storage formats.
