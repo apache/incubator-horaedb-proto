@@ -30,8 +30,9 @@ message ColumnSchema {
   // Comment of the column
   string comment = 6;
   // Default value expr of the column
-  bytes encoded_default_value = 7;
-  uint32 default_value_encoding_version = 8;
+  oneof default_value {
+    bytes dataufion_proto = 7;
+  }
 }
 
 // Data type of column
