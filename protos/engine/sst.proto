@@ -15,7 +15,7 @@ message SstMetaData {
 
 message ColumnFilter {
   oneof filter {
-    bytes xor_filter = 1;
+    bytes xor = 1;
   }
 }
 
