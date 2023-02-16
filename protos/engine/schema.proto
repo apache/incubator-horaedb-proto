@@ -31,7 +31,7 @@ message ColumnSchema {
   string comment = 6;
   // Default value expr of the column
   oneof default_value {
-    bytes datafusion_proto = 7;
+    bytes serde_json = 7;
   }
 }
 
