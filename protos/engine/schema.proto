@@ -9,9 +9,9 @@ message TableSchema {
     repeated ColumnSchema columns = 1;
     // Version of the schema
     uint32 version = 2;
-    // Timestamp index in columns
+    // Id of timestamp key column
     uint32 timestamp_id = 3;
-    // Primary key index
+    // Ids of primary keys
     repeated uint32 primary_key_ids = 4;
 }
 
