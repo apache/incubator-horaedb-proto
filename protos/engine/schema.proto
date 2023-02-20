@@ -36,7 +36,6 @@ message ColumnSchema {
 }
 
 // Data type of column
-// TODO(yingwen): Do we need a null type?
 enum DataType {
   NULL = 0;
   TIMESTAMP = 1;
@@ -53,6 +52,8 @@ enum DataType {
   UINT16 = 12;
   UINT8 = 13;
   BOOL = 14;
+  DATE = 15;
+  TIME = 16;
 }
 
 // Projected Schema
