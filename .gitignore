@@ -4,3 +4,8 @@
 **/.DS_Store
 **/.vscode
 src/
+
+
+# Added by cargo
+
+/target
