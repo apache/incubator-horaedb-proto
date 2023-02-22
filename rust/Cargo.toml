@@ -3,9 +3,10 @@ name = "ceresdbproto"
 version = "0.1.0"
 authors = ["CeresDB Authors <ceresdbservice@gmail.com>"]
 edition = "2021"
-repository = "https://github.com/apache/arrow-rs"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+repository = "https://github.com/CeresDB/ceresdbproto"
+license = "Apache-2.0"
+description = "Protobuf specs for CeresDB"
+readme = "../README.md"
 
 [dependencies]
 tonic = "0.8"
