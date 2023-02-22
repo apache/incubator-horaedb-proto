@@ -7,25 +7,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     tonic_build::configure().out_dir("./src").compile(
         &[
-            "../protos/cluster.proto",
-            "../protos/common.proto",
-            "../protos/meta_event.proto",
-            "../protos/meta_service.proto",
-            "../protos/meta_storage.proto",
-            "../protos/prometheus.proto",
-            "../protos/storage.proto",
+            "protos/cluster.proto",
+            "protos/common.proto",
+            "protos/meta_event.proto",
+            "protos/meta_service.proto",
+            "protos/meta_storage.proto",
+            "protos/prometheus.proto",
+            "protos/storage.proto",
             // engine
-            "../protos/engine/schema.proto",
-            "../protos/engine/manifest.proto",
-            "../protos/engine/oss_cache.proto",
-            "../protos/engine/remote_engine.proto",
-            "../protos/engine/sst.proto",
-            "../protos/engine/sys_catalog.proto",
-            "../protos/engine/table_requests.proto",
-            "../protos/engine/time_range.proto",
-            "../protos/engine/wal_on_mq.proto",
+            "protos/engine/schema.proto",
+            "protos/engine/manifest.proto",
+            "protos/engine/oss_cache.proto",
+            "protos/engine/remote_engine.proto",
+            "protos/engine/sst.proto",
+            "protos/engine/sys_catalog.proto",
+            "protos/engine/table_requests.proto",
+            "protos/engine/time_range.proto",
+            "protos/engine/wal_on_mq.proto",
         ],
-        &["../protos"],
+        &["protos"],
     )?;
     Ok(())
 }
