@@ -6,6 +6,7 @@ package remote_engine;
 import "engine/schema.proto";
 import "engine/time_range.proto";
 import "common.proto";
+import "storage.proto";
 
 service RemoteEngineService {
   rpc Read(ReadRequest) returns (stream ReadResponse) {}
@@ -51,18 +52,17 @@ message ReadRequest {
 
 message ReadResponse {
   common.ResponseHeader header = 1;
-  // Version of row encoding method
-  uint32 version = 2;
-  bytes rows = 3;
+  oneof output {
+      storage.ArrowPayload arrow = 2;
+  }
 }
 
 message RowGroup {
-  // Version of row encoding method
-  schema.TableSchema table_schema = 1;
-  int64 min_timestamp = 2;
-  int64 max_timestamp = 3;
-  uint32 version = 4;
-  repeated bytes rows = 5;
+  int64 min_timestamp = 1;
+  int64 max_timestamp = 2;
+  oneof rows {
+        storage.ArrowPayload arrow = 3;
+    }
 }
 
 message WriteRequest {
