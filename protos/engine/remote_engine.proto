@@ -61,8 +61,8 @@ message RowGroup {
   int64 min_timestamp = 1;
   int64 max_timestamp = 2;
   oneof rows {
-        storage.ArrowPayload arrow = 3;
-    }
+      storage.ArrowPayload arrow = 3;
+  }
 }
 
 message WriteRequest {
