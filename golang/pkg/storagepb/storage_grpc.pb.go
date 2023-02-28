@@ -27,6 +27,7 @@ type StorageServiceClient interface {
 	StreamWrite(ctx context.Context, opts ...grpc.CallOption) (StorageService_StreamWriteClient, error)
 	SqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (*SqlQueryResponse, error)
 	StreamSqlQuery(ctx context.Context, in *SqlQueryRequest, opts ...grpc.CallOption) (StorageService_StreamSqlQueryClient, error)
+	// This interface is mainly for testing now
 	PromQuery(ctx context.Context, in *PrometheusQueryRequest, opts ...grpc.CallOption) (*PrometheusQueryResponse, error)
 }
 
@@ -149,6 +150,7 @@ type StorageServiceServer interface {
 	StreamWrite(StorageService_StreamWriteServer) error
 	SqlQuery(context.Context, *SqlQueryRequest) (*SqlQueryResponse, error)
 	StreamSqlQuery(*SqlQueryRequest, StorageService_StreamSqlQueryServer) error
+	// This interface is mainly for testing now
 	PromQuery(context.Context, *PrometheusQueryRequest) (*PrometheusQueryResponse, error)
 	mustEmbedUnimplementedStorageServiceServer()
 }
