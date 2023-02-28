@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.ceresdb</groupId>
     <artifactId>ceresdb-proto-internal</artifactId>
-    <version>0.3.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>ceresdb-proto-internal</name>
 
