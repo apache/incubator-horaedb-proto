@@ -1,5 +1,8 @@
 # Protocol of [CeresDB](https://github.com/CeresDB/ceresdb)
 
+[![Crates.io](https://img.shields.io/crates/v/ceresdbproto.svg)](https://crates.io/crates/ceresdbproto)
+[![Go Reference](https://pkg.go.dev/badge/github.com/CeresDB/ceresdbproto.svg)](https://pkg.go.dev/github.com/CeresDB/ceresdbproto)
+
 Protocol buffer files for CeresDB. Projects that manage generated code of different languages are also in this repository. They acts as underlying dependency of client, server and meta.
 
 ---
@@ -8,10 +11,8 @@ Protocol buffer files for CeresDB. Projects that manage generated code of differ
 
 ### Rust
 
-Add the following dependency to your Cargo.toml, and specify a precise commit hash:
-
-```
-ceresdbproto = { git = "https://github.com/CeresDB/ceresdbproto.git"}
+```sh
+cargo add ceresdbproto
 ```
 
 ### Golang
@@ -28,7 +29,7 @@ Add a maven dependency to your project.
 <dependency>
     <groupId>io.ceresdb</groupId>
     <artifactId>ceresdb-proto-internal</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
