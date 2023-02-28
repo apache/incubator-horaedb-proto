@@ -34,7 +34,6 @@ message Endpoint {
 message Route {
   string table = 1;
   Endpoint endpoint = 2;
-  bytes ext = 3;
 }
 
 message RouteResponse {
