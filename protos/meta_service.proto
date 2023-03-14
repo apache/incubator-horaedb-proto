@@ -10,6 +10,8 @@ service CeresmetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
   rpc GetTablesOfShards(GetTablesOfShardsRequest)
       returns (GetTablesOfShardsResponse) {}
+  rpc AllocTable(AllocTableRequest) returns (AllocTableResponse){}
+  rpc CommitDDL(CommitDDLRequest) returns (CommitDDLResponse){}
   rpc CreateTable(CreateTableRequest) returns (CreateTableResponse) {}
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
@@ -45,6 +47,34 @@ message CreateTableRequest {
   bool create_if_not_exist = 6;
   map<string, string> options = 7;
   PartitionTableInfo partition_table_info = 8;
+}
+
+message AllocTableRequest{
+  RequestHeader header = 1;
+
+  string schema_name = 2;
+  string table_name = 3;
+}
+
+message AllocTableResponse{
+  common.ResponseHeader header = 1;
+
+  uint64 table_id = 2;
+  uint64 shard_id = 3;
+  uint64 procedure_id = 4;
+}
+
+message CommitDDLRequest{
+  RequestHeader header = 1;
+
+  uint64 table_id = 2;
+  uint64 procedure_id = 3;
+}
+
+message CommitDDLResponse{
+  common.ResponseHeader header = 1;
+
+  bool success = 2;
 }
 
 message PartitionTableInfo {
