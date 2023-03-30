@@ -5,12 +5,14 @@ package remote_engine;
 
 import "engine/schema.proto";
 import "engine/time_range.proto";
+import "cluster.proto";
 import "common.proto";
 import "storage.proto";
 
 service RemoteEngineService {
   rpc Read(ReadRequest) returns (stream ReadResponse) {}
   rpc Write(WriteRequest) returns (WriteResponse) {}
+  rpc GetTableInfo(GetTableInfoRequest) returns (GetTableInfoResponse) {}
 }
 
 message TableIdentifier {
@@ -73,4 +75,25 @@ message WriteRequest {
 message WriteResponse {
   common.ResponseHeader header = 1;
   uint64 affected_rows = 2;
+}
+
+message GetTableInfoRequest {
+  TableIdentifier table = 1;
+}
+
+message TableInfo {
+  string catalog_name = 1;
+  string schema_name = 2;
+  uint32 schema_id = 3;
+  string table_name = 4;
+  uint64 table_id = 5;
+  schema.TableSchema table_schema = 6;
+  string engine = 7;
+  map<string, string> options = 8;
+  cluster.PartitionInfo partition_info = 9;
+}
+
+message GetTableInfoResponse {
+  common.ResponseHeader header = 1;
+  TableInfo table_info = 2;
 }
