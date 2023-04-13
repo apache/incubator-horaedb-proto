@@ -105,12 +105,6 @@ message WriteBatchRequest {
 
 message WriteBatchResponse {
   common.ResponseHeader header = 1;
-  repeated OneWriteResult results = 2;
-}
-
-message OneWriteResult {
-  string table = 1;
   uint64 success = 2;
   uint64 failed = 3;
-  string msg = 4;
 }
