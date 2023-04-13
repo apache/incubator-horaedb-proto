@@ -97,3 +97,7 @@ message GetTableInfoResponse {
   common.ResponseHeader header = 1;
   TableInfo table_info = 2;
 }
+
+message WriteBatchRequest {
+  repeated WriteRequest batch = 1;
+}
