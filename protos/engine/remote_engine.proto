@@ -109,7 +109,8 @@ message WriteBatchResponse {
 }
 
 message OneWriteResult {
-  uint64 success = 1;
-  uint64 failed = 2;
-  string msg = 3;
+  string table = 1;
+  uint64 success = 2;
+  uint64 failed = 3;
+  string msg = 4;
 }
