@@ -13,6 +13,7 @@ service RemoteEngineService {
   rpc Read(ReadRequest) returns (stream ReadResponse) {}
   rpc Write(WriteRequest) returns (WriteResponse) {}
   rpc GetTableInfo(GetTableInfoRequest) returns (GetTableInfoResponse) {}
+  rpc WriteBatch(WriteBatchRequest) returns (WriteResponse) {}
 }
 
 message TableIdentifier {
@@ -96,4 +97,8 @@ message TableInfo {
 message GetTableInfoResponse {
   common.ResponseHeader header = 1;
   TableInfo table_info = 2;
+}
+
+message WriteBatchRequest {
+  repeated WriteRequest batch = 1;
 }
