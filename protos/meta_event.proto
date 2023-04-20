@@ -102,3 +102,7 @@ message ChangeShardRoleRequest {}
 message ChangeShardRoleResponse {
   common.ResponseHeader header = 1;
 }
+
+message ShardLockValue {
+  string node_name = 1;
+}
