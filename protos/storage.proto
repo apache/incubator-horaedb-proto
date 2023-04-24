@@ -14,6 +14,7 @@ service StorageService {
   rpc StreamWrite(stream WriteRequest) returns (WriteResponse) {}
   rpc SqlQuery(SqlQueryRequest) returns (SqlQueryResponse) {}
   rpc StreamSqlQuery(SqlQueryRequest) returns (stream SqlQueryResponse) {}
+  rpc PromRemoteQuery(PrometheusRemoteQueryRequest) returns (PrometheusRemoteQueryResponse) {}
   // This interface is mainly for testing now
   rpc PromQuery(PrometheusQueryRequest) returns (PrometheusQueryResponse) {}
 }
@@ -136,4 +137,16 @@ message PrometheusQueryResponse {
   common.ResponseHeader header = 1;
   // Samples within a time series must be ordered by time.
   repeated prometheus.TimeSeries timeseries = 2;
+}
+
+message PrometheusRemoteQueryRequest {
+  RequestContext context = 1;
+  // Encoded query for https://github.com/prometheus/prometheus/blob/v2.43.0/prompb/remote.proto#L67
+  bytes query = 2;
+}
+
+message PrometheusRemoteQueryResponse {
+  common.ResponseHeader header = 1;
+  // Encoded response for https://github.com/prometheus/prometheus/blob/v2.43.0/prompb/remote.proto#L74
+  bytes response = 2;
 }
