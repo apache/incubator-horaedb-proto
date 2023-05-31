@@ -48,8 +48,9 @@ message KeyPartitionInfo {
 // cluster 2: v1/cluster/2 -> ceresmeta.Cluster
 message Cluster {
   enum TopologyType {
-    STATIC = 0;
-    DYNAMIC = 1;
+    UNKNOWN = 0;
+    STATIC  = 1;
+    DYNAMIC = 2;
   }
 
   uint32 id = 1;
