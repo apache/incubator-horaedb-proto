@@ -33,6 +33,8 @@ message ColumnSchema {
   oneof default_value {
     bytes serde_json = 7;
   }
+  // Is the column used as dictionary
+  bool is_dictionary = 8;
 }
 
 // Data type of column
