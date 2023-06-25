@@ -70,10 +70,18 @@ impl Builder {
     }
 }
 
+const ENABLE_VENDOR_ENV: &str = "CERESDBPROTO_ENABLE_VENDORED";
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Download the protoc and set the path for tonic_build.
-    let protoc_path = protoc_bin_vendored::protoc_bin_path().map_err(|e| Box::new(e))?;
-    std::env::set_var("PROTOC", protoc_path.as_os_str());
+
+    println!("cargo:rerun-if-env-changed={}", ENABLE_VENDOR_ENV);
+
+    let enable_vendor = std::env::var(ENABLE_VENDOR_ENV).unwrap_or("true".to_string());
+    if "true" == enable_vendor {
+        let protoc_path = protoc_bin_vendored::protoc_bin_path().map_err(|e| Box::new(e))?;
+        std::env::set_var("PROTOC", protoc_path.as_os_str());
+    }
 
     // Build protos.
     let out_dir = std::env::var("OUT_DIR").map_err(|e| Box::new(e))?;
