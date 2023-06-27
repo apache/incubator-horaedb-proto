@@ -85,9 +85,7 @@ message AlterOptionsMeta {
 message AllocSstIdMeta {
   uint32 space_id = 1;
   uint64 table_id = 2;
-  uint64 last_file_id = 3;
-  uint64 max_file_id = 4;
-  uint64 alloc_step = 5;
+  uint64 max_file_id = 3;
 }
 
 // Meta update data to persist
