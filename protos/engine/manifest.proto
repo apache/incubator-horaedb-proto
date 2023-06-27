@@ -82,7 +82,7 @@ message AlterOptionsMeta {
 }
 
 // Meta data of sst id update
-message AlterSstIdMeta {
+message AllocSstIdMeta {
   uint32 space_id = 1;
   uint64 table_id = 2;
   uint64 last_file_id = 3;
@@ -98,7 +98,7 @@ message MetaUpdate {
     AlterSchemaMeta alter_schema = 3;
     AlterOptionsMeta alter_options = 4;
     DropTableMeta drop_table = 5;
-    AlterSstIdMeta alter_sst_id = 6;
+    AllocSstIdMeta alloc_sst_id = 6;
   }
 }
 
