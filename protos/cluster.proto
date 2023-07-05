@@ -65,6 +65,7 @@ message Cluster {
   uint64 modified_at = 8;
   bool enable_schedule = 9;
   TopologyType topology_type = 10;
+  uint32 max_concurrent_open_shard_batch_size = 11;
 }
 
 // example:
