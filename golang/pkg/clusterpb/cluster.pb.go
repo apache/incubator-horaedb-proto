@@ -536,11 +536,12 @@ type Cluster struct {
 	ShardTotal        uint32 `protobuf:"varint,5,opt,name=shard_total,json=shardTotal,proto3" json:"shard_total,omitempty"`
 	CreatedAt         uint64 `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Deprecated: This field is deprecated after CeresDB v1.2.0 .
-	PartitionTableRatioOfNodes  uint32               `protobuf:"varint,7,opt,name=partition_table_ratio_of_nodes,json=partitionTableRatioOfNodes,proto3" json:"partition_table_ratio_of_nodes,omitempty"`
-	ModifiedAt                  uint64               `protobuf:"varint,8,opt,name=modified_at,json=modifiedAt,proto3" json:"modified_at,omitempty"`
-	EnableSchedule              bool                 `protobuf:"varint,9,opt,name=enable_schedule,json=enableSchedule,proto3" json:"enable_schedule,omitempty"`
-	TopologyType                Cluster_TopologyType `protobuf:"varint,10,opt,name=topology_type,json=topologyType,proto3,enum=cluster.Cluster_TopologyType" json:"topology_type,omitempty"`
-	ProcedureExecutingBatchSize uint32               `protobuf:"varint,11,opt,name=procedure_executing_batch_size,json=procedureExecutingBatchSize,proto3" json:"procedure_executing_batch_size,omitempty"`
+	PartitionTableRatioOfNodes uint32               `protobuf:"varint,7,opt,name=partition_table_ratio_of_nodes,json=partitionTableRatioOfNodes,proto3" json:"partition_table_ratio_of_nodes,omitempty"`
+	ModifiedAt                 uint64               `protobuf:"varint,8,opt,name=modified_at,json=modifiedAt,proto3" json:"modified_at,omitempty"`
+	EnableSchedule             bool                 `protobuf:"varint,9,opt,name=enable_schedule,json=enableSchedule,proto3" json:"enable_schedule,omitempty"`
+	TopologyType               Cluster_TopologyType `protobuf:"varint,10,opt,name=topology_type,json=topologyType,proto3,enum=cluster.Cluster_TopologyType" json:"topology_type,omitempty"`
+	// The maximum number of procedures in a single batch
+	ProcedureExecutingBatchSize uint32 `protobuf:"varint,11,opt,name=procedure_executing_batch_size,json=procedureExecutingBatchSize,proto3" json:"procedure_executing_batch_size,omitempty"`
 }
 
 func (x *Cluster) Reset() {
