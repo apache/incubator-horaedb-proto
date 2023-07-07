@@ -61,6 +61,7 @@ message VersionEditMeta {
   uint64 flushed_sequence = 3;
   repeated AddFileMeta files_to_add = 4;
   repeated DeleteFileMeta files_to_delete = 5;
+  uint64 max_file_id = 6;
 }
 
 // Meta data of schema update.
