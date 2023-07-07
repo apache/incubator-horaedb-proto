@@ -61,6 +61,7 @@ message VersionEditMeta {
   uint64 flushed_sequence = 3;
   repeated AddFileMeta files_to_add = 4;
   repeated DeleteFileMeta files_to_delete = 5;
+  uint64 max_file_id = 6;
 }
 
 // Meta data of schema update.
@@ -81,13 +82,6 @@ message AlterOptionsMeta {
   TableOptions options = 3;
 }
 
-// Meta data of sst id update
-message AllocSstIdMeta {
-  uint32 space_id = 1;
-  uint64 table_id = 2;
-  uint64 max_file_id = 3;
-}
-
 // Meta update data to persist
 message MetaUpdate {
   oneof meta {
@@ -96,7 +90,6 @@ message MetaUpdate {
     AlterSchemaMeta alter_schema = 3;
     AlterOptionsMeta alter_options = 4;
     DropTableMeta drop_table = 5;
-    AllocSstIdMeta alloc_sst_id = 6;
   }
 }
 
