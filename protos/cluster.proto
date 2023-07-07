@@ -65,6 +65,9 @@ message Cluster {
   uint64 modified_at = 8;
   bool enable_schedule = 9;
   TopologyType topology_type = 10;
+  // The maximum number of concurrent executing procedures in a single `BatchProcedure`,
+  // it is only used in `TransferLeaderBatchProcedure` now.
+  uint32 procedure_executing_batch_size = 11;
 }
 
 // example:
