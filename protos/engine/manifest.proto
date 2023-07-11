@@ -116,6 +116,7 @@ message TableOptions {
   // is still unknown.
   bool sampling_segment_duration = 11;
   StorageFormatHint storage_format_hint = 12;
+  bool disable_index_for_non_tag_column = 13;
 }
 
 enum UpdateMode {
