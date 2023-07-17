@@ -53,6 +53,11 @@ message Cluster {
     DYNAMIC = 2;
   }
 
+  enum NodePickStrategy {
+    UNIFORMITY = 0;
+    CONSISTENT = 1;
+  }
+
   uint32 id = 1;
   string name = 2;
   uint32 min_node_count = 3;
@@ -68,6 +73,9 @@ message Cluster {
   // The maximum number of concurrent executing procedures in a single `BatchProcedure`,
   // it is only used in `TransferLeaderBatchProcedure` now.
   uint32 procedure_executing_batch_size = 11;
+  // The strategy used by the scheduler to assign nodes to shards,
+  // it will affect the distribution of shards on each node.
+  NodePickStrategy node_pick_strategy = 12;
 }
 
 // example:
