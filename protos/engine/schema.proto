@@ -5,14 +5,14 @@ package schema;
 
 // Table Schema
 message TableSchema {
-    // Schema of each column
-    repeated ColumnSchema columns = 1;
-    // Version of the schema
-    uint32 version = 2;
-    // Id of timestamp key column
-    uint32 timestamp_id = 3;
-    // Ids of primary keys
-    repeated uint32 primary_key_ids = 4;
+  // Schema of each column
+  repeated ColumnSchema columns = 1;
+  // Version of the schema
+  uint32 version = 2;
+  // Id of timestamp key column
+  uint32 timestamp_id = 3;
+  // Ids of primary keys
+  repeated uint32 primary_key_ids = 4;
 }
 
 // Column schema

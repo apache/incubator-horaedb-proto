@@ -56,7 +56,7 @@ message ReadRequest {
 message ReadResponse {
   common.ResponseHeader header = 1;
   oneof output {
-      storage.ArrowPayload arrow = 2;
+    storage.ArrowPayload arrow = 2;
   }
 }
 
@@ -64,7 +64,7 @@ message RowGroup {
   int64 min_timestamp = 1;
   int64 max_timestamp = 2;
   oneof rows {
-      storage.ArrowPayload arrow = 3;
+    storage.ArrowPayload arrow = 3;
   }
 }
 
