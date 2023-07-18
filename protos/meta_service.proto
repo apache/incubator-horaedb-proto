@@ -143,15 +143,15 @@ message NodeHeartbeatRequest {
 
 message ShardInfo {
   enum Status {
-    PartialOpen = 0;
-    Ready = 1;
+    Ready = 0;
+    PartialOpen = 1;
   }
 
   uint32 id = 1;
   cluster.ShardRole role = 2;
   uint64 version = 3;
   // When status is missing, it means Ready
-  Status status = 4;
+  optional Status status = 4;
 }
 
 message NodeInfo {
