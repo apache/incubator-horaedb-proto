@@ -142,7 +142,7 @@ message NodeHeartbeatRequest {
 }
 
 message ShardInfo {
-  enum Status {
+   enum Status {
     PartialOpen = 0;
     Ready = 1;
   }
