@@ -68,7 +68,6 @@ message Selector {
   int64 range = 8;
   int64 offset = 9;
   string field = 10;
-
 }
 
 message Sample {
