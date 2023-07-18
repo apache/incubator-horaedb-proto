@@ -1348,7 +1348,8 @@ type PrometheusRemoteQueryRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	Context *RequestContext `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
-	// Encoded query for https://github.com/prometheus/prometheus/blob/v2.43.0/prompb/remote.proto#L67
+	// Encoded query for
+	// https://github.com/prometheus/prometheus/blob/v2.43.0/prompb/remote.proto#L67
 	Query []byte `protobuf:"bytes,2,opt,name=query,proto3" json:"query,omitempty"`
 }
 
@@ -1404,7 +1405,8 @@ type PrometheusRemoteQueryResponse struct {
 	unknownFields protoimpl.UnknownFields
 
 	Header *commonpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	// Encoded response for https://github.com/prometheus/prometheus/blob/v2.43.0/prompb/remote.proto#L74
+	// Encoded response for
+	// https://github.com/prometheus/prometheus/blob/v2.43.0/prompb/remote.proto#L74
 	Response []byte `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
 }
 
