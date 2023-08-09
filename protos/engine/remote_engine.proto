@@ -60,11 +60,17 @@ message ReadResponse {
   }
 }
 
+message ContiguousRows {
+  uint32 schema_version = 1;
+  repeated bytes encoded_rows = 2;
+}
+
 message RowGroup {
   int64 min_timestamp = 1;
   int64 max_timestamp = 2;
   oneof rows {
     storage.ArrowPayload arrow = 3;
+    ContiguousRows contiguous = 4;
   }
 }
 
