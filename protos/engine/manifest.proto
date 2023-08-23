@@ -44,6 +44,7 @@ message AddFileMeta {
   uint64 size = 5;
   uint64 row_num = 6;
   StorageFormat storage_format = 7;
+  repeated string associated_files = 8;
 }
 
 // Meta data of the file to delete
