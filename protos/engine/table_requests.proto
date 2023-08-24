@@ -11,9 +11,11 @@ message WriteRequest {
   // Version of row encoding method
   uint32 version = 1;
   // Schema of rows
-  schema.TableSchema schema = 2;
-  // Rows in bytes
   //
-  // Each row is encoded in the same format as memtable
+  // Only used when version == 0
+  schema.TableSchema schema = 2;
+  // Rows in bytes when version == 0
   repeated bytes rows = 3;
+  // Columns in bytes when version == 1
+  repeated bytes cols = 4;
 }
