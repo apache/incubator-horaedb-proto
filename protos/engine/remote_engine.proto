@@ -14,6 +14,7 @@ service RemoteEngineService {
   rpc Write(WriteRequest) returns (WriteResponse) {}
   rpc GetTableInfo(GetTableInfoRequest) returns (GetTableInfoResponse) {}
   rpc WriteBatch(WriteBatchRequest) returns (WriteResponse) {}
+  rpc ExecutePhysicalPlan(ExecutePlanRequest) returns (stream ReadResponse) {}
 }
 
 message TableIdentifier {
@@ -107,4 +108,36 @@ message GetTableInfoResponse {
 
 message WriteBatchRequest {
   repeated WriteRequest batch = 1;
+}
+
+message ExtensionNode {
+  oneof typed_extension {
+    DistSqlQueryExtensionNode dist_sql_query = 1;
+  }
+}
+
+message DistSqlQueryExtensionNode {
+  oneof typed_plan {
+    UnreolvedSubScan unreolved_sub_scan = 1;
+  }
+}
+
+message UnreolvedSubScan {
+  TableIdentifier table = 1;
+  TableReadRequest read_request = 2;
+}
+
+message ExecContext {
+  uint64 request_id = 1;
+  string default_catalog = 2;
+  string default_schema = 3;
+  // -1 means no timeout
+  int64 timeout_ms = 4;
+}
+
+message ExecutePlanRequest {
+  ExecContext context = 1;
+  oneof physical_plan {
+    bytes datafusion = 2;
+  }
 }
