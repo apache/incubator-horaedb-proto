@@ -117,12 +117,10 @@ message ExtensionNode {
 }
 
 message DistSqlQueryExtensionNode {
-  oneof typed_plan {
-    UnreolvedSubScan unreolved_sub_scan = 1;
-  }
+  UnresolvedSubScan unresolved_sub_scan = 1;
 }
 
-message UnreolvedSubScan {
+message UnresolvedSubScan {
   TableIdentifier table = 1;
   TableReadRequest read_request = 2;
 }
