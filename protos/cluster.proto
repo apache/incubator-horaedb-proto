@@ -19,6 +19,7 @@ message PartitionInfo {
   oneof info {
     HashPartitionInfo hash = 1;
     KeyPartitionInfo key = 2;
+    RandomPartitionInfo random = 3;
   }
 }
 
@@ -41,6 +42,10 @@ message KeyPartitionInfo {
   repeated PartitionDefinition definitions = 2;
   repeated string partition_key = 3;
   bool linear = 4;
+}
+
+message RandomPartitionInfo {
+  repeated PartitionDefinition definitions = 1;
 }
 
 // example:
