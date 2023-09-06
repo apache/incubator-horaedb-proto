@@ -45,8 +45,7 @@ message KeyPartitionInfo {
 }
 
 message RandomPartitionInfo {
-  int32 version = 1;
-  repeated PartitionDefinition definitions = 2;
+  repeated PartitionDefinition definitions = 1;
 }
 
 // example:
