@@ -138,4 +138,5 @@ message ExecutePlanRequest {
   oneof physical_plan {
     bytes datafusion = 2;
   }
+  TableIdentifier table = 3;
 }
