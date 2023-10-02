@@ -23,11 +23,20 @@ message RowGroupFilter {
   repeated ColumnFilter column_filters = 1;
 }
 
+message ColumnValueSet {
+  message StringSet {
+    repeated string values = 1;
+  }
+
+  oneof value {
+    StringSet string_set = 1;
+  }
+}
+
 message ParquetFilter {
   repeated RowGroupFilter row_group_filters = 1;
 }
 
-/// Used by ssts encoded by parquet, incuding columar&hybrid storage formats.
 message ParquetMetaData {
   // Min key in the sst
   bytes min_key = 1;
@@ -39,5 +48,9 @@ message ParquetMetaData {
   time_range.TimeRange time_range = 4;
   schema.TableSchema schema = 5;
   ParquetFilter filter = 6;
+  // Deprecated, used in hybrid format.
   repeated uint32 collapsible_cols_idx = 7;
+  // Optional column values, used to convert `not in` filter to `in`.
+  // Only will set when column's cardinality is low.
+  repeated ColumnValueSet column_values = 8;
 }
