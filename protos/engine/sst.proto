@@ -32,11 +32,11 @@ message ColumnValue {
     StringSet string_set = 1;
   }
 }
+
 message ParquetFilter {
   repeated RowGroupFilter row_group_filters = 1;
 }
 
-/// Used by ssts encoded by parquet, incuding columar&hybrid storage formats.
 message ParquetMetaData {
   // Min key in the sst
   bytes min_key = 1;
@@ -50,7 +50,7 @@ message ParquetMetaData {
   ParquetFilter filter = 6;
   // Deprecated, used in hybrid format.
   repeated uint32 collapsible_cols_idx = 7;
-  // Optional column values, used to convert `not in` fitler to `in`.
-  // Only set column when its cardinality is low.
+  // Optional column values, used to convert `not in` filter to `in`.
+  // Only will set when column's cardinality is low.
   repeated ColumnValue column_values = 8;
 }
