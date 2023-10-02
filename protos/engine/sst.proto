@@ -23,7 +23,7 @@ message RowGroupFilter {
   repeated ColumnFilter column_filters = 1;
 }
 
-message ColumnValue {
+message ColumnValueSet {
   message StringSet {
     repeated string values = 1;
   }
@@ -52,5 +52,5 @@ message ParquetMetaData {
   repeated uint32 collapsible_cols_idx = 7;
   // Optional column values, used to convert `not in` filter to `in`.
   // Only will set when column's cardinality is low.
-  repeated ColumnValue column_values = 8;
+  repeated ColumnValueSet column_values = 8;
 }
