@@ -15,6 +15,8 @@ service RemoteEngineService {
   rpc GetTableInfo(GetTableInfoRequest) returns (GetTableInfoResponse) {}
   rpc WriteBatch(WriteBatchRequest) returns (WriteResponse) {}
   rpc ExecutePhysicalPlan(ExecutePlanRequest) returns (stream ReadResponse) {}
+  rpc AlterTableSchema(AlterTableSchemaRequest) returns (AlterTableSchemaResponse) {}
+  rpc AlterTableOptions(AlterTableOptionsRequest) returns (AlterTableOptionsResponse) {}
 }
 
 message TableIdentifier {
@@ -139,4 +141,23 @@ message ExecutePlanRequest {
     bytes datafusion = 2;
   }
   TableIdentifier table = 3;
+}
+
+message AlterTableSchemaRequest {
+  TableIdentifier table = 1;
+  schema.TableSchema table_schema = 2;
+  uint32 pre_schema_version = 3;
+}
+
+message AlterTableSchemaResponse {
+  common.ResponseHeader header = 1;
+}
+
+message AlterTableOptionsRequest {
+  TableIdentifier table = 1;
+  map<string, string> options = 2;
+}
+
+message AlterTableOptionsResponse {
+  common.ResponseHeader header = 1;
 }
