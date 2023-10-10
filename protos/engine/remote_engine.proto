@@ -15,8 +15,10 @@ service RemoteEngineService {
   rpc GetTableInfo(GetTableInfoRequest) returns (GetTableInfoResponse) {}
   rpc WriteBatch(WriteBatchRequest) returns (WriteResponse) {}
   rpc ExecutePhysicalPlan(ExecutePlanRequest) returns (stream ReadResponse) {}
-  rpc AlterTableSchema(AlterTableSchemaRequest) returns (AlterTableSchemaResponse) {}
-  rpc AlterTableOptions(AlterTableOptionsRequest) returns (AlterTableOptionsResponse) {}
+  rpc AlterTableSchema(AlterTableSchemaRequest)
+      returns (AlterTableSchemaResponse) {}
+  rpc AlterTableOptions(AlterTableOptionsRequest)
+      returns (AlterTableOptionsResponse) {}
 }
 
 message TableIdentifier {
