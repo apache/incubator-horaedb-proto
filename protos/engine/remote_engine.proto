@@ -65,9 +65,15 @@ message ReadResponse {
   }
 }
 
+message ColumnDesc {
+  uint32 id = 1;
+  schema.DataType typ = 2;
+}
+
 message ContiguousRows {
   uint32 schema_version = 1;
   repeated bytes encoded_rows = 2;
+  repeated ColumnDesc column_descs = 3;
 }
 
 message RowGroup {
