@@ -11,8 +11,6 @@ enum NodeState {
 enum ShardRole {
   LEADER = 0;
   FOLLOWER = 1;
-  PENDING_LEADER = 2;
-  PENDING_FOLLOWER = 3;
 }
 
 message PartitionInfo {
