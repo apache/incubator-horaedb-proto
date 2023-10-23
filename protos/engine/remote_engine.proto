@@ -132,7 +132,7 @@ message DistSqlQueryExtensionNode {
 
 message UnresolvedSubScan {
   TableIdentifier table = 1;
-  TableReadRequest read_request = 2;
+  TableScanContext table_scan_ctx = 2;
 }
 
 message ExecContext {
