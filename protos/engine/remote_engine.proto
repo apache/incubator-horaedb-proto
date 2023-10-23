@@ -169,3 +169,10 @@ message AlterTableOptionsRequest {
 message AlterTableOptionsResponse {
   common.ResponseHeader header = 1;
 }
+
+message TableScanContext {
+  uint64 batch_size = 1;
+  uint64 read_parallelism = 2;
+  schema.ProjectedSchema projected_schema = 3;
+  Predicate predicate = 4;
+}
