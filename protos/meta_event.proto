@@ -26,7 +26,6 @@ service MetaEventService {
 
 message UpdateShardInfo {
   meta_service.ShardInfo curr_shard_info = 1;
-  uint64 prev_version = 2;
 }
 
 message OpenShardRequest {
@@ -56,6 +55,7 @@ message CreateTableOnShardRequest {
 
 message CreateTableOnShardResponse {
   common.ResponseHeader header = 1;
+  uint64 cur_version = 2;
 }
 
 message DropTableOnShardRequest {
@@ -65,6 +65,7 @@ message DropTableOnShardRequest {
 
 message DropTableOnShardResponse {
   common.ResponseHeader header = 1;
+  uint64 cur_version = 2;
 }
 
 message OpenTableOnShardRequest {
