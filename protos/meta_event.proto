@@ -26,6 +26,8 @@ service MetaEventService {
 
 message UpdateShardInfo {
   meta_service.ShardInfo curr_shard_info = 1;
+  // Deprecated: prev_version is no longer valid. Use version in curr_shard_info to get the current version.
+  uint64 prev_version = 2;
 }
 
 message OpenShardRequest {
@@ -55,7 +57,7 @@ message CreateTableOnShardRequest {
 
 message CreateTableOnShardResponse {
   common.ResponseHeader header = 1;
-  uint64 cur_version = 2;
+  uint64 latest_version = 2;
 }
 
 message DropTableOnShardRequest {
@@ -65,7 +67,7 @@ message DropTableOnShardRequest {
 
 message DropTableOnShardResponse {
   common.ResponseHeader header = 1;
-  uint64 cur_version = 2;
+  uint64 latest_version = 2;
 }
 
 message OpenTableOnShardRequest {
