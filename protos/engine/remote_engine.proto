@@ -135,12 +135,19 @@ message UnresolvedSubScan {
   TableScanContext table_scan_ctx = 2;
 }
 
+enum QueryPriority {
+  High = 0;
+  Low = 1;
+}
+
 message ExecContext {
   uint64 request_id = 1;
   string default_catalog = 2;
   string default_schema = 3;
   // -1 means no timeout
   int64 timeout_ms = 4;
+  QueryPriority priority = 5;
+  string displayable_query = 6;
 }
 
 message ExecutePlanRequest {
