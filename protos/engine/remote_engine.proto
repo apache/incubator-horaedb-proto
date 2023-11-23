@@ -147,6 +147,7 @@ message ExecContext {
   // -1 means no timeout
   int64 timeout_ms = 4;
   RequestPriority priority = 5;
+  string sql = 6;
 }
 
 message ExecutePlanRequest {
