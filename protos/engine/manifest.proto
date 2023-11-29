@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-// Copyright 2023 CeresDB Project Authors. Licensed under Apache-2.0.
-
 // Manifest of engine
 syntax = "proto3";
 package manifest;
@@ -142,7 +140,7 @@ enum UpdateMode {
 
 message StorageFormatHint {
   oneof hint {
-    // Auto means the storage format is automatically determined by CeresDB and
+    // Auto means the storage format is automatically determined by HoraeDB and
     // its value have no specific meaning.
     int32 auto = 1;
     StorageFormat specific = 2;

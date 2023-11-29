@@ -82,7 +82,7 @@ impl Builder {
     }
 }
 
-const ENABLE_VENDOR_ENV: &str = "CERESDBPROTO_ENABLE_VENDORED";
+const ENABLE_VENDOR_ENV: &str = "HORAEDBPROTO_ENABLE_VENDORED";
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Download the protoc and set the path for tonic_build.

@@ -28,7 +28,7 @@ Add a maven dependency to your project.
 ```xml
 <dependency>
     <groupId>io.ceresdb</groupId>
-    <artifactId>ceresdb-proto-internal</artifactId>
+    <artifactId>horaedb-proto-internal</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```

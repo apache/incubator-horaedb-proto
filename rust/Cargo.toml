@@ -13,13 +13,13 @@
 # limitations under the License.
 
 [package]
-name = "ceresdbproto"
+name = "horaedbproto"
 version = "1.0.23"
-authors = ["CeresDB Authors <ceresdbservice@gmail.com>"]
+authors = ["HoraeDB Authors"]
 edition = "2021"
-repository = "https://github.com/CeresDB/ceresdbproto"
+repository = "https://github.com/CeresDB/horaedbproto"
 license = "Apache-2.0"
-description = "Protobuf specs for CeresDB"
+description = "Protobuf specs for HoraeDB"
 readme = "../README.md"
 
 [dependencies]

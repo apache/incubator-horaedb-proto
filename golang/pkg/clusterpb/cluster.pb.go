@@ -576,8 +576,8 @@ func (x *RandomPartitionInfo) GetDefinitions() []*PartitionDefinition {
 }
 
 // example:
-// cluster 1: v1/cluster/1 -> ceresmeta.Cluster
-// cluster 2: v1/cluster/2 -> ceresmeta.Cluster
+// cluster 1: v1/cluster/1 -> horaemeta.Cluster
+// cluster 2: v1/cluster/2 -> horaemeta.Cluster
 type Cluster struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -590,7 +590,7 @@ type Cluster struct {
 	ReplicationFactor uint32 `protobuf:"varint,4,opt,name=replication_factor,json=replicationFactor,proto3" json:"replication_factor,omitempty"`
 	ShardTotal        uint32 `protobuf:"varint,5,opt,name=shard_total,json=shardTotal,proto3" json:"shard_total,omitempty"`
 	CreatedAt         uint64 `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	// Deprecated: This field is deprecated after CeresDB v1.2.0 .
+	// Deprecated: This field is deprecated after HoraeDB v1.2.0 .
 	PartitionTableRatioOfNodes uint32               `protobuf:"varint,7,opt,name=partition_table_ratio_of_nodes,json=partitionTableRatioOfNodes,proto3" json:"partition_table_ratio_of_nodes,omitempty"`
 	ModifiedAt                 uint64               `protobuf:"varint,8,opt,name=modified_at,json=modifiedAt,proto3" json:"modified_at,omitempty"`
 	EnableSchedule             bool                 `protobuf:"varint,9,opt,name=enable_schedule,json=enableSchedule,proto3" json:"enable_schedule,omitempty"`
@@ -712,8 +712,8 @@ func (x *Cluster) GetProcedureExecutingBatchSize() uint32 {
 // example:
 // cluster 1: v1/cluster/1/view/latest_version -> 99
 //
-//	v1/cluster/1/view/99 -> ceresmeta.ClusterView
-//	v1/cluster/1/view/98 -> ceresmeta.ClusterView
+//	v1/cluster/1/view/99 -> horaemeta.ClusterView
+//	v1/cluster/1/view/98 -> horaemeta.ClusterView
 type ClusterView struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -866,10 +866,10 @@ func (x *ShardNode) GetNode() string {
 }
 
 // example:
-// cluster 1: v1/cluster/1/schema/1 -> ceresmeta.Schema
+// cluster 1: v1/cluster/1/schema/1 -> horaemeta.Schema
 //
-//	v1/cluster/1/schema/2 -> ceresmeta.Schema
-//	v1/cluster/1/schema/3 -> ceresmeta.Schema
+//	v1/cluster/1/schema/2 -> horaemeta.Schema
+//	v1/cluster/1/schema/3 -> horaemeta.Schema
 type Schema struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -942,11 +942,11 @@ func (x *Schema) GetCreatedAt() uint64 {
 }
 
 // example:
-// cluster 1: v1/cluster/1/schema/1/table/1 -> ceresmeta.Table
+// cluster 1: v1/cluster/1/schema/1/table/1 -> horaemeta.Table
 //
-//	v1/cluster/1/schema/1/table/2 -> ceresmeta.Table
-//	v1/cluster/1/schema/1/table/3 -> ceresmeta.Table
-//	v1/cluster/1/schema/2/table/4 -> ceresmeta.Table
+//	v1/cluster/1/schema/1/table/2 -> horaemeta.Table
+//	v1/cluster/1/schema/1/table/3 -> horaemeta.Table
+//	v1/cluster/1/schema/2/table/4 -> horaemeta.Table
 //
 // cluster 1 tableName-> ID :
 //
@@ -1044,10 +1044,10 @@ func (x *Table) GetPartitionInfo() *PartitionInfo {
 // example:
 // cluster 1: v1/cluster/1/shard_view/1/latest_version -> 9
 //
-//	v1/cluster/1/shard_view/1/9 -> ceresmeta.ShardView
-//	v1/cluster/1/shard_view/1/8 -> ceresmeta.ShardView
+//	v1/cluster/1/shard_view/1/9 -> horaemeta.ShardView
+//	v1/cluster/1/shard_view/1/8 -> horaemeta.ShardView
 //	v1/cluster/1/shard_view/2/latest_version -> 3
-//	v1/cluster/1/shard_view/2/3 -> ceresmeta.ShardView
+//	v1/cluster/1/shard_view/2/3 -> horaemeta.ShardView
 type ShardView struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1120,9 +1120,9 @@ func (x *ShardView) GetCreatedAt() uint64 {
 }
 
 // example:
-// cluster 1: v1/cluster/1/node/127.0.0.1:8081 -> value is ceresmeta.Node
+// cluster 1: v1/cluster/1/node/127.0.0.1:8081 -> value is horaemeta.Node
 //
-//	v1/cluster/1/node/127.0.0.2:8081 -> value is ceresmeta.Node
+//	v1/cluster/1/node/127.0.0.2:8081 -> value is horaemeta.Node
 type Node struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

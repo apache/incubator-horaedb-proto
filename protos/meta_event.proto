@@ -17,12 +17,12 @@
 syntax = "proto3";
 
 package meta_event;
-option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/metaeventpb";
+option go_package = "github.com/CeresDB/horaedbproto/golang/pkg/metaeventpb";
 
 import "common.proto";
 import "meta_service.proto";
 
-// The service is hosted by CeresDB to handle the events from CeresMeta.
+// The service is hosted by HoraeDB to handle the events from HoraeMeta.
 service MetaEventService {
   rpc OpenShard(OpenShardRequest) returns (OpenShardResponse) {}
   rpc CloseShard(CloseShardRequest) returns (CloseShardResponse) {}

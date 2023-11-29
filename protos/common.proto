@@ -19,7 +19,7 @@ syntax = "proto3";
 package common;
 option java_package = "io.ceresdb.proto.internal";
 option java_outer_classname = "Common";
-option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/commonpb";
+option go_package = "github.com/CeresDB/horaedbproto/golang/pkg/commonpb";
 
 message ResponseHeader {
   uint32 code = 1;
