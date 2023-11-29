@@ -1,7 +1,23 @@
+/*
+ * Copyright 2022 The HoraeDB Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 syntax = "proto3";
 
 package cluster;
-option go_package = "github.com/CeresDB/ceresdbproto/golang/pkg/clusterpb";
+option go_package = "github.com/CeresDB/horaedbproto/golang/pkg/clusterpb";
 
 enum NodeState {
   ONLINE = 0;
@@ -47,8 +63,8 @@ message RandomPartitionInfo {
 }
 
 // example:
-// cluster 1: v1/cluster/1 -> ceresmeta.Cluster
-// cluster 2: v1/cluster/2 -> ceresmeta.Cluster
+// cluster 1: v1/cluster/1 -> horaemeta.Cluster
+// cluster 2: v1/cluster/2 -> horaemeta.Cluster
 message Cluster {
   enum TopologyType {
     UNKNOWN = 0;
@@ -63,7 +79,7 @@ message Cluster {
   uint32 replication_factor = 4;
   uint32 shard_total = 5;
   uint64 created_at = 6;
-  // Deprecated: This field is deprecated after CeresDB v1.2.0 .
+  // Deprecated: This field is deprecated after HoraeDB v1.2.0 .
   uint32 partition_table_ratio_of_nodes = 7;
   uint64 modified_at = 8;
   bool enable_schedule = 9;
@@ -75,8 +91,8 @@ message Cluster {
 
 // example:
 // cluster 1: v1/cluster/1/view/latest_version -> 99
-//            v1/cluster/1/view/99 -> ceresmeta.ClusterView
-//            v1/cluster/1/view/98 -> ceresmeta.ClusterView
+//            v1/cluster/1/view/99 -> horaemeta.ClusterView
+//            v1/cluster/1/view/98 -> horaemeta.ClusterView
 message ClusterView {
   enum ClusterState {
     EMPTY = 0;
@@ -102,9 +118,9 @@ message ShardNode {
 }
 
 // example:
-// cluster 1: v1/cluster/1/schema/1 -> ceresmeta.Schema
-//            v1/cluster/1/schema/2 -> ceresmeta.Schema
-//            v1/cluster/1/schema/3 -> ceresmeta.Schema
+// cluster 1: v1/cluster/1/schema/1 -> horaemeta.Schema
+//            v1/cluster/1/schema/2 -> horaemeta.Schema
+//            v1/cluster/1/schema/3 -> horaemeta.Schema
 message Schema {
   uint32 id = 1;
   uint32 cluster_id = 2;
@@ -113,10 +129,10 @@ message Schema {
 }
 
 // example:
-// cluster 1: v1/cluster/1/schema/1/table/1 -> ceresmeta.Table
-//            v1/cluster/1/schema/1/table/2 -> ceresmeta.Table
-//            v1/cluster/1/schema/1/table/3 -> ceresmeta.Table
-//            v1/cluster/1/schema/2/table/4 -> ceresmeta.Table
+// cluster 1: v1/cluster/1/schema/1/table/1 -> horaemeta.Table
+//            v1/cluster/1/schema/1/table/2 -> horaemeta.Table
+//            v1/cluster/1/schema/1/table/3 -> horaemeta.Table
+//            v1/cluster/1/schema/2/table/4 -> horaemeta.Table
 // cluster 1 tableName-> ID :
 //            v1/cluster/1/schema/1/table_name_to_id/table1 -> 1
 //            v1/cluster/1/schema/1/table_name_to_id/table2 -> 2
@@ -133,10 +149,10 @@ message Table {
 
 // example:
 // cluster 1: v1/cluster/1/shard_view/1/latest_version -> 9
-//            v1/cluster/1/shard_view/1/9 -> ceresmeta.ShardView
-//            v1/cluster/1/shard_view/1/8 -> ceresmeta.ShardView
+//            v1/cluster/1/shard_view/1/9 -> horaemeta.ShardView
+//            v1/cluster/1/shard_view/1/8 -> horaemeta.ShardView
 //            v1/cluster/1/shard_view/2/latest_version -> 3
-//            v1/cluster/1/shard_view/2/3 -> ceresmeta.ShardView
+//            v1/cluster/1/shard_view/2/3 -> horaemeta.ShardView
 message ShardView {
   uint32 shard_id = 1;
   uint64 version = 2;
@@ -145,8 +161,8 @@ message ShardView {
 }
 
 // example:
-// cluster 1: v1/cluster/1/node/127.0.0.1:8081 -> value is ceresmeta.Node
-//            v1/cluster/1/node/127.0.0.2:8081 -> value is ceresmeta.Node
+// cluster 1: v1/cluster/1/node/127.0.0.1:8081 -> value is horaemeta.Node
+//            v1/cluster/1/node/127.0.0.2:8081 -> value is horaemeta.Node
 message Node {
   string name = 1;
   NodeStats stats = 2;
