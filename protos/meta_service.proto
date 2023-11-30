@@ -22,7 +22,7 @@ option go_package = "github.com/CeresDB/horaedbproto/golang/pkg/metaservicepb";
 import "common.proto";
 import "cluster.proto";
 
-service HoraeMetaRpcService {
+service CeresmetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
   rpc GetTablesOfShards(GetTablesOfShardsRequest)
       returns (GetTablesOfShardsResponse) {}

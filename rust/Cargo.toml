@@ -14,7 +14,7 @@
 
 [package]
 name = "horaedbproto"
-version = "1.0.23"
+version = "1.0.24"
 authors = ["HoraeDB Authors"]
 edition = "2021"
 repository = "https://github.com/CeresDB/horaedbproto"
