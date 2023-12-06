@@ -148,6 +148,7 @@ message ExecContext {
   int64 timeout_ms = 4;
   QueryPriority priority = 5;
   string displayable_query = 6;
+  string request_id_str = 7;
 }
 
 message ExecutePlanRequest {
