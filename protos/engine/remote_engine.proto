@@ -63,7 +63,7 @@ message ReadResponse {
   oneof output {
     storage.ArrowPayload arrow = 2;
   }
-  optional string metrics = 3;
+  string metrics = 3;
 }
 
 message ColumnDesc {
