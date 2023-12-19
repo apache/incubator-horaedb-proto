@@ -27,9 +27,9 @@ Add a maven dependency to your project.
 
 ```xml
 <dependency>
-    <groupId>io.ceresdb</groupId>
+    <groupId>org.apache.horaedb</groupId>
     <artifactId>horaedb-proto-internal</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -43,7 +43,7 @@ After modifying the proto files, something else for different programming langua
 
 1. Name the maven project to a new version.
 2. Rebuild the maven project lies in the `java` directory (During the build process, java code for the latest proto will be generated).
-2. Publish the build result to the central maven repository.
+3. Publish the build result to the central maven repository.
 
 ### Rust
 
@@ -52,5 +52,5 @@ As for the Rust projects that depends on this project, everything will be genera
 ### Golang
 
 1. Install the prerequisites:
-* Install [Protocol Buffers v3.20.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1) compiler.
+   * Install [Protocol Buffers v3.20.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1) compiler.
 2. Execute `make build`.
