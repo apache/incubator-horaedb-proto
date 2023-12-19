@@ -17,7 +17,7 @@
 syntax = "proto3";
 
 package cluster;
-option go_package = "github.com/CeresDB/horaedbproto/golang/pkg/clusterpb";
+option go_package = "github.com/apache/incubator-horaedbproto/golang/pkg/clusterpb";
 
 enum NodeState {
   ONLINE = 0;

@@ -22,8 +22,8 @@
 package metaeventpb
 
 import (
-	commonpb "github.com/CeresDB/horaedbproto/golang/pkg/commonpb"
-	metaservicepb "github.com/CeresDB/horaedbproto/golang/pkg/metaservicepb"
+	commonpb "github.com/apache/incubator-horaedbproto/golang/pkg/commonpb"
+	metaservicepb "github.com/apache/incubator-horaedbproto/golang/pkg/metaservicepb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

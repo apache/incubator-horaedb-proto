@@ -1,11 +1,9 @@
-# Protocol of [HoraeDB](https://github.com/CeresDB/horaedb)
+# Protocol of [HoraeDB](https://github.com/apache/incubator-horaedb)
 
 [![Crates.io](https://img.shields.io/crates/v/horaedbproto.svg)](https://crates.io/crates/horaedbproto)
-[![Go Reference](https://pkg.go.dev/badge/github.com/CeresDB/horaedbproto.svg)](https://pkg.go.dev/github.com/CeresDB/horaedbproto)
+[![Go Reference](https://pkg.go.dev/badge/github.com/apache/incubator-horaedbproto.svg)](https://pkg.go.dev/github.com/apache/incubator-horaedbproto)
 
 Protocol buffer files for HoraeDB. Projects that manage generated code of different languages are also in this repository. They acts as underlying dependency of client, server and meta.
-
----
 
 ## User Guide
 
@@ -18,7 +16,7 @@ cargo add horaedbproto
 ### Golang
 
 ```sh
-go get github.com/CeresDB/horaedbproto/golang
+go get github.com/apache/incubator-horaedbproto/golang
 ```
 
 ### Java
@@ -27,13 +25,11 @@ Add a maven dependency to your project.
 
 ```xml
 <dependency>
-    <groupId>io.ceresdb</groupId>
+    <groupId>org.apache.horaedb</groupId>
     <artifactId>horaedb-proto-internal</artifactId>
-    <version>1.0.0</version>
+    <version>${horaedb-proto-internal.version}</version>
 </dependency>
 ```
-
----
 
 ## Developer Guide
 
@@ -51,6 +47,5 @@ As for the Rust projects that depends on this project, everything will be genera
 
 ### Golang
 
-1. Install the prerequisites:
-* Install [Protocol Buffers v3.20.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1) compiler.
+1. Install [Protocol Buffers v3.20.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1) compiler.
 2. Execute `make build`.

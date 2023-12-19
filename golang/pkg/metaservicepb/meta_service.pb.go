@@ -22,8 +22,8 @@
 package metaservicepb
 
 import (
-	clusterpb "github.com/CeresDB/horaedbproto/golang/pkg/clusterpb"
-	commonpb "github.com/CeresDB/horaedbproto/golang/pkg/commonpb"
+	clusterpb "github.com/apache/incubator-horaedbproto/golang/pkg/clusterpb"
+	commonpb "github.com/apache/incubator-horaedbproto/golang/pkg/commonpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
