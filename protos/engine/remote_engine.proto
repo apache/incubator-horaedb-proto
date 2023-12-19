@@ -79,7 +79,14 @@ message ReadResponse {
   common.ResponseHeader header = 1;
   oneof output {
     storage.ArrowPayload arrow = 2;
+    // This field is used to return metric of child node when query is executed
+    // in distributed mode.
+    MetricPayload metric = 3;
   }
+}
+
+message MetricPayload {
+  string metric = 1;
 }
 
 message ColumnDesc {
