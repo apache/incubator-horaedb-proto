@@ -12,12 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-headerPath = "Apache-2.0.txt"
+headerPath = "Apache-2.0-ASF.txt"
 
 excludes = [
     "*.pb.go",
 ]
-
-[properties]
-inceptionYear = 2022
-copyrightOwner = "The HoraeDB Authors"
