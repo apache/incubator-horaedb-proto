@@ -1,4 +1,4 @@
-module github.com/CeresDB/horaedbproto/golang
+module github.com/apache/incubator-horaedbproto/golang
 
 go 1.18
 
