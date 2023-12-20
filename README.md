@@ -1,7 +1,7 @@
 # Protocol of [HoraeDB](https://github.com/apache/incubator-horaedb)
 
-[![Crates.io](https://img.shields.io/crates/v/horaedbproto.svg)](https://crates.io/crates/horaedbproto)
-[![Go Reference](https://pkg.go.dev/badge/github.com/apache/incubator-horaedbproto.svg)](https://pkg.go.dev/github.com/apache/incubator-horaedbproto)
+[![Crates.io](https://img.shields.io/crates/v/horaedb-proto.svg)](https://crates.io/crates/horaedb-proto)
+[![Go Reference](https://pkg.go.dev/badge/github.com/apache/incubator-horaedb-proto.svg)](https://pkg.go.dev/github.com/apache/incubator-horaedb-proto)
 
 Protocol buffer files for HoraeDB. Projects that manage generated code of different languages are also in this repository. They acts as underlying dependency of client, server and meta.
 
@@ -16,7 +16,7 @@ cargo add horaedbproto
 ### Golang
 
 ```sh
-go get github.com/apache/incubator-horaedbproto/golang
+go get github.com/apache/incubator-horaedb-proto/golang
 ```
 
 ### Java

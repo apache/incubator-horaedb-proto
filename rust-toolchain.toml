@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -16,14 +15,6 @@
 # specific language governing permissions and limitations
 # under the License.
 
-
-
-
-set -ex
-
-GO_PREFIX_PATH=github.com/apache/incubator-horaedb-proto/golang
-
-protoc --proto_path=../protos --go_out=. --go-grpc_out=. ../protos/cluster.proto ../protos/common.proto ../protos/meta_event.proto ../protos/meta_service.proto ../protos/meta_storage.proto ../protos/prometheus.proto ../protos/storage.proto
-
-rm -rf pkg && mv $GO_PREFIX_PATH/pkg .
-rm -rf github.com
+[toolchain]
+channel = "stable"
+components = ["rustfmt", "clippy", "rust-analyzer"]
