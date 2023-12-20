@@ -17,7 +17,7 @@
 
 set -ex
 
-GO_PREFIX_PATH=github.com/apache/incubator-horaedbproto/golang
+GO_PREFIX_PATH=github.com/apache/incubator-horaedb-proto/golang
 
 protoc --proto_path=../protos --go_out=. --go-grpc_out=. ../protos/cluster.proto ../protos/common.proto ../protos/meta_event.proto ../protos/meta_service.proto ../protos/meta_storage.proto ../protos/prometheus.proto ../protos/storage.proto
 

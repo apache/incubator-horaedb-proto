@@ -22,8 +22,8 @@
 package storagepb
 
 import (
-	commonpb "github.com/apache/incubator-horaedbproto/golang/pkg/commonpb"
-	horaeprompb "github.com/apache/incubator-horaedbproto/golang/pkg/horaeprompb"
+	commonpb "github.com/apache/incubator-horaedb-proto/golang/pkg/commonpb"
+	horaeprompb "github.com/apache/incubator-horaedb-proto/golang/pkg/horaeprompb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
