@@ -28,14 +28,24 @@ on:
       - 'protos/**'
 
 jobs:
-  formatting-check:
-    name: Formatting Check
+  check-protos:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Run clang-format style check for Protobuf files
+    - name: Check proto files
       uses: jidicula/clang-format-action@v4.11.0
       with:
         clang-format-version: '13'
         check-path: 'protos'
         fallback-style: 'google'
+  check-gopb:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Protoc
+      uses: arduino/setup-protoc@v2
+      with:
+        version: "20.1"
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Ensure generated gopb identical
+      run: make go && git diff --exit-code
