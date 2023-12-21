@@ -48,4 +48,4 @@ As for the Rust projects that depends on this project, everything will be genera
 ### Golang
 
 1. Install [Protocol Buffers v3.20.1](https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1) compiler.
-2. Execute `make build`.
+2. Execute `make go`.

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -16,14 +17,20 @@
 # specific language governing permissions and limitations
 # under the License.
 
-
-
-
 set -ex
 
-GO_PREFIX_PATH=github.com/apache/incubator-horaedb-proto/golang
+ROOT_DIR=$( dirname "$0" )
+GO_DIR="${ROOT_DIR}/golang"
+GO_PREFIX_PATH="${GO_DIR}/github.com/apache/incubator-horaedb-proto/golang"
 
-protoc --proto_path=../protos --go_out=. --go-grpc_out=. ../protos/cluster.proto ../protos/common.proto ../protos/meta_event.proto ../protos/meta_service.proto ../protos/meta_storage.proto ../protos/prometheus.proto ../protos/storage.proto
+protoc --proto_path=./protos --go_out="$GO_DIR" --go-grpc_out="$GO_DIR" \
+    ./protos/cluster.proto \
+    ./protos/common.proto \
+    ./protos/meta_event.proto \
+    ./protos/meta_service.proto \
+    ./protos/meta_storage.proto \
+    ./protos/prometheus.proto \
+    ./protos/storage.proto
 
-rm -rf pkg && mv $GO_PREFIX_PATH/pkg .
-rm -rf github.com
+rm -rf "$GO_DIR/pkg" && mv "$GO_PREFIX_PATH/pkg" "$GO_DIR"
+rm -rf "$GO_DIR/github.com"

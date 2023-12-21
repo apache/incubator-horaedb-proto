@@ -1,8 +1,7 @@
-**/target
-.idea/
+.idea
 .env
-**/.DS_Store
-**/.vscode
-src/
-# https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries
-rust/Cargo.lock
+.DS_Store
+.vscode
+
+target
+Cargo.lock

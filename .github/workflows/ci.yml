@@ -19,23 +19,34 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'protos/**'
+    branches: [ main ]
   pull_request:
-    paths:
-      - 'protos/**'
 
 jobs:
-  formatting-check:
-    name: Formatting Check
+  check:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Run clang-format style check for Protobuf files
+    - uses: korandoru/hawkeye@v4
+    - name: Check proto files
       uses: jidicula/clang-format-action@v4.11.0
       with:
         clang-format-version: '13'
         check-path: 'protos'
         fallback-style: 'google'
+    - name: Install Protoc
+      uses: arduino/setup-protoc@v1
+      with:
+        version: "3.20.1"
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '8'
+        cache: maven
+    - name: Ensure Golang generated identical
+      run: make go && git diff --exit-code
+    - name: Ensure Rust crate compiled
+      run: make rust
+    - name: Ensure Java library compiled
+      run: make java
