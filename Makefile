@@ -1,6 +1,6 @@
-.PHONY: all go rust
+.PHONY: all go rust java
 
-all: go rust
+all: go rust java
 
 dependence:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
@@ -11,3 +11,6 @@ go: dependence
 
 rust:
 	cargo build
+
+java:
+	mvn -f java/pom.xml clean install

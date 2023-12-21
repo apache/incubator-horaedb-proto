@@ -39,5 +39,14 @@ jobs:
       with:
         version: "3.20.1"
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Ensure generated gopb identical
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '8'
+        cache: maven
+    - name: Ensure Golang generated identical
       run: make go && git diff --exit-code
+    - name: Ensure Rust crate compiled
+      run: make rust
+    - name: Ensure Java library compiled
+      run: make java
