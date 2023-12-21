@@ -18,12 +18,12 @@
 [package]
 name = "horaedbproto"
 version = "1.0.24"
-authors = ["HoraeDB Authors"]
 edition = "2021"
-repository = "https://github.com/apache/incubator-horaedb-proto"
 license = "Apache-2.0"
+readme = "README.md"
 description = "Protobuf specs for HoraeDB"
-readme = "../README.md"
+authors = ["HoraeDB Authors <dev@horaedb.apache.org>"]
+repository = "https://github.com/apache/incubator-horaedb-proto"
 
 [dependencies]
 tonic = "0.8"

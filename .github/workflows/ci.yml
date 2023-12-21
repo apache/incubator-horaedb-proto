@@ -19,13 +19,8 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'protos/**'
+    branches: [ main ]
   pull_request:
-    paths:
-      - 'protos/**'
 
 jobs:
   check-protos:
