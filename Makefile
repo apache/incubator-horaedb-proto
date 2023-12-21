@@ -1,8 +1,13 @@
-default: build
+.PHONY: all go rust
 
-prepare:
+all: go rust
+
+dependence:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
-build: prepare
-	cd golang && sh gen-go.sh
+go: dependence
+	./generate-go.sh
+
+rust:
+	cargo build
