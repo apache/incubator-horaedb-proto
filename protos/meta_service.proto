@@ -25,7 +25,7 @@ option go_package = "github.com/apache/incubator-horaedb-proto/golang/pkg/metase
 import "common.proto";
 import "cluster.proto";
 
-service CeresmetaRpcService {
+service MetaRpcService {
   rpc AllocSchemaID(AllocSchemaIdRequest) returns (AllocSchemaIdResponse) {}
   rpc GetTablesOfShards(GetTablesOfShardsRequest)
       returns (GetTablesOfShardsResponse) {}

@@ -18,10 +18,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// CeresmetaRpcServiceClient is the client API for CeresmetaRpcService service.
+// MetaRpcServiceClient is the client API for MetaRpcService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CeresmetaRpcServiceClient interface {
+type MetaRpcServiceClient interface {
 	AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error)
 	GetTablesOfShards(ctx context.Context, in *GetTablesOfShardsRequest, opts ...grpc.CallOption) (*GetTablesOfShardsResponse, error)
 	CreateTable(ctx context.Context, in *CreateTableRequest, opts ...grpc.CallOption) (*CreateTableResponse, error)
@@ -31,81 +31,81 @@ type CeresmetaRpcServiceClient interface {
 	NodeHeartbeat(ctx context.Context, in *NodeHeartbeatRequest, opts ...grpc.CallOption) (*NodeHeartbeatResponse, error)
 }
 
-type ceresmetaRpcServiceClient struct {
+type metaRpcServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCeresmetaRpcServiceClient(cc grpc.ClientConnInterface) CeresmetaRpcServiceClient {
-	return &ceresmetaRpcServiceClient{cc}
+func NewMetaRpcServiceClient(cc grpc.ClientConnInterface) MetaRpcServiceClient {
+	return &metaRpcServiceClient{cc}
 }
 
-func (c *ceresmetaRpcServiceClient) AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error) {
+func (c *metaRpcServiceClient) AllocSchemaID(ctx context.Context, in *AllocSchemaIdRequest, opts ...grpc.CallOption) (*AllocSchemaIdResponse, error) {
 	out := new(AllocSchemaIdResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/AllocSchemaID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/AllocSchemaID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) GetTablesOfShards(ctx context.Context, in *GetTablesOfShardsRequest, opts ...grpc.CallOption) (*GetTablesOfShardsResponse, error) {
+func (c *metaRpcServiceClient) GetTablesOfShards(ctx context.Context, in *GetTablesOfShardsRequest, opts ...grpc.CallOption) (*GetTablesOfShardsResponse, error) {
 	out := new(GetTablesOfShardsResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetTablesOfShards", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/GetTablesOfShards", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) CreateTable(ctx context.Context, in *CreateTableRequest, opts ...grpc.CallOption) (*CreateTableResponse, error) {
+func (c *metaRpcServiceClient) CreateTable(ctx context.Context, in *CreateTableRequest, opts ...grpc.CallOption) (*CreateTableResponse, error) {
 	out := new(CreateTableResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/CreateTable", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/CreateTable", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error) {
+func (c *metaRpcServiceClient) DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error) {
 	out := new(DropTableResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/DropTable", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/DropTable", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error) {
+func (c *metaRpcServiceClient) RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error) {
 	out := new(RouteTablesResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/RouteTables", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/RouteTables", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) GetNodes(ctx context.Context, in *GetNodesRequest, opts ...grpc.CallOption) (*GetNodesResponse, error) {
+func (c *metaRpcServiceClient) GetNodes(ctx context.Context, in *GetNodesRequest, opts ...grpc.CallOption) (*GetNodesResponse, error) {
 	out := new(GetNodesResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/GetNodes", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/GetNodes", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ceresmetaRpcServiceClient) NodeHeartbeat(ctx context.Context, in *NodeHeartbeatRequest, opts ...grpc.CallOption) (*NodeHeartbeatResponse, error) {
+func (c *metaRpcServiceClient) NodeHeartbeat(ctx context.Context, in *NodeHeartbeatRequest, opts ...grpc.CallOption) (*NodeHeartbeatResponse, error) {
 	out := new(NodeHeartbeatResponse)
-	err := c.cc.Invoke(ctx, "/meta_service.CeresmetaRpcService/NodeHeartbeat", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/NodeHeartbeat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CeresmetaRpcServiceServer is the server API for CeresmetaRpcService service.
-// All implementations must embed UnimplementedCeresmetaRpcServiceServer
+// MetaRpcServiceServer is the server API for MetaRpcService service.
+// All implementations must embed UnimplementedMetaRpcServiceServer
 // for forward compatibility
-type CeresmetaRpcServiceServer interface {
+type MetaRpcServiceServer interface {
 	AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error)
 	GetTablesOfShards(context.Context, *GetTablesOfShardsRequest) (*GetTablesOfShardsResponse, error)
 	CreateTable(context.Context, *CreateTableRequest) (*CreateTableResponse, error)
@@ -113,207 +113,207 @@ type CeresmetaRpcServiceServer interface {
 	RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error)
 	GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error)
 	NodeHeartbeat(context.Context, *NodeHeartbeatRequest) (*NodeHeartbeatResponse, error)
-	mustEmbedUnimplementedCeresmetaRpcServiceServer()
+	mustEmbedUnimplementedMetaRpcServiceServer()
 }
 
-// UnimplementedCeresmetaRpcServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedCeresmetaRpcServiceServer struct {
+// UnimplementedMetaRpcServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedMetaRpcServiceServer struct {
 }
 
-func (UnimplementedCeresmetaRpcServiceServer) AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error) {
+func (UnimplementedMetaRpcServiceServer) AllocSchemaID(context.Context, *AllocSchemaIdRequest) (*AllocSchemaIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllocSchemaID not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) GetTablesOfShards(context.Context, *GetTablesOfShardsRequest) (*GetTablesOfShardsResponse, error) {
+func (UnimplementedMetaRpcServiceServer) GetTablesOfShards(context.Context, *GetTablesOfShardsRequest) (*GetTablesOfShardsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTablesOfShards not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) CreateTable(context.Context, *CreateTableRequest) (*CreateTableResponse, error) {
+func (UnimplementedMetaRpcServiceServer) CreateTable(context.Context, *CreateTableRequest) (*CreateTableResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTable not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error) {
+func (UnimplementedMetaRpcServiceServer) DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DropTable not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error) {
+func (UnimplementedMetaRpcServiceServer) RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RouteTables not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error) {
+func (UnimplementedMetaRpcServiceServer) GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNodes not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) NodeHeartbeat(context.Context, *NodeHeartbeatRequest) (*NodeHeartbeatResponse, error) {
+func (UnimplementedMetaRpcServiceServer) NodeHeartbeat(context.Context, *NodeHeartbeatRequest) (*NodeHeartbeatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NodeHeartbeat not implemented")
 }
-func (UnimplementedCeresmetaRpcServiceServer) mustEmbedUnimplementedCeresmetaRpcServiceServer() {}
+func (UnimplementedMetaRpcServiceServer) mustEmbedUnimplementedMetaRpcServiceServer() {}
 
-// UnsafeCeresmetaRpcServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CeresmetaRpcServiceServer will
+// UnsafeMetaRpcServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MetaRpcServiceServer will
 // result in compilation errors.
-type UnsafeCeresmetaRpcServiceServer interface {
-	mustEmbedUnimplementedCeresmetaRpcServiceServer()
+type UnsafeMetaRpcServiceServer interface {
+	mustEmbedUnimplementedMetaRpcServiceServer()
 }
 
-func RegisterCeresmetaRpcServiceServer(s grpc.ServiceRegistrar, srv CeresmetaRpcServiceServer) {
-	s.RegisterService(&CeresmetaRpcService_ServiceDesc, srv)
+func RegisterMetaRpcServiceServer(s grpc.ServiceRegistrar, srv MetaRpcServiceServer) {
+	s.RegisterService(&MetaRpcService_ServiceDesc, srv)
 }
 
-func _CeresmetaRpcService_AllocSchemaID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MetaRpcService_AllocSchemaID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AllocSchemaIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).AllocSchemaID(ctx, in)
+		return srv.(MetaRpcServiceServer).AllocSchemaID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/AllocSchemaID",
+		FullMethod: "/meta_service.MetaRpcService/AllocSchemaID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).AllocSchemaID(ctx, req.(*AllocSchemaIdRequest))
+		return srv.(MetaRpcServiceServer).AllocSchemaID(ctx, req.(*AllocSchemaIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_GetTablesOfShards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MetaRpcService_GetTablesOfShards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTablesOfShardsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).GetTablesOfShards(ctx, in)
+		return srv.(MetaRpcServiceServer).GetTablesOfShards(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/GetTablesOfShards",
+		FullMethod: "/meta_service.MetaRpcService/GetTablesOfShards",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).GetTablesOfShards(ctx, req.(*GetTablesOfShardsRequest))
+		return srv.(MetaRpcServiceServer).GetTablesOfShards(ctx, req.(*GetTablesOfShardsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_CreateTable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MetaRpcService_CreateTable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTableRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).CreateTable(ctx, in)
+		return srv.(MetaRpcServiceServer).CreateTable(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/CreateTable",
+		FullMethod: "/meta_service.MetaRpcService/CreateTable",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).CreateTable(ctx, req.(*CreateTableRequest))
+		return srv.(MetaRpcServiceServer).CreateTable(ctx, req.(*CreateTableRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_DropTable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MetaRpcService_DropTable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DropTableRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).DropTable(ctx, in)
+		return srv.(MetaRpcServiceServer).DropTable(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/DropTable",
+		FullMethod: "/meta_service.MetaRpcService/DropTable",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).DropTable(ctx, req.(*DropTableRequest))
+		return srv.(MetaRpcServiceServer).DropTable(ctx, req.(*DropTableRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_RouteTables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MetaRpcService_RouteTables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RouteTablesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).RouteTables(ctx, in)
+		return srv.(MetaRpcServiceServer).RouteTables(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/RouteTables",
+		FullMethod: "/meta_service.MetaRpcService/RouteTables",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).RouteTables(ctx, req.(*RouteTablesRequest))
+		return srv.(MetaRpcServiceServer).RouteTables(ctx, req.(*RouteTablesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_GetNodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MetaRpcService_GetNodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetNodesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).GetNodes(ctx, in)
+		return srv.(MetaRpcServiceServer).GetNodes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/GetNodes",
+		FullMethod: "/meta_service.MetaRpcService/GetNodes",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).GetNodes(ctx, req.(*GetNodesRequest))
+		return srv.(MetaRpcServiceServer).GetNodes(ctx, req.(*GetNodesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CeresmetaRpcService_NodeHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MetaRpcService_NodeHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NodeHeartbeatRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CeresmetaRpcServiceServer).NodeHeartbeat(ctx, in)
+		return srv.(MetaRpcServiceServer).NodeHeartbeat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/meta_service.CeresmetaRpcService/NodeHeartbeat",
+		FullMethod: "/meta_service.MetaRpcService/NodeHeartbeat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CeresmetaRpcServiceServer).NodeHeartbeat(ctx, req.(*NodeHeartbeatRequest))
+		return srv.(MetaRpcServiceServer).NodeHeartbeat(ctx, req.(*NodeHeartbeatRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CeresmetaRpcService_ServiceDesc is the grpc.ServiceDesc for CeresmetaRpcService service.
+// MetaRpcService_ServiceDesc is the grpc.ServiceDesc for MetaRpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CeresmetaRpcService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "meta_service.CeresmetaRpcService",
-	HandlerType: (*CeresmetaRpcServiceServer)(nil),
+var MetaRpcService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "meta_service.MetaRpcService",
+	HandlerType: (*MetaRpcServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "AllocSchemaID",
-			Handler:    _CeresmetaRpcService_AllocSchemaID_Handler,
+			Handler:    _MetaRpcService_AllocSchemaID_Handler,
 		},
 		{
 			MethodName: "GetTablesOfShards",
-			Handler:    _CeresmetaRpcService_GetTablesOfShards_Handler,
+			Handler:    _MetaRpcService_GetTablesOfShards_Handler,
 		},
 		{
 			MethodName: "CreateTable",
-			Handler:    _CeresmetaRpcService_CreateTable_Handler,
+			Handler:    _MetaRpcService_CreateTable_Handler,
 		},
 		{
 			MethodName: "DropTable",
-			Handler:    _CeresmetaRpcService_DropTable_Handler,
+			Handler:    _MetaRpcService_DropTable_Handler,
 		},
 		{
 			MethodName: "RouteTables",
-			Handler:    _CeresmetaRpcService_RouteTables_Handler,
+			Handler:    _MetaRpcService_RouteTables_Handler,
 		},
 		{
 			MethodName: "GetNodes",
-			Handler:    _CeresmetaRpcService_GetNodes_Handler,
+			Handler:    _MetaRpcService_GetNodes_Handler,
 		},
 		{
 			MethodName: "NodeHeartbeat",
-			Handler:    _CeresmetaRpcService_NodeHeartbeat_Handler,
+			Handler:    _MetaRpcService_NodeHeartbeat_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
