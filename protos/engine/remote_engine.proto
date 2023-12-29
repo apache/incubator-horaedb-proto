@@ -147,9 +147,7 @@ enum QueryPriority {
   Low = 1;
 }
 
-enum Explain {
-  Analyze = 0;
-}
+enum Explain { Analyze = 0; }
 
 message ExecContext {
   // This field is deprecated, use request_id_str instead.
