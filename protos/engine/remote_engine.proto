@@ -161,7 +161,7 @@ message ExecContext {
   QueryPriority priority = 5;
   string displayable_query = 6;
   string request_id_str = 7;
-  optional Explain explain  = 8;
+  optional Explain explain = 8;
 }
 
 message ExecutePlanRequest {
