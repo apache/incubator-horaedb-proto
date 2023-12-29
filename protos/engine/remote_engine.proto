@@ -164,6 +164,8 @@ enum QueryPriority {
   Low = 1;
 }
 
+enum Explain { Analyze = 0; }
+
 message ExecContext {
   // This field is deprecated, use request_id_str instead.
   uint64 request_id = 1;
@@ -174,6 +176,7 @@ message ExecContext {
   QueryPriority priority = 5;
   string displayable_query = 6;
   string request_id_str = 7;
+  optional Explain explain = 8;
 }
 
 message ExecutePlanRequest {
