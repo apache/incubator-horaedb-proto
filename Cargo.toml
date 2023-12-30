@@ -21,7 +21,7 @@ version = "2.0.0"
 edition = "2021"
 license = "Apache-2.0"
 readme = "README.md"
-description = "Protobuf specs for HoraeDB"
+description = "Protobuf specs for Apache HoraeDB™"
 authors = ["HoraeDB Authors <dev@horaedb.apache.org>"]
 repository = "https://github.com/apache/incubator-horaedb-proto"
 

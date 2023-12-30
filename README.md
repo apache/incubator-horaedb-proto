@@ -1,4 +1,4 @@
-# Protocol of [HoraeDB](https://github.com/apache/incubator-horaedb)
+# Protocol of [Apache HoraeDB™](https://github.com/apache/incubator-horaedb)
 
 [![Crates.io](https://img.shields.io/crates/v/horaedb-proto.svg)](https://crates.io/crates/horaedb-proto)
 [![Go Reference](https://pkg.go.dev/badge/github.com/apache/incubator-horaedb-proto.svg)](https://pkg.go.dev/github.com/apache/incubator-horaedb-proto)
