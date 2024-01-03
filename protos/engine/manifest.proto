@@ -134,6 +134,8 @@ message TableOptions {
   // is still unknown.
   bool sampling_segment_duration = 11;
   StorageFormatHint storage_format_hint = 12;
+  MemtableType memtable_type = 13;
+  LayeredMemtableOptions layered_memtable_options = 14;
 }
 
 enum UpdateMode {
@@ -187,4 +189,13 @@ enum Compression {
   LZ4 = 1;
   SNAPPY = 2;
   ZSTD = 3;
+}
+
+enum MemtableType {
+  SkipList = 0;
+  Column = 1;
+}
+
+message LayeredMemtableOptions {
+  uint64 mutable_segment_switch_threshold = 1;
 }
