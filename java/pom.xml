@@ -23,8 +23,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apache</groupId>
         <artifactId>apache</artifactId>
+        <groupId>org.apache</groupId>
         <version>29</version>
     </parent>
 
@@ -32,14 +32,14 @@
     <artifactId>horaedb-proto-internal</artifactId>
     <version>2.0.0</version>
 
+    <url>https://horaedb.apache.org</url>
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
-
-    <url>https://horaedb.apache.org</url>
     <mailingLists>
         <mailingList>
             <name>Develop List</name>
@@ -51,13 +51,11 @@
     </mailingLists>
 
     <properties>
+        <io.grpc.version>1.58.0</io.grpc.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.encoding>UTF-8</project.encoding>
-
-        <io.grpc.version>1.23.0</io.grpc.version>
-        <junit.version>4.13.1</junit.version>
-        <protobuf.version>3.20.1</protobuf.version>
+        <protobuf.version>3.25.1</protobuf.version>
     </properties>
 
     <dependencies>
