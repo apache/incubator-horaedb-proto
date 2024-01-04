@@ -50,6 +50,12 @@
         </mailingList>
     </mailingLists>
 
+    <scm>
+        <url>https://github.com/apache/incubator-horaedb-proto.git</url>
+        <connection>scm:git:https://gitbox.apache.org/repos/asf/incubator-horaedb-proto.git</connection>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/incubator-horaedb-proto.git</developerConnection>
+    </scm>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
