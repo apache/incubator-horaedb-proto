@@ -44,9 +44,13 @@ jobs:
         distribution: 'temurin'
         java-version: '8'
         cache: maven
-    - name: Ensure Golang generated identical
-      run: make go && git diff --exit-code
-    - name: Ensure Rust crate compiled
+    - name: Check Golang package
+      run: |
+        # Check generated files identical
+        make go && git diff --exit-code
+        # Check Golang package compile
+        pushd golang && go build ./... && popd
+    - name: Check Rust crate
       run: make rust
-    - name: Ensure Java library compiled
+    - name: Check Java library
       run: make java
