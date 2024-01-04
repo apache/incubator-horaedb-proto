@@ -97,7 +97,6 @@
                 <version>1.7.1</version>
             </extension>
         </extensions>
-        <finalName>horaedb-proto-internal</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
