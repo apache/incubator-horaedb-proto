@@ -23,6 +23,8 @@ ROOT_DIR=$( dirname "$0" )
 GO_DIR="${ROOT_DIR}/golang"
 GO_PREFIX_PATH="${GO_DIR}/github.com/apache/incubator-horaedb-proto/golang"
 
+export PATH="$(go env GOPATH)/bin:$PATH"
+
 protoc --proto_path=./protos --go_out="$GO_DIR" --go-grpc_out="$GO_DIR" \
     ./protos/cluster.proto \
     ./protos/common.proto \
