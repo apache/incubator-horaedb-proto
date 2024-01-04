@@ -35,9 +35,9 @@ jobs:
         check-path: 'protos'
         fallback-style: 'google'
     - name: Install Protoc
-      uses: arduino/setup-protoc@v1
+      uses: arduino/setup-protoc@v2
       with:
-        version: "3.25.1"
+        version: "25.1"
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/setup-java@v4
       with:
