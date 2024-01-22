@@ -166,20 +166,37 @@ message ShardInfo {
     PartialOpen = 1;
   }
 
+  message Load {
+    uint64 written_bytes = 1;
+    uint64 read_bytes = 2;
+  }
+
   uint32 id = 1;
   cluster.ShardRole role = 2;
   uint64 version = 3;
   // When status is missing, it means Ready
   optional Status status = 4;
+  // When load is missing, it represents the use of an older version of the
+  // protocol
+  optional Load load = 5;
 }
 
 message NodeInfo {
+  message Load {
+    float cpu_usage_core = 6;
+    uint32 cpu_total_core = 7;
+    uint64 memory_total_bytes = 8;
+    uint64 memory_usage_bytes = 9;
+  }
   // ip:port
   string endpoint = 1;
   uint32 lease = 2;
   string zone = 3;
   string binary_version = 4;
   repeated ShardInfo shard_infos = 5;
+  // When load is missing, it represents the use of an older version of the
+  // protocol
+  optional Load load = 6;
 }
 
 message NodeHeartbeatResponse {
