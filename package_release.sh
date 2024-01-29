@@ -18,13 +18,15 @@
 
 set -e
 
-if [ "$#" -lt 2 ]; then
-  echo "Usage: $0 HORAEDB_VERSION RC_NUMBER"
+if [ "$#" -lt 1 ]; then
+  echo "Usage: $0 HORAEDB_VERSION [RC_NUMBER]"
   exit 1
 fi
 
 HORAEDB_VERSION=$1
-RC_NUMBER=$2
+if [ "$#" -ge 2 ]; then
+  RC_NUMBER=$2
+fi
 
 release_version=${HORAEDB_VERSION}
 
