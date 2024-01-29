@@ -26,17 +26,19 @@ fi
 HORAEDB_VERSION=$1
 RC_NUMBER=$2
 
-# tar source code
 release_version=${HORAEDB_VERSION}
-rc_version="${HORAEDB_VERSION_RC:-RC.${RC_NUMBER}}"
+
+if [ -n "$RC_NUMBER" ]; then
+	rc_version="${HORAEDB_VERSION_RC:-RC.${RC_NUMBER}}"
+	git_branch=release-${release_version}-${rc_version}
+else
+	git_branch=release-${release_version}
+fi
 
 # Corresponding git repository branch
-final_version=${release_version}
-git_branch=release-${release_version}-${rc_version}
 
 echo ${git_branch}
-echo ${rc_version}
-echo ${release_version}
+
 rm -rf dist
 mkdir -p dist/
 
@@ -44,7 +46,7 @@ echo "> Checkout version branch"
 git checkout -B "${git_branch}"
 
 echo "> Start package"
-git archive --format=tar.gz --output="dist/apache-horaedb-proto-incubating-$final_version-src.tar.gz" --prefix="apache-horaedb-proto-incubating-$final_version-src/"  "$git_branch"
+git archive --format=tar.gz --output="dist/apache-horaedb-proto-incubating-$release_version-src.tar.gz" --prefix="apache-horaedb-proto-incubating-$release_version-src/"  "$git_branch"
 
 cd dist
 echo "> Generate signature"
