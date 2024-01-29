@@ -61,7 +61,6 @@ echo "> Generate sha512sum"
 for i in *.tar.gz; do
 	echo "$i"
 	shasum -a 512  "$i" >"$i.sha512"
-  # shasum -a 512  apache-horaedb-proto-incubating-v2.0.0.rc.5-src.tar.gz >"apache-horaedb-proto-incubating-v2.0.0.rc.5-src.tar.gz.sha512"
 done
 echo "> Check sha512sum"
 for i in *.tar.gz; do
