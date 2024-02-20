@@ -1,6 +1,6 @@
 # Protocol of [Apache HoraeDB™](https://github.com/apache/incubator-horaedb)
 
-[![Crates.io](https://img.shields.io/crates/v/horaedb-proto.svg)](https://crates.io/crates/horaedbproto)
+[![Crates.io](https://img.shields.io/crates/v/horaedbproto.svg)](https://crates.io/crates/horaedbproto)
 [![Go Reference](https://pkg.go.dev/badge/github.com/apache/incubator-horaedb-proto.svg)](https://pkg.go.dev/github.com/apache/incubator-horaedb-proto)
 [![Maven Central](https://img.shields.io/maven-central/v/org.apache.horaedb/horaedb-proto-internal.svg?logo=Apache+Maven&logoColor=blue)](https://central.sonatype.com/artifact/org.apache.horaedb/horaedb-proto-internal)
 
