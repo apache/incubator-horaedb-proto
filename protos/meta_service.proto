@@ -160,6 +160,11 @@ message NodeHeartbeatRequest {
   NodeInfo info = 2;
 }
 
+message ShardInfoLoad {
+  uint64 written_bytes = 1;
+  uint64 read_bytes = 2;
+}
+
 message ShardInfo {
   enum Status {
     Ready = 0;
@@ -171,6 +176,16 @@ message ShardInfo {
   uint64 version = 3;
   // When status is missing, it means Ready
   optional Status status = 4;
+  // When load is missing, it represents the use of an older version of the
+  // protocol
+  ShardInfoLoad load = 5;
+}
+
+message NodeInfoLoad {
+  float cpu_usage_core = 1;
+  uint32 cpu_total_core = 2;
+  uint64 memory_total_bytes = 3;
+  uint64 memory_usage_bytes = 4;
 }
 
 message NodeInfo {
@@ -180,6 +195,9 @@ message NodeInfo {
   string zone = 3;
   string binary_version = 4;
   repeated ShardInfo shard_infos = 5;
+  // When load is missing, it represents the use of an older version of the
+  // protocol
+  NodeInfoLoad load = 6;
 }
 
 message NodeHeartbeatResponse {
