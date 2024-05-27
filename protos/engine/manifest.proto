@@ -193,4 +193,7 @@ enum Compression {
 message LayeredMemtableOptions {
   // Layered memtable will be disable when threshold is 0.
   uint64 mutable_segment_switch_threshold = 1;
+  oneof enable {
+    bool enable_opt = 2;
+  }
 }
