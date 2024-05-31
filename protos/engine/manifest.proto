@@ -191,6 +191,8 @@ enum Compression {
 }
 
 message LayeredMemtableOptions {
-  // Layered memtable will be disable when threshold is 0.
   uint64 mutable_segment_switch_threshold = 1;
+  // because bool's default value is false in pb,
+  // use `disable` here to make `enable` default true.
+  bool disable = 2;
 }
