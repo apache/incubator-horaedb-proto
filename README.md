@@ -1,10 +1,16 @@
-# Protocol of [Apache HoraeDB™](https://github.com/apache/incubator-horaedb)
+# Apache HoraeDB (Incubating) Protocol Buffer Files
 
 [![Crates.io](https://img.shields.io/crates/v/horaedbproto.svg)](https://crates.io/crates/horaedbproto)
 [![Go Reference](https://pkg.go.dev/badge/github.com/apache/incubator-horaedb-proto.svg)](https://pkg.go.dev/github.com/apache/incubator-horaedb-proto)
 [![Maven Central](https://img.shields.io/maven-central/v/org.apache.horaedb/horaedb-proto-internal.svg?logo=Apache+Maven&logoColor=blue)](https://central.sonatype.com/artifact/org.apache.horaedb/horaedb-proto-internal)
 
-Protocol buffer files for HoraeDB. Projects that manage generated code of different languages are also in this repository. They act as underlying dependencies of the client, server, and meta.
+Protocol buffer files for [Apache HoraeDB (Incubating)](https://github.com/apache/incubator-horaedb). Projects that manage generated code of different languages are also in this repository. They act as underlying dependencies of the client, server, and meta.
+
+> [!IMPORTANT]
+> Apache HoraeDB (incubating) is an effort undergoing incubation at the Apache
+> Software Foundation (ASF), sponsored by the Apache Incubator PMC.
+>
+> Please read the [DISCLAIMER](DISCLAIMER) and a full explanation of ["incubating"](https://incubator.apache.org/policy/incubation.html).
 
 ## User Guide
 
