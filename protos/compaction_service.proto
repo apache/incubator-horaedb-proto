@@ -21,11 +21,102 @@ syntax = "proto3";
 
 package compaction_service;
 
+import "engine/schema.proto";
+import "engine/time_range.proto";
+import "engine/manifest.proto";
+
 service CompactionService {
   rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest)
       returns (ExecuteCompactionTaskResponse) {}
 }
 
-message ExecuteCompactionTaskRequest {}
+message FileMeta {
+  uint64 file_id = 1;
+  uint64 max_seq = 2;
+  time_range.TimeRange time_range = 3;
+  uint64 size = 4;
+  uint64 row_num = 5;
+  manifest.StorageFormat storage_format = 6;
+  repeated string associated_files = 7;
+}
+
+message FilePurgeRequest {
+  uint32 space_id = 1;
+  uint64 table_id = 2;
+  uint64 file_id = 3;
+  repeated string associated_files = 4;
+}
+
+message Exit {}
+
+message Request {
+  oneof request_type {
+    FilePurgeRequest purge = 1;
+    Exit exit = 2;
+  }
+}
+
+message FilePurgeQueue {
+  uint32 space_id = 1;
+  uint64 table_id = 2;
+  bool closed = 3;
+  repeated Request requests = 4;
+}
+
+message SstMetrics {
+  uint32 key_num = 1;
+}
+
+message FileHandle {
+  // Meta of a sst file
+  FileMeta meta = 1;
+  // Queue to store files to be deleted for a table.
+  FilePurgeQueue purge_queue = 2;
+  bool being_compacted = 3;
+  SstMetrics metrics = 4;
+}
+
+message CompactionInputFiles {
+  // Level of the files to be compacted
+  uint32 level = 1;
+  // Files to be compacted.
+  repeated FileHandle files = 2;
+  // The output level of the merged file.
+  uint32 output_level = 3;
+}
+
+message InputContext {
+  // Input sst files in the compaction
+  CompactionInputFiles files = 1;
+  uint32 num_rows_per_row_group = 2;
+  uint32 merge_iter_options = 3;
+  bool need_dedup = 4;
+}
+
+message SstWriteOptions {
+  manifest.StorageFormatHint storage_format_hint = 1;
+  uint32 num_rows_per_row_group = 2;
+  manifest.Compression compression = 3;
+  uint32 max_buffer_size = 4;
+  map<string, bool> column_stats = 5;
+}
+
+message OutputContext {
+  // Output sst file path
+  string file_path = 1;
+  SstWriteOptions write_options = 2;
+}
+
+message ExecuteCompactionTaskRequest {
+  string request_id = 1;
+
+  schema.TableSchema schema = 2;
+  uint32 space_id = 3;
+  uint64 table_id = 4;
+  uint64 sequence = 5;
+  
+  InputContext input_ctx = 6;
+  OutputContext output_ctx = 7;
+}
 
 message ExecuteCompactionTaskResponse {}
