@@ -24,6 +24,7 @@ package compaction_service;
 import "engine/schema.proto";
 import "engine/time_range.proto";
 import "engine/manifest.proto";
+import "common.proto";
 
 service CompactionService {
   rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest)
@@ -119,4 +120,44 @@ message ExecuteCompactionTaskRequest {
   OutputContext output_ctx = 7;
 }
 
-message ExecuteCompactionTaskResponse {}
+enum State {
+  FAILED = 0;
+  SUCCESS = 1;
+}
+
+message ExecStatus {
+  uint64 process_latency = 1;
+  State state = 2;
+}
+
+message SstInfo {
+  uint32 file_size = 1;
+  uint32 row_num = 2;
+  manifest.StorageFormat storage_format = 3;
+  string meta_path = 4;
+  time_range.TimeRange time_range = 5;
+}
+
+message MetaData {
+  // Min key in the sst
+  bytes min_key = 1;
+  // Max key in the sst
+  bytes max_key = 2;
+  // Max sequence number in the sst
+  uint64 max_sequence = 3;
+  // The time range of the sst
+  time_range.TimeRange time_range = 4;
+  schema.TableSchema schema = 5;
+}
+
+message ExecResult {
+  string output_file_path = 1;
+  SstInfo sst_info = 2;
+  MetaData sst_meta = 3;
+}
+
+message ExecuteCompactionTaskResponse {
+  common.ResponseHeader header = 1;
+  ExecStatus status = 2; 
+  ExecResult result = 3;
+}
