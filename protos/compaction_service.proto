@@ -61,7 +61,7 @@ message FilePurgeQueue {
   uint32 space_id = 1;
   uint64 table_id = 2;
   bool closed = 3;
-  repeated Request requests = 4;
+  Request request = 4;
 }
 
 message SstMetrics {
@@ -109,25 +109,20 @@ message OutputContext {
 }
 
 message ExecuteCompactionTaskRequest {
-  string request_id = 1;
+  string task_key = 1;
+  string request_id = 2;
 
-  schema.TableSchema schema = 2;
-  uint32 space_id = 3;
-  uint64 table_id = 4;
-  uint64 sequence = 5;
-  
-  InputContext input_ctx = 6;
-  OutputContext output_ctx = 7;
-}
+  schema.TableSchema schema = 3;
+  uint32 space_id = 4;
+  uint64 table_id = 5;
+  uint64 sequence = 6;
 
-enum State {
-  FAILED = 0;
-  SUCCESS = 1;
+  InputContext input_ctx = 7;
+  OutputContext output_ctx = 8;
 }
 
 message ExecStatus {
   uint64 process_latency = 1;
-  State state = 2;
 }
 
 message SstInfo {
