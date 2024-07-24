@@ -27,7 +27,7 @@ import "engine/manifest.proto";
 import "common.proto";
 
 service CompactionService {
-  rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest)
+  rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest) 
       returns (ExecuteCompactionTaskResponse) {}
 }
 
@@ -126,8 +126,8 @@ message ExecStatus {
 }
 
 message SstInfo {
-  uint32 file_size = 1;
-  uint32 row_num = 2;
+  uint64 file_size = 1;
+  uint64 row_num = 2;
   manifest.StorageFormat storage_format = 3;
   string meta_path = 4;
   time_range.TimeRange time_range = 5;
