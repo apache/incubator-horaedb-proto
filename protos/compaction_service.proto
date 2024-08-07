@@ -26,6 +26,8 @@ import "engine/time_range.proto";
 import "engine/manifest.proto";
 import "common.proto";
 
+// The service is hosted by CompactionServer to handle the remote compaction
+// service request from HoraeDB.
 service CompactionService {
   rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest) 
       returns (ExecuteCompactionTaskResponse) {}
@@ -64,9 +66,7 @@ message FilePurgeQueue {
   Request request = 4;
 }
 
-message SstMetrics {
-  uint32 key_num = 1;
-}
+message SstMetrics {}
 
 message FileHandle {
   // Meta of a sst file
