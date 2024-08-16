@@ -174,12 +174,19 @@ message ShardInfo {
 }
 
 message NodeInfo {
+  // Type of server in cluster mode.
+  enum ClusterType {
+    HoraeDB = 0;
+    CompactionServer = 1;
+  }
+
   // ip:port
   string endpoint = 1;
   uint32 lease = 2;
   string zone = 3;
   string binary_version = 4;
   repeated ShardInfo shard_infos = 5;
+  ClusterType cluster_type = 6;
 }
 
 message NodeHeartbeatResponse {
