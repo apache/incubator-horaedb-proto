@@ -43,27 +43,9 @@ message FileMeta {
   repeated string associated_files = 7;
 }
 
-message FilePurgeRequest {
-  uint32 space_id = 1;
-  uint64 table_id = 2;
-  uint64 file_id = 3;
-  repeated string associated_files = 4;
-}
-
-message Exit {}
-
-message Request {
-  oneof request_type {
-    FilePurgeRequest purge = 1;
-    Exit exit = 2;
-  }
-}
-
 message FilePurgeQueue {
   uint32 space_id = 1;
   uint64 table_id = 2;
-  bool closed = 3;
-  Request request = 4;
 }
 
 message SstMetrics {}
