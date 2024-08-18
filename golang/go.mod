@@ -1,8 +1,10 @@
-module github.com/apache/incubator-horaedb-proto/golang
+// Modify for horaemeta development (tmp).
+module github.com/LeslieKid/incubator-horaedb-proto/golang
 
 go 1.18
 
 require (
+	github.com/apache/incubator-horaedb-proto/golang v0.0.0-20240703150756-8d4530696277
 	google.golang.org/grpc v1.47.0
 	google.golang.org/protobuf v1.28.0
 )
