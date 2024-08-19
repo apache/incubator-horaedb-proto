@@ -130,6 +130,53 @@ func (ShardRole) EnumDescriptor() ([]byte, []int) {
 	return file_cluster_proto_rawDescGZIP(), []int{1}
 }
 
+// Type of node in cluster mode.
+type NodeType int32
+
+const (
+	NodeType_HoraeDB          NodeType = 0
+	NodeType_CompactionServer NodeType = 1
+)
+
+// Enum value maps for NodeType.
+var (
+	NodeType_name = map[int32]string{
+		0: "HoraeDB",
+		1: "CompactionServer",
+	}
+	NodeType_value = map[string]int32{
+		"HoraeDB":          0,
+		"CompactionServer": 1,
+	}
+)
+
+func (x NodeType) Enum() *NodeType {
+	p := new(NodeType)
+	*p = x
+	return p
+}
+
+func (x NodeType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (NodeType) Descriptor() protoreflect.EnumDescriptor {
+	return file_cluster_proto_enumTypes[2].Descriptor()
+}
+
+func (NodeType) Type() protoreflect.EnumType {
+	return &file_cluster_proto_enumTypes[2]
+}
+
+func (x NodeType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use NodeType.Descriptor instead.
+func (NodeType) EnumDescriptor() ([]byte, []int) {
+	return file_cluster_proto_rawDescGZIP(), []int{2}
+}
+
 type Cluster_TopologyType int32
 
 const (
@@ -163,11 +210,11 @@ func (x Cluster_TopologyType) String() string {
 }
 
 func (Cluster_TopologyType) Descriptor() protoreflect.EnumDescriptor {
-	return file_cluster_proto_enumTypes[2].Descriptor()
+	return file_cluster_proto_enumTypes[3].Descriptor()
 }
 
 func (Cluster_TopologyType) Type() protoreflect.EnumType {
-	return &file_cluster_proto_enumTypes[2]
+	return &file_cluster_proto_enumTypes[3]
 }
 
 func (x Cluster_TopologyType) Number() protoreflect.EnumNumber {
@@ -218,11 +265,11 @@ func (x ClusterView_ClusterState) String() string {
 }
 
 func (ClusterView_ClusterState) Descriptor() protoreflect.EnumDescriptor {
-	return file_cluster_proto_enumTypes[3].Descriptor()
+	return file_cluster_proto_enumTypes[4].Descriptor()
 }
 
 func (ClusterView_ClusterState) Type() protoreflect.EnumType {
-	return &file_cluster_proto_enumTypes[3]
+	return &file_cluster_proto_enumTypes[4]
 }
 
 func (x ClusterView_ClusterState) Number() protoreflect.EnumNumber {
@@ -1217,9 +1264,10 @@ type NodeStats struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Lease       uint32 `protobuf:"varint,1,opt,name=lease,proto3" json:"lease,omitempty"`
-	Zone        string `protobuf:"bytes,2,opt,name=zone,proto3" json:"zone,omitempty"`
-	NodeVersion string `protobuf:"bytes,3,opt,name=node_version,json=nodeVersion,proto3" json:"node_version,omitempty"`
+	Lease       uint32   `protobuf:"varint,1,opt,name=lease,proto3" json:"lease,omitempty"`
+	Zone        string   `protobuf:"bytes,2,opt,name=zone,proto3" json:"zone,omitempty"`
+	NodeVersion string   `protobuf:"bytes,3,opt,name=node_version,json=nodeVersion,proto3" json:"node_version,omitempty"`
+	NodeType    NodeType `protobuf:"varint,4,opt,name=node_type,json=nodeType,proto3,enum=cluster.NodeType" json:"node_type,omitempty"`
 }
 
 func (x *NodeStats) Reset() {
@@ -1273,6 +1321,13 @@ func (x *NodeStats) GetNodeVersion() string {
 		return x.NodeVersion
 	}
 	return ""
+}
+
+func (x *NodeStats) GetNodeType() NodeType {
+	if x != nil {
+		return x.NodeType
+	}
+	return NodeType_HoraeDB
 }
 
 var File_cluster_proto protoreflect.FileDescriptor
@@ -1418,17 +1473,23 @@ var file_cluster_proto_rawDesc = []byte{
 	0x73, 0x74, 0x54, 0x6f, 0x75, 0x63, 0x68, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x28, 0x0a, 0x05, 0x73,
 	0x74, 0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x12, 0x2e, 0x63, 0x6c, 0x75,
 	0x73, 0x74, 0x65, 0x72, 0x2e, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05,
-	0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0x58, 0x0a, 0x09, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x74, 0x61,
-	0x74, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x65, 0x61, 0x73, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0d, 0x52, 0x05, 0x6c, 0x65, 0x61, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x7a, 0x6f, 0x6e, 0x65,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x7a, 0x6f, 0x6e, 0x65, 0x12, 0x21, 0x0a, 0x0c,
-	0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0b, 0x6e, 0x6f, 0x64, 0x65, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x2a,
-	0x24, 0x0a, 0x09, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x0a, 0x0a, 0x06,
-	0x4f, 0x4e, 0x4c, 0x49, 0x4e, 0x45, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x4f, 0x46, 0x46, 0x4c,
-	0x49, 0x4e, 0x45, 0x10, 0x01, 0x2a, 0x25, 0x0a, 0x09, 0x53, 0x68, 0x61, 0x72, 0x64, 0x52, 0x6f,
-	0x6c, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x41, 0x44, 0x45, 0x52, 0x10, 0x00, 0x12, 0x0c,
-	0x0a, 0x08, 0x46, 0x4f, 0x4c, 0x4c, 0x4f, 0x57, 0x45, 0x52, 0x10, 0x01, 0x42, 0x40, 0x5a, 0x3e,
+	0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0x88, 0x01, 0x0a, 0x09, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x74,
+	0x61, 0x74, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x65, 0x61, 0x73, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0d, 0x52, 0x05, 0x6c, 0x65, 0x61, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x7a, 0x6f, 0x6e,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x7a, 0x6f, 0x6e, 0x65, 0x12, 0x21, 0x0a,
+	0x0c, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x6e, 0x6f, 0x64, 0x65, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e,
+	0x12, 0x2e, 0x0a, 0x09, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x11, 0x2e, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x2e, 0x4e, 0x6f,
+	0x64, 0x65, 0x54, 0x79, 0x70, 0x65, 0x52, 0x08, 0x6e, 0x6f, 0x64, 0x65, 0x54, 0x79, 0x70, 0x65,
+	0x2a, 0x24, 0x0a, 0x09, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x0a, 0x0a,
+	0x06, 0x4f, 0x4e, 0x4c, 0x49, 0x4e, 0x45, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x4f, 0x46, 0x46,
+	0x4c, 0x49, 0x4e, 0x45, 0x10, 0x01, 0x2a, 0x25, 0x0a, 0x09, 0x53, 0x68, 0x61, 0x72, 0x64, 0x52,
+	0x6f, 0x6c, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x41, 0x44, 0x45, 0x52, 0x10, 0x00, 0x12,
+	0x0c, 0x0a, 0x08, 0x46, 0x4f, 0x4c, 0x4c, 0x4f, 0x57, 0x45, 0x52, 0x10, 0x01, 0x2a, 0x2d, 0x0a,
+	0x08, 0x4e, 0x6f, 0x64, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x48, 0x6f, 0x72,
+	0x61, 0x65, 0x44, 0x42, 0x10, 0x00, 0x12, 0x14, 0x0a, 0x10, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x10, 0x01, 0x42, 0x40, 0x5a, 0x3e,
 	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x70, 0x61, 0x63, 0x68,
 	0x65, 0x2f, 0x69, 0x6e, 0x63, 0x75, 0x62, 0x61, 0x74, 0x6f, 0x72, 0x2d, 0x68, 0x6f, 0x72, 0x61,
 	0x65, 0x64, 0x62, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67,
@@ -1448,46 +1509,48 @@ func file_cluster_proto_rawDescGZIP() []byte {
 	return file_cluster_proto_rawDescData
 }
 
-var file_cluster_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_cluster_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_cluster_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_cluster_proto_goTypes = []interface{}{
 	(NodeState)(0),                // 0: cluster.NodeState
 	(ShardRole)(0),                // 1: cluster.ShardRole
-	(Cluster_TopologyType)(0),     // 2: cluster.Cluster.TopologyType
-	(ClusterView_ClusterState)(0), // 3: cluster.ClusterView.ClusterState
-	(*PartitionInfo)(nil),         // 4: cluster.PartitionInfo
-	(*PartitionDefinition)(nil),   // 5: cluster.PartitionDefinition
-	(*HashPartitionInfo)(nil),     // 6: cluster.HashPartitionInfo
-	(*KeyPartitionInfo)(nil),      // 7: cluster.KeyPartitionInfo
-	(*RandomPartitionInfo)(nil),   // 8: cluster.RandomPartitionInfo
-	(*Cluster)(nil),               // 9: cluster.Cluster
-	(*ClusterView)(nil),           // 10: cluster.ClusterView
-	(*ShardNode)(nil),             // 11: cluster.ShardNode
-	(*Schema)(nil),                // 12: cluster.Schema
-	(*Table)(nil),                 // 13: cluster.Table
-	(*ShardView)(nil),             // 14: cluster.ShardView
-	(*Node)(nil),                  // 15: cluster.Node
-	(*NodeStats)(nil),             // 16: cluster.NodeStats
+	(NodeType)(0),                 // 2: cluster.NodeType
+	(Cluster_TopologyType)(0),     // 3: cluster.Cluster.TopologyType
+	(ClusterView_ClusterState)(0), // 4: cluster.ClusterView.ClusterState
+	(*PartitionInfo)(nil),         // 5: cluster.PartitionInfo
+	(*PartitionDefinition)(nil),   // 6: cluster.PartitionDefinition
+	(*HashPartitionInfo)(nil),     // 7: cluster.HashPartitionInfo
+	(*KeyPartitionInfo)(nil),      // 8: cluster.KeyPartitionInfo
+	(*RandomPartitionInfo)(nil),   // 9: cluster.RandomPartitionInfo
+	(*Cluster)(nil),               // 10: cluster.Cluster
+	(*ClusterView)(nil),           // 11: cluster.ClusterView
+	(*ShardNode)(nil),             // 12: cluster.ShardNode
+	(*Schema)(nil),                // 13: cluster.Schema
+	(*Table)(nil),                 // 14: cluster.Table
+	(*ShardView)(nil),             // 15: cluster.ShardView
+	(*Node)(nil),                  // 16: cluster.Node
+	(*NodeStats)(nil),             // 17: cluster.NodeStats
 }
 var file_cluster_proto_depIdxs = []int32{
-	6,  // 0: cluster.PartitionInfo.hash:type_name -> cluster.HashPartitionInfo
-	7,  // 1: cluster.PartitionInfo.key:type_name -> cluster.KeyPartitionInfo
-	8,  // 2: cluster.PartitionInfo.random:type_name -> cluster.RandomPartitionInfo
-	5,  // 3: cluster.HashPartitionInfo.definitions:type_name -> cluster.PartitionDefinition
-	5,  // 4: cluster.KeyPartitionInfo.definitions:type_name -> cluster.PartitionDefinition
-	5,  // 5: cluster.RandomPartitionInfo.definitions:type_name -> cluster.PartitionDefinition
-	2,  // 6: cluster.Cluster.topology_type:type_name -> cluster.Cluster.TopologyType
-	3,  // 7: cluster.ClusterView.state:type_name -> cluster.ClusterView.ClusterState
-	11, // 8: cluster.ClusterView.shard_nodes:type_name -> cluster.ShardNode
+	7,  // 0: cluster.PartitionInfo.hash:type_name -> cluster.HashPartitionInfo
+	8,  // 1: cluster.PartitionInfo.key:type_name -> cluster.KeyPartitionInfo
+	9,  // 2: cluster.PartitionInfo.random:type_name -> cluster.RandomPartitionInfo
+	6,  // 3: cluster.HashPartitionInfo.definitions:type_name -> cluster.PartitionDefinition
+	6,  // 4: cluster.KeyPartitionInfo.definitions:type_name -> cluster.PartitionDefinition
+	6,  // 5: cluster.RandomPartitionInfo.definitions:type_name -> cluster.PartitionDefinition
+	3,  // 6: cluster.Cluster.topology_type:type_name -> cluster.Cluster.TopologyType
+	4,  // 7: cluster.ClusterView.state:type_name -> cluster.ClusterView.ClusterState
+	12, // 8: cluster.ClusterView.shard_nodes:type_name -> cluster.ShardNode
 	1,  // 9: cluster.ShardNode.shard_role:type_name -> cluster.ShardRole
-	4,  // 10: cluster.Table.partition_info:type_name -> cluster.PartitionInfo
-	16, // 11: cluster.Node.stats:type_name -> cluster.NodeStats
+	5,  // 10: cluster.Table.partition_info:type_name -> cluster.PartitionInfo
+	17, // 11: cluster.Node.stats:type_name -> cluster.NodeStats
 	0,  // 12: cluster.Node.state:type_name -> cluster.NodeState
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	2,  // 13: cluster.NodeStats.node_type:type_name -> cluster.NodeType
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_cluster_proto_init() }
@@ -1666,7 +1729,7 @@ func file_cluster_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cluster_proto_rawDesc,
-			NumEnums:      4,
+			NumEnums:      5,
 			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   0,

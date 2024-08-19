@@ -173,8 +173,15 @@ message Node {
   NodeState state = 4;
 }
 
+// Type of node in cluster mode.
+enum NodeType {
+  HoraeDB = 0;
+  CompactionServer = 1;
+}
+
 message NodeStats {
   uint32 lease = 1;
   string zone = 2;
   string node_version = 3;
+  NodeType node_type = 4;
 }
