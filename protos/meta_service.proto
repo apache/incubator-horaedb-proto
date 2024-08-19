@@ -20,7 +20,7 @@
 syntax = "proto3";
 
 package meta_service;
-option go_package = "github.com/apache/incubator-horaedb-proto/golang/pkg/metaservicepb";
+option go_package = "github.com/LeslieKid/incubator-horaedb-proto/golang/pkg/metaservicepb";
 
 import "common.proto";
 import "cluster.proto";

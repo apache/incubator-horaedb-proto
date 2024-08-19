@@ -1,5 +1,5 @@
 // Modify for horaemeta development (tmp).
-module github.com/apache/incubator-horaedb-proto/golang
+module github.com/LeslieKid/incubator-horaedb-proto/golang
 
 go 1.18
 

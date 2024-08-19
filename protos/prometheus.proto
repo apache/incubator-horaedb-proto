@@ -22,7 +22,7 @@ syntax = "proto3";
 package prometheus;
 option java_package = "org.apache.horaedb.proto.internal";
 option java_outer_classname = "Prometheus";
-option go_package = "github.com/apache/incubator-horaedb-proto/golang/pkg/horaeprompb";
+option go_package = "github.com/LeslieKid/incubator-horaedb-proto/golang/pkg/horaeprompb";
 
 message Expr {
   oneof node {

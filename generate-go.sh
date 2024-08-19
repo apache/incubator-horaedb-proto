@@ -21,7 +21,7 @@ set -ex
 
 ROOT_DIR=$( dirname "$0" )
 GO_DIR="${ROOT_DIR}/golang"
-GO_PREFIX_PATH="${GO_DIR}/github.com/apache/incubator-horaedb-proto/golang"
+GO_PREFIX_PATH="${GO_DIR}/github.com/LeslieKid/incubator-horaedb-proto/golang"
 
 export PATH="$(go env GOPATH)/bin:$PATH"
 
