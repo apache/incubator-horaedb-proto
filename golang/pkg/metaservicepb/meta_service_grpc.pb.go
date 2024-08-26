@@ -28,6 +28,7 @@ type MetaRpcServiceClient interface {
 	DropTable(ctx context.Context, in *DropTableRequest, opts ...grpc.CallOption) (*DropTableResponse, error)
 	RouteTables(ctx context.Context, in *RouteTablesRequest, opts ...grpc.CallOption) (*RouteTablesResponse, error)
 	GetNodes(ctx context.Context, in *GetNodesRequest, opts ...grpc.CallOption) (*GetNodesResponse, error)
+	FetchCompactionNode(ctx context.Context, in *FetchCompactionNodeRequest, opts ...grpc.CallOption) (*FetchCompactionNodeResponse, error)
 	NodeHeartbeat(ctx context.Context, in *NodeHeartbeatRequest, opts ...grpc.CallOption) (*NodeHeartbeatResponse, error)
 }
 
@@ -93,6 +94,15 @@ func (c *metaRpcServiceClient) GetNodes(ctx context.Context, in *GetNodesRequest
 	return out, nil
 }
 
+func (c *metaRpcServiceClient) FetchCompactionNode(ctx context.Context, in *FetchCompactionNodeRequest, opts ...grpc.CallOption) (*FetchCompactionNodeResponse, error) {
+	out := new(FetchCompactionNodeResponse)
+	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/FetchCompactionNode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *metaRpcServiceClient) NodeHeartbeat(ctx context.Context, in *NodeHeartbeatRequest, opts ...grpc.CallOption) (*NodeHeartbeatResponse, error) {
 	out := new(NodeHeartbeatResponse)
 	err := c.cc.Invoke(ctx, "/meta_service.MetaRpcService/NodeHeartbeat", in, out, opts...)
@@ -112,6 +122,7 @@ type MetaRpcServiceServer interface {
 	DropTable(context.Context, *DropTableRequest) (*DropTableResponse, error)
 	RouteTables(context.Context, *RouteTablesRequest) (*RouteTablesResponse, error)
 	GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error)
+	FetchCompactionNode(context.Context, *FetchCompactionNodeRequest) (*FetchCompactionNodeResponse, error)
 	NodeHeartbeat(context.Context, *NodeHeartbeatRequest) (*NodeHeartbeatResponse, error)
 	mustEmbedUnimplementedMetaRpcServiceServer()
 }
@@ -137,6 +148,9 @@ func (UnimplementedMetaRpcServiceServer) RouteTables(context.Context, *RouteTabl
 }
 func (UnimplementedMetaRpcServiceServer) GetNodes(context.Context, *GetNodesRequest) (*GetNodesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNodes not implemented")
+}
+func (UnimplementedMetaRpcServiceServer) FetchCompactionNode(context.Context, *FetchCompactionNodeRequest) (*FetchCompactionNodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchCompactionNode not implemented")
 }
 func (UnimplementedMetaRpcServiceServer) NodeHeartbeat(context.Context, *NodeHeartbeatRequest) (*NodeHeartbeatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NodeHeartbeat not implemented")
@@ -262,6 +276,24 @@ func _MetaRpcService_GetNodes_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MetaRpcService_FetchCompactionNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchCompactionNodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MetaRpcServiceServer).FetchCompactionNode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/meta_service.MetaRpcService/FetchCompactionNode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MetaRpcServiceServer).FetchCompactionNode(ctx, req.(*FetchCompactionNodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _MetaRpcService_NodeHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NodeHeartbeatRequest)
 	if err := dec(in); err != nil {
@@ -310,6 +342,10 @@ var MetaRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNodes",
 			Handler:    _MetaRpcService_GetNodes_Handler,
+		},
+		{
+			MethodName: "FetchCompactionNode",
+			Handler:    _MetaRpcService_FetchCompactionNode_Handler,
 		},
 		{
 			MethodName: "NodeHeartbeat",

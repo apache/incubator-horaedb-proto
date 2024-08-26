@@ -33,6 +33,7 @@ service MetaRpcService {
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
   rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
+  rpc FetchCompactionNode(FetchCompactionNodeRequest) returns (FetchCompactionNodeResponse) {}
   rpc NodeHeartbeat(NodeHeartbeatRequest) returns (NodeHeartbeatResponse) {}
 }
 
@@ -138,6 +139,17 @@ message GetNodesResponse {
 
   uint64 cluster_topology_version = 2;
   repeated NodeShard node_shards = 3;
+}
+
+message FetchCompactionNodeRequest {
+  RequestHeader header = 1;
+}
+
+message FetchCompactionNodeResponse {
+  common.ResponseHeader header = 1;
+
+  // addr(ip:port) for compaction node.
+  string endpoint = 2;
 }
 
 message DropTableRequest {
