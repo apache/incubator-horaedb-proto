@@ -71,8 +71,8 @@ message CompactionInputFiles {
 message InputContext {
   // Input sst files in the compaction
   CompactionInputFiles files = 1;
-  uint32 num_rows_per_row_group = 2;
-  uint32 merge_iter_options = 3;
+  uint64 num_rows_per_row_group = 2;
+  uint64 merge_iter_options = 3;
   bool need_dedup = 4;
 }
 
