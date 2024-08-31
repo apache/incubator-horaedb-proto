@@ -78,9 +78,9 @@ message InputContext {
 
 message SstWriteOptions {
   manifest.StorageFormatHint storage_format_hint = 1;
-  uint32 num_rows_per_row_group = 2;
+  uint64 num_rows_per_row_group = 2;
   manifest.Compression compression = 3;
-  uint32 max_buffer_size = 4;
+  uint64 max_buffer_size = 4;
   map<string, bool> column_stats = 5;
 }
 
