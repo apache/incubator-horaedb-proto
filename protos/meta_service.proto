@@ -33,7 +33,8 @@ service MetaRpcService {
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
   rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
-  rpc FetchCompactionNode(FetchCompactionNodeRequest) returns (FetchCompactionNodeResponse) {}
+  rpc FetchCompactionNode(FetchCompactionNodeRequest)
+      returns (FetchCompactionNodeResponse) {}
   rpc NodeHeartbeat(NodeHeartbeatRequest) returns (NodeHeartbeatResponse) {}
 }
 
