@@ -22,7 +22,7 @@ syntax = "proto3";
 package storage;
 option java_package = "org.apache.horaedb.proto.internal";
 option java_outer_classname = "Storage";
-option go_package = "github.com/apache/incubator-horaedb-proto/golang/pkg/storagepb";
+option go_package = "github.com/LeslieKid/incubator-horaedb-proto/golang/pkg/storagepb";
 
 import "common.proto";
 import "prometheus.proto";

@@ -20,7 +20,7 @@
 syntax = "proto3";
 
 package meta_service;
-option go_package = "github.com/apache/incubator-horaedb-proto/golang/pkg/metaservicepb";
+option go_package = "github.com/LeslieKid/incubator-horaedb-proto/golang/pkg/metaservicepb";
 
 import "common.proto";
 import "cluster.proto";
@@ -33,6 +33,8 @@ service MetaRpcService {
   rpc DropTable(DropTableRequest) returns (DropTableResponse) {}
   rpc RouteTables(RouteTablesRequest) returns (RouteTablesResponse) {}
   rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
+  rpc FetchCompactionNode(FetchCompactionNodeRequest)
+      returns (FetchCompactionNodeResponse) {}
   rpc NodeHeartbeat(NodeHeartbeatRequest) returns (NodeHeartbeatResponse) {}
 }
 
@@ -140,6 +142,17 @@ message GetNodesResponse {
   repeated NodeShard node_shards = 3;
 }
 
+message FetchCompactionNodeRequest {
+  RequestHeader header = 1;
+}
+
+message FetchCompactionNodeResponse {
+  common.ResponseHeader header = 1;
+
+  // addr(ip:port) for compaction node.
+  string endpoint = 2;
+}
+
 message DropTableRequest {
   RequestHeader header = 1;
 
@@ -180,6 +193,7 @@ message NodeInfo {
   string zone = 3;
   string binary_version = 4;
   repeated ShardInfo shard_infos = 5;
+  cluster.NodeType node_type = 6;
 }
 
 message NodeHeartbeatResponse {

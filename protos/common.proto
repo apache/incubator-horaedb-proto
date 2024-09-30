@@ -22,7 +22,7 @@ syntax = "proto3";
 package common;
 option java_package = "org.apache.horaedb.proto.internal";
 option java_outer_classname = "Common";
-option go_package = "github.com/apache/incubator-horaedb-proto/golang/pkg/commonpb";
+option go_package = "github.com/LeslieKid/incubator-horaedb-proto/golang/pkg/commonpb";
 
 message ResponseHeader {
   uint32 code = 1;

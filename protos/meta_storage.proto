@@ -20,7 +20,7 @@
 syntax = "proto3";
 
 package meta_storage;
-option go_package = "github.com/apache/incubator-horaedb-proto/golang/pkg/metastoragepb";
+option go_package = "github.com/LeslieKid/incubator-horaedb-proto/golang/pkg/metastoragepb";
 
 message Member {
   string name = 1;
