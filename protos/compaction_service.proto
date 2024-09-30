@@ -29,7 +29,7 @@ import "common.proto";
 // The service is hosted by CompactionServer to handle the remote compaction
 // service request from HoraeDB.
 service CompactionService {
-  rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest) 
+  rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest)
       returns (ExecuteCompactionTaskResponse) {}
 }
 
@@ -135,6 +135,6 @@ message ExecResult {
 
 message ExecuteCompactionTaskResponse {
   common.ResponseHeader header = 1;
-  ExecStatus status = 2; 
+  ExecStatus status = 2;
   ExecResult result = 3;
 }
