@@ -1,0 +1,140 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+syntax = "proto3";
+
+package compaction_service;
+
+import "engine/schema.proto";
+import "engine/time_range.proto";
+import "engine/manifest.proto";
+import "common.proto";
+
+// The service is hosted by CompactionServer to handle the remote compaction
+// service request from HoraeDB.
+service CompactionService {
+  rpc ExecuteCompactionTask(ExecuteCompactionTaskRequest) 
+      returns (ExecuteCompactionTaskResponse) {}
+}
+
+message FileMeta {
+  uint64 file_id = 1;
+  uint64 max_seq = 2;
+  time_range.TimeRange time_range = 3;
+  uint64 size = 4;
+  uint64 row_num = 5;
+  manifest.StorageFormat storage_format = 6;
+  repeated string associated_files = 7;
+}
+
+message FilePurgeQueue {
+  uint32 space_id = 1;
+  uint64 table_id = 2;
+}
+
+message SstMetrics {}
+
+message FileHandle {
+  // Meta of a sst file
+  FileMeta meta = 1;
+  // Queue to store files to be deleted for a table.
+  FilePurgeQueue purge_queue = 2;
+  bool being_compacted = 3;
+  SstMetrics metrics = 4;
+}
+
+message CompactionInputFiles {
+  // Level of the files to be compacted
+  uint32 level = 1;
+  // Files to be compacted.
+  repeated FileHandle files = 2;
+  // The output level of the merged file.
+  uint32 output_level = 3;
+}
+
+message InputContext {
+  // Input sst files in the compaction
+  CompactionInputFiles files = 1;
+  uint64 num_rows_per_row_group = 2;
+  uint64 merge_iter_options = 3;
+  bool need_dedup = 4;
+}
+
+message SstWriteOptions {
+  manifest.StorageFormatHint storage_format_hint = 1;
+  uint64 num_rows_per_row_group = 2;
+  manifest.Compression compression = 3;
+  uint64 max_buffer_size = 4;
+  map<string, bool> column_stats = 5;
+}
+
+message OutputContext {
+  // Output sst file path
+  string file_path = 1;
+  SstWriteOptions write_options = 2;
+}
+
+message ExecuteCompactionTaskRequest {
+  string task_key = 1;
+  string request_id = 2;
+
+  schema.TableSchema schema = 3;
+  uint32 space_id = 4;
+  uint64 table_id = 5;
+  uint64 sequence = 6;
+
+  InputContext input_ctx = 7;
+  OutputContext output_ctx = 8;
+}
+
+message ExecStatus {
+  uint64 process_latency = 1;
+}
+
+message SstInfo {
+  uint64 file_size = 1;
+  uint64 row_num = 2;
+  manifest.StorageFormat storage_format = 3;
+  string meta_path = 4;
+  time_range.TimeRange time_range = 5;
+}
+
+message MetaData {
+  // Min key in the sst
+  bytes min_key = 1;
+  // Max key in the sst
+  bytes max_key = 2;
+  // Max sequence number in the sst
+  uint64 max_sequence = 3;
+  // The time range of the sst
+  time_range.TimeRange time_range = 4;
+  schema.TableSchema schema = 5;
+}
+
+message ExecResult {
+  string output_file_path = 1;
+  SstInfo sst_info = 2;
+  MetaData sst_meta = 3;
+}
+
+message ExecuteCompactionTaskResponse {
+  common.ResponseHeader header = 1;
+  ExecStatus status = 2; 
+  ExecResult result = 3;
+}
